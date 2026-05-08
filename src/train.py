@@ -177,7 +177,7 @@ def main():
     )
 
     model = RecommendationScoreModel(
-        input_dim=len(cfg.feature_cols),
+        input_dim=len(cfg.feature_cols) + (1 if cfg.use_position_feature else 0),
         hidden_dims=cfg.hidden_dims,
         dropout=cfg.dropout,
         use_batch_norm=cfg.use_batch_norm,

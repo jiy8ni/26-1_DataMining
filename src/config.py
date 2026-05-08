@@ -1,6 +1,17 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
 
+# Columns that are right-skewed counts/prices — log1p-transformed in v3+
+LOG_TRANSFORM_COLS: List[str] = [
+    "text_length", "image_count", "table_count", "list_item_count",
+    "paragraph_count", "section_count", "jsonld_field_count",
+    "explicit_number_count", "ambiguous_term_count",
+    "price_krw", "skin_type_targets_count",
+    "active_ingredient_count", "claim_keyword_count", "texture_keyword_count",
+    "no_list_count", "cosmetic_cert_count",
+    "Q4_social_proof_count", "Q9_external_authority_count",
+]
+
 # v1: all 24 numeric features (includes high-missingness columns)
 FEATURE_COLS_V1: List[str] = [
     "text_length", "image_count", "table_count", "list_item_count",
@@ -42,7 +53,7 @@ class Config:
     protocol: str = "step2"
 
     # Model version tag — used in wandb run name and checkpoint filename
-    version: str = "v2"
+    version: str = "v3"
 
     # Engine filter: "openai" | "anthropic" | None (use both — not recommended)
     engine_filter: Optional[str] = "openai"
@@ -52,6 +63,12 @@ class Config:
 
     # Feature columns — switch to FEATURE_COLS_V1 to reproduce baseline
     feature_cols: List[str] = field(default_factory=lambda: FEATURE_COLS_V2)
+
+    # Columns to apply log1p before StandardScaler (v3+); empty list = no transform
+    log_transform_cols: List[str] = field(default_factory=lambda: LOG_TRANSFORM_COLS)
+
+    # Whether to append normalized sku_pos (presentation order) as an extra feature
+    use_position_feature: bool = True
 
     # Model architecture
     hidden_dims: List[int] = field(default_factory=lambda: [128, 64, 32])

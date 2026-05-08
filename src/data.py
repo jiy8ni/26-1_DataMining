@@ -26,11 +26,19 @@ class RankingDataset(Dataset):
         scaler: Optional[StandardScaler] = None,
         fit_scaler: bool = False,
         filter_ambiguous: bool = True,
+        log_transform_cols: Optional[List[str]] = None,
+        use_position_feature: bool = False,
     ):
         df = df.copy()
 
         if filter_ambiguous and "is_ambiguous" in df.columns:
             df = df[~df["is_ambiguous"].astype(bool)]
+
+        # log1p-transform skewed count/price features before imputation so that
+        # medians and StandardScaler operate on the already-compressed scale
+        if log_transform_cols:
+            cols_to_transform = [c for c in log_transform_cols if c in feature_cols]
+            df[cols_to_transform] = np.log1p(df[cols_to_transform].clip(lower=0))
 
         # Impute NaN with column-level median (computed from this df slice;
         # callers ensure only training data is used when fit_scaler=True)
@@ -53,6 +61,9 @@ class RankingDataset(Dataset):
             feats   = torch.tensor(group[feature_cols].values, dtype=torch.float32)
             ranks   = torch.tensor(group["ai_rank"].values,  dtype=torch.long)
             sku_pos = torch.tensor(group["sku_pos"].values,  dtype=torch.long)
+            if use_position_feature:
+                pos_feat = (sku_pos.float() - 1) / 2  # normalize 1/2/3 → 0/0.5/1
+                feats = torch.cat([feats, pos_feat.unsqueeze(1)], dim=1)
             self.trials.append((feats, ranks, sku_pos))
 
     def __len__(self) -> int:
@@ -79,12 +90,65 @@ def build_loaders(
     val_df   = _load("val")
     test_df  = _load("test")
 
-    train_ds = RankingDataset(train_df, cfg.feature_cols, cfg.trial_keys, fit_scaler=True)
-    val_ds   = RankingDataset(val_df,   cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler)
-    test_ds  = RankingDataset(test_df,  cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler)
+    log_cols = getattr(cfg, "log_transform_cols", None)
+    use_pos  = getattr(cfg, "use_position_feature", False)
+    train_ds = RankingDataset(train_df, cfg.feature_cols, cfg.trial_keys, fit_scaler=True,  log_transform_cols=log_cols, use_position_feature=use_pos)
+    val_ds   = RankingDataset(val_df,   cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler, log_transform_cols=log_cols, use_position_feature=use_pos)
+    test_ds  = RankingDataset(test_df,  cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler, log_transform_cols=log_cols, use_position_feature=use_pos)
 
     train_loader = DataLoader(train_ds, batch_size=cfg.batch_size, shuffle=True,  drop_last=False)
     val_loader   = DataLoader(val_ds,   batch_size=cfg.batch_size, shuffle=False, drop_last=False)
     test_loader  = DataLoader(test_ds,  batch_size=cfg.batch_size, shuffle=False, drop_last=False)
 
     return train_loader, val_loader, test_loader, train_ds.scaler
+
+
+def build_arrays(
+    cfg: Config,
+) -> Tuple:
+    """
+    Same preprocessing pipeline as build_loaders but returns numpy arrays
+    for LightGBM LambdaRank.
+
+    Returns for each split: (X, relevance, ranks, groups)
+        X         : (N_items, D)   scaled feature matrix  (N_items = N_trials * 3)
+        relevance : (N_items,)     4 - ai_rank  (higher = better; LightGBM convention)
+        ranks     : (N_trials, 3)  original ai_rank values for metrics / calibration
+        groups    : (N_trials,)    all-3 array (items per trial)
+    Also returns the fitted StandardScaler.
+    """
+    def _load(split: str) -> pd.DataFrame:
+        df = pd.read_csv(f"{cfg.data_dir}/{cfg.protocol}_{split}_features.csv")
+        if cfg.engine_filter is not None:
+            df = df[df["engine"] == cfg.engine_filter]
+        return df
+
+    train_df = _load("train")
+    val_df   = _load("val")
+    test_df  = _load("test")
+
+    log_cols = getattr(cfg, "log_transform_cols", None)
+    use_pos  = getattr(cfg, "use_position_feature", False)
+
+    train_ds = RankingDataset(train_df, cfg.feature_cols, cfg.trial_keys, fit_scaler=True,          log_transform_cols=log_cols, use_position_feature=use_pos)
+    val_ds   = RankingDataset(val_df,   cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler,   log_transform_cols=log_cols, use_position_feature=use_pos)
+    test_ds  = RankingDataset(test_df,  cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler,   log_transform_cols=log_cols, use_position_feature=use_pos)
+
+    def _extract(ds: RankingDataset):
+        X_list, rel_list, rank_list = [], [], []
+        for feats, ranks, _ in ds:
+            X_list.append(feats.numpy())
+            rank_list.append(ranks.numpy())
+            rel_list.append((4 - ranks).numpy())          # rank1→3, rank2→2, rank3→1
+        X         = np.concatenate(X_list, axis=0)        # (N*3, D)
+        relevance = np.concatenate(rel_list, axis=0).astype(np.float32)
+        ranks_2d  = np.stack(rank_list, axis=0)           # (N, 3)
+        groups    = np.full(len(ds), 3, dtype=np.int32)
+        return X, relevance, ranks_2d, groups
+
+    return (
+        _extract(train_ds),
+        _extract(val_ds),
+        _extract(test_ds),
+        train_ds.scaler,
+    )
