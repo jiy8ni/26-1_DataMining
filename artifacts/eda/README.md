@@ -110,7 +110,59 @@
 - `src/config.py`
 - `artifacts/eda/step1/full_data_qc/00_feature_quality/missingness.csv`
 
-### 4. 수집한 전체 상품과 실제 비교에 사용된 상품이 다름
+### 4. 가격 구간과 일부 요약값은 고정된 시장 기준이 아니라 EDA용 휴리스틱임
+
+현재 EDA 코드에는 해석에 직접 영향을 주는 몇 가지 간단한 규칙이 들어 있습니다.
+그중 가장 중요한 것은 `저가`, `중가`, `고가` 구간입니다.
+
+이 구간은 미리 정한 절대 시장 기준이 아니라, 각 데이터셋 안에 있는 가격 분포를 3등분해서 자동으로 만든 상대 구간입니다.
+그래서 지금 산출물에서 보이는 `저가`, `중가`, `고가`는 "시장 전체에서의 절대 가격대"라기보다, "그 분석에 들어간 상품들 안에서의 상대 위치"로 해석해야 합니다.
+
+현재 확인된 컷오프는 다음과 같습니다.
+
+- 전체 후보 세트 기준 분석과 `step1` 학습용 분석에서는 15,000원, 22,000원
+- `step2` 학습용 분석에서는 약 14,933원, 21,300원
+
+왜 중요한가:
+
+- 같은 `저가`, `중가`, `고가`라는 이름을 써도 `step1`과 `step2`에서 실제 숫자 범위가 다를 수 있습니다.
+- 그래서 `step1_price_bucket_rank_summary.csv`와 `step2_price_bucket_rank_summary.csv`를 같은 기준처럼 직접 비교하면 해석이 흔들립니다.
+- `price_bucket_combo_counts.csv`도 같은 문제를 가집니다.
+  조합 이름은 같아 보여도, 그 안에 들어가는 실제 가격 범위는 분석 단위마다 달라질 수 있습니다.
+
+같이 알아둘 점:
+
+- `ml당 가격`은 가격을 용량으로 나눈 파생값입니다.
+  용량이 없거나 0 이하이면 비어 있는 값으로 처리됩니다.
+- 이상치는 도메인 기준이 아니라 IQR 1.5 규칙으로 잡습니다.
+  이 값은 탐색용 기준으로는 괜찮지만, "이 상품은 비정상이다"를 확정하는 기준으로 쓰면 안 됩니다.
+- `train_only` 분석은 원본 학습 파일을 그대로 쓰지 않습니다.
+  매핑이 불확실한 행, 세 후보가 다 남지 않은 세트, 같은 브랜드가 두 번 들어간 세트를 제거한 뒤 분석합니다.
+  그래서 `train_only` 결과를 공유할 때는 반드시 "정제된 학습용 부분집합 기준"이라고 적는 것이 안전합니다.
+- 상품 식별도 완전히 깔끔하지 않습니다.
+  먼저 확정된 상품 주소를 쓰고, 그게 없으면 원본 주소를 쓰고, 그것도 불확실하면 브랜드 이름으로 대체합니다.
+  그래서 모든 행을 완전한 상품 단위라고 가정하면 안 됩니다.
+- 시각화 중 일부는 상위 10개, 15개, 20개만 잘라서 보여줍니다.
+  보기 좋게 줄인 것이지, 나머지가 없다는 뜻은 아닙니다.
+
+권장 대응:
+
+- 가격 구간은 하나의 공통 기준으로 고정하는 편이 좋습니다.
+- 방법은 두 가지 중 하나를 추천합니다.
+  전체 상품 풀 기준으로 한 번만 컷오프를 정해서 `step1`, `step2`에 같이 적용하거나,
+  아예 `1만원 이하`, `1만원 초과 2만원 이하`, `2만원 초과`처럼 절대 구간으로 고정하는 방식입니다.
+- 산출물에는 현재 컷오프 숫자를 같이 적는 것이 좋습니다.
+  라벨만 있으면 팀원이 서로 다른 기준으로 해석하기 쉽습니다.
+- 상품 단위 선호표를 공유할 때는 매핑 품질이나 불확실 여부 요약을 같이 붙이는 것이 안전합니다.
+
+어디서 확인하나:
+
+- `src/eda.py`
+- `artifacts/eda/step1/train_only/step1_price_bucket_rank_summary.csv`
+- `artifacts/eda/step2/train_only/step2_price_bucket_rank_summary.csv`
+- `artifacts/eda/step1/full_data_qc/02_candidate_set_quality/price_bucket_combo_counts.csv`
+
+### 5. 수집한 전체 상품과 실제 비교에 사용된 상품이 다름
 
 상품 페이지 파일에는 327개 상품이 있지만, 실제 후보 세트에 연결된 상품은 295개만 확인되었습니다.
 커버리지는 약 90.2%입니다.
@@ -124,7 +176,7 @@
 - `artifacts/eda/step1/full_data_qc/00_feature_quality/dataset_summary.csv`
 - `data/processed/trial_items.csv`
 
-### 5. 두 엔진의 라벨 불일치가 큼
+### 6. 두 엔진의 라벨 불일치가 큼
 
 같은 후보 세트라도 `OpenAI`와 `Anthropic`이 고른 순위가 자주 다릅니다.
 
@@ -142,7 +194,7 @@
 - `artifacts/eda/response_diagnostics/overall/engine_agreement_summary.csv`
 - `artifacts/eda/response_diagnostics/overall/engine_top1_disagreement_cases.csv`
 
-### 6. 후보를 보여준 순서가 결과에 영향을 줌
+### 7. 후보를 보여준 순서가 결과에 영향을 줌
 
 후보가 1번, 2번, 3번 자리에 놓였을 때 1위로 뽑히는 비율이 균등하지 않습니다.
 
@@ -163,7 +215,7 @@
 - `artifacts/eda/response_diagnostics/by_engine/openai/position_bias.csv`
 - `artifacts/eda/response_diagnostics/by_engine/anthropic/position_bias.csv`
 
-### 7. 어떤 상품은 많이 나오고 어떤 상품은 적게 나옴
+### 8. 어떤 상품은 많이 나오고 어떤 상품은 적게 나옴
 
 후보로 등장한 횟수가 상품마다 꽤 다릅니다.
 
@@ -185,7 +237,7 @@
 - `artifacts/eda/step1/full_data_qc/02_candidate_set_quality/pair_cooccurrence_counts.csv`
 - `artifacts/eda/response_diagnostics/overall/item_exposure_counts.csv`
 
-### 8. 같은 후보 세트가 엔진별로 두 번 존재함
+### 9. 같은 후보 세트가 엔진별로 두 번 존재함
 
 모든 후보 세트는 `OpenAI`용 1행, `Anthropic`용 1행으로 존재합니다.
 
@@ -197,7 +249,7 @@
 
 - `response.csv`
 
-### 9. 매핑이 불확실한 상품이 상위 노출 그룹에 있을 수 있음
+### 10. 매핑이 불확실한 상품이 상위 노출 그룹에 있을 수 있음
 
 일부 상품은 정확한 상품 단위가 아니라 브랜드 평균 정보로 연결되어 있습니다.
 이런 상품이 많이 등장하면, 특정 상품이 좋아서 상위에 간 것처럼 보여도 실제로는 브랜드 평균 특성의 영향일 수 있습니다.
