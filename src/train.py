@@ -88,7 +88,7 @@ class Trainer:
 
     def fit(self, train_loader, val_loader) -> None:
         os.makedirs(self.cfg.ckpt_dir, exist_ok=True)
-        ckpt_path = os.path.join(self.cfg.ckpt_dir, f"{self.cfg.protocol}_best.pt")
+        ckpt_path = os.path.join(self.cfg.ckpt_dir, f"{self.cfg.protocol}_{self.cfg.version}_best.pt")
 
         best_val_loss = float("inf")
         no_improve    = 0
@@ -146,21 +146,23 @@ def main():
 
     wandb.init(
         project="formcleaner-ranker",
-        name=cfg.protocol,
+        name=f"{cfg.protocol}_{cfg.version}",
         config={
-            "protocol":    cfg.protocol,
-            "hidden_dims": cfg.hidden_dims,
-            "dropout":     cfg.dropout,
-            "lr":          cfg.lr,
-            "weight_decay": cfg.weight_decay,
-            "batch_size":  cfg.batch_size,
-            "n_epochs":    cfg.n_epochs,
-            "patience":    cfg.patience,
-            "seed":        cfg.seed,
+            "protocol":      cfg.protocol,
+            "version":       cfg.version,
+            "n_features":    len(cfg.feature_cols),
+            "hidden_dims":   cfg.hidden_dims,
+            "dropout":       cfg.dropout,
+            "lr":            cfg.lr,
+            "weight_decay":  cfg.weight_decay,
+            "batch_size":    cfg.batch_size,
+            "n_epochs":      cfg.n_epochs,
+            "patience":      cfg.patience,
+            "seed":          cfg.seed,
         },
     )
 
-    print(f"Device: {device}  |  Protocol: {cfg.protocol}")
+    print(f"Device: {device}  |  Protocol: {cfg.protocol}  |  Version: {cfg.version}  |  Features: {len(cfg.feature_cols)}")
 
     train_loader, val_loader, test_loader, scaler = build_loaders(cfg)
     print(
