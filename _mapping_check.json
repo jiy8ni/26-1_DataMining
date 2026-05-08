@@ -1,0 +1,11 @@
+{
+  "fp_rows": 3000,
+  "fp_unique_setids": 3000,
+  "total_unique_urls_in_fp": 297,
+  "urls_found_in_pf": 218,
+  "urls_NOT_in_pf": 79,
+  "fp_ids == resp_ids": true,
+  "brand_match_sku1": 1.0,
+  "brand_match_sku2": 1.0,
+  "brand_match_sku3": 1.0
+}

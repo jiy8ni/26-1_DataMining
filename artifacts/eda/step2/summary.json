@@ -1,0 +1,37 @@
+{
+  "protocol": "step2",
+  "full_data_qc": {
+    "page_features_rows": 327,
+    "response_rows": 6000,
+    "trial_set_ids": 3000,
+    "duplicate_triplet_count": 1,
+    "duplicate_brand_trial_count": 123,
+    "graph_summary": {
+      "n_nodes": 297,
+      "n_components": 1,
+      "largest_component_size": 297,
+      "min_degree": 18,
+      "median_degree": 55.0,
+      "max_degree": 155
+    }
+  },
+  "train_only": {
+    "protocol": "step2",
+    "cleaning_summary": {
+      "initial_rows": 10565,
+      "initial_trials": 3594,
+      "ambiguous_rows_removed": 245,
+      "incomplete_trials_removed": 440,
+      "duplicate_brand_trials_removed": 0,
+      "final_rows": 9462,
+      "final_trials": 3154
+    },
+    "modeled_items": 258,
+    "modeled_brands": 99,
+    "top_position_bias": {
+      "1.0": 0.29201014584654406,
+      "2.0": 0.37349397590361444,
+      "3.0": 0.33449587824984145
+    }
+  }
+}

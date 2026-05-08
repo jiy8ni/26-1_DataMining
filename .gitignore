@@ -1,0 +1,28 @@
+# Raw data (full_prompt.csv is 111MB — over GitHub limit)
+data/raw/
+
+# Root-level duplicate files
+response.csv
+page_features.csv
+
+# Model checkpoints
+checkpoints/
+
+# wandb local run files
+wandb/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.Python
+
+# Jupyter
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

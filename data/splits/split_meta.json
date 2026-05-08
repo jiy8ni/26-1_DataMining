@@ -1,0 +1,28 @@
+{
+  "seed": 42,
+  "holdout_brands": [
+    "김소형풀",
+    "넘버즈인",
+    "믹순",
+    "비욘드",
+    "수이스킨",
+    "숨37",
+    "아로마티카",
+    "아크웰",
+    "아페리레",
+    "제이준",
+    "피캄"
+  ],
+  "set_id_counts": {
+    "step1_train": 2100,
+    "step1_val": 450,
+    "step1_test": 450,
+    "step2_train": 1797,
+    "step2_val": 318,
+    "step2_test": 885
+  },
+  "description": {
+    "step1": "Random 70/15/15 over all 3000 set_ids (no brand filtering)",
+    "step2": "Holdout 10% brands → step2_test; remaining 85/15 → step2_train/step2_val"
+  }
+}

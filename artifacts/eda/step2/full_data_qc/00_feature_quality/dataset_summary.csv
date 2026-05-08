@@ -1,0 +1,11 @@
+﻿metric,value
+page_features_rows,327.0
+unique_urls,327.0
+duplicate_urls,0.0
+unique_brands,122.0
+brands_with_multiple_products,53.0
+image_missing_rate_pct,0.3058103975535168
+response_rows,6000.0
+response_set_ids,3000.0
+trial_item_rows,9000.0
+trial_item_set_ids,3000.0

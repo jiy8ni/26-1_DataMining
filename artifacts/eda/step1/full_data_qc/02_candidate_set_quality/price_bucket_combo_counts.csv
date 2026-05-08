@@ -1,0 +1,11 @@
+﻿price_bucket_combo,count
+high | low | mid,658
+low | low | mid,407
+low | mid | mid,380
+high | low | low,371
+high | high | low,325
+high | mid | mid,274
+high | high | mid,260
+low | low | low,147
+mid | mid | mid,93
+high | high | high,85
