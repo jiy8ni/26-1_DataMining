@@ -1,0 +1,2 @@
+﻿engine_a,engine_b,paired_set_ids,paired_top1_available,paired_complete_rankings,top1_agreement_rate,rank2_agreement_rate,rank3_agreement_rate,full_rank_agreement_rate,pairwise_preference_agreement_rate
+anthropic,openai,3000,3000,2917,0.61,0.47788824134384644,0.6215289681179293,0.4230373671580391,0.724922563736002

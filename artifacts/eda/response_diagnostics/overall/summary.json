@@ -1,0 +1,38 @@
+{
+  "response_rows": 6000,
+  "set_ids": 3000,
+  "engines": [
+    "anthropic",
+    "openai"
+  ],
+  "duplicate_input_brand_rows": 246,
+  "duplicate_input_brand_set_ids": 123,
+  "input_trial_brand_mismatch_rows": 0,
+  "position_bias": {
+    "mapped_rows": 17420,
+    "unique_top1_rows": 5846,
+    "ambiguous_top1_rows": 154
+  },
+  "item_exposure_summary": {
+    "n_candidates": 295,
+    "min": 18,
+    "q1": 46.0,
+    "median": 60.0,
+    "q3": 74.0,
+    "max": 104,
+    "mean": 59.76949152542373,
+    "std": 17.29459880135292,
+    "cv": 0.28935495952808027
+  },
+  "brand_exposure_summary": {
+    "n_candidates": 111,
+    "min": 44,
+    "q1": 69.0,
+    "median": 86.0,
+    "q3": 203.0,
+    "max": 840,
+    "mean": 162.16216216216216,
+    "std": 149.50588559655375,
+    "cv": 0.9219529611787481
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "overall": {
+    "response_rows": 6000,
+    "set_ids": 3000,
+    "engines": [
+      "anthropic",
+      "openai"
+    ],
+    "duplicate_input_brand_rows": 246,
+    "duplicate_input_brand_set_ids": 123,
+    "input_trial_brand_mismatch_rows": 0,
+    "position_bias": {
+      "mapped_rows": 17420,
+      "unique_top1_rows": 5846,
+      "ambiguous_top1_rows": 154
+    },
+    "item_exposure_summary": {
+      "n_candidates": 295,
+      "min": 18,
+      "q1": 46.0,
+      "median": 60.0,
+      "q3": 74.0,
+      "max": 104,
+      "mean": 59.76949152542373,
+      "std": 17.29459880135292,
+      "cv": 0.28935495952808027
+    },
+    "brand_exposure_summary": {
+      "n_candidates": 111,
+      "min": 44,
+      "q1": 69.0,
+      "median": 86.0,
+      "q3": 203.0,
+      "max": 840,
+      "mean": 162.16216216216216,
+      "std": 149.50588559655375,
+      "cv": 0.9219529611787481
+    }
+  },
+  "by_engine": {
+    "anthropic": {
+      "response_rows": 3000,
+      "set_ids": 3000,
+      "missing_rank3_rows": 82,
+      "position_bias": {
+        "mapped_rows": 8670,
+        "unique_top1_rows": 2924,
+        "ambiguous_top1_rows": 76
+      },
+      "item_exposure_summary": {
+        "n_candidates": 295,
+        "min": 9,
+        "q1": 23.0,
+        "median": 30.0,
+        "q3": 37.0,
+        "max": 52,
+        "mean": 29.884745762711866,
+        "std": 8.64729940067646,
+        "cv": 0.28935495952808027
+      },
+      "brand_exposure_summary": {
+        "n_candidates": 111,
+        "min": 22,
+        "q1": 34.5,
+        "median": 43.0,
+        "q3": 101.5,
+        "max": 420,
+        "mean": 81.08108108108108,
+        "std": 74.75294279827688,
+        "cv": 0.9219529611787481
+      },
+      "mean_response_chars": 280.6243333333333,
+      "mean_cost_usd": 0.0016102299999999998
+    },
+    "openai": {
+      "response_rows": 3000,
+      "set_ids": 3000,
+      "missing_rank3_rows": 0,
+      "position_bias": {
+        "mapped_rows": 8750,
+        "unique_top1_rows": 2922,
+        "ambiguous_top1_rows": 78
+      },
+      "item_exposure_summary": {
+        "n_candidates": 295,
+        "min": 9,
+        "q1": 23.0,
+        "median": 30.0,
+        "q3": 37.0,
+        "max": 52,
+        "mean": 29.884745762711866,
+        "std": 8.64729940067646,
+        "cv": 0.28935495952808027
+      },
+      "brand_exposure_summary": {
+        "n_candidates": 111,
+        "min": 22,
+        "q1": 34.5,
+        "median": 43.0,
+        "q3": 101.5,
+        "max": 420,
+        "mean": 81.08108108108108,
+        "std": 74.75294279827688,
+        "cv": 0.9219529611787481
+      },
+      "mean_response_chars": 260.80033333333336,
+      "mean_cost_usd": 0.001115015
+    }
+  }
+}
