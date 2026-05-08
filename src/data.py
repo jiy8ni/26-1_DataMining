@@ -70,8 +70,10 @@ def build_loaders(
     DataLoaders plus the fitted StandardScaler (needed for inference).
     """
     def _load(split: str) -> pd.DataFrame:
-        path = f"{cfg.data_dir}/{cfg.protocol}_{split}_features.csv"
-        return pd.read_csv(path)
+        df = pd.read_csv(f"{cfg.data_dir}/{cfg.protocol}_{split}_features.csv")
+        if cfg.engine_filter is not None:
+            df = df[df["engine"] == cfg.engine_filter]
+        return df
 
     train_df = _load("train")
     val_df   = _load("val")

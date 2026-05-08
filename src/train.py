@@ -88,7 +88,8 @@ class Trainer:
 
     def fit(self, train_loader, val_loader) -> None:
         os.makedirs(self.cfg.ckpt_dir, exist_ok=True)
-        ckpt_path = os.path.join(self.cfg.ckpt_dir, f"{self.cfg.protocol}_{self.cfg.version}_best.pt")
+        engine_tag = self.cfg.engine_filter or "all"
+        ckpt_path  = os.path.join(self.cfg.ckpt_dir, f"{self.cfg.protocol}_{self.cfg.version}_{engine_tag}_best.pt")
 
         best_val_loss = float("inf")
         no_improve    = 0
@@ -144,12 +145,16 @@ def main():
     set_seed(cfg.seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+    engine_tag = cfg.engine_filter or "all"
+    run_name   = f"{cfg.protocol}_{cfg.version}_{engine_tag}"
+
     wandb.init(
         project="formcleaner-ranker",
-        name=f"{cfg.protocol}_{cfg.version}",
+        name=run_name,
         config={
             "protocol":      cfg.protocol,
             "version":       cfg.version,
+            "engine_filter": engine_tag,
             "n_features":    len(cfg.feature_cols),
             "hidden_dims":   cfg.hidden_dims,
             "dropout":       cfg.dropout,
@@ -162,7 +167,7 @@ def main():
         },
     )
 
-    print(f"Device: {device}  |  Protocol: {cfg.protocol}  |  Version: {cfg.version}  |  Features: {len(cfg.feature_cols)}")
+    print(f"Device: {device}  |  Protocol: {cfg.protocol}  |  Version: {cfg.version}  |  Engine: {engine_tag}  |  Features: {len(cfg.feature_cols)}")
 
     train_loader, val_loader, test_loader, scaler = build_loaders(cfg)
     print(

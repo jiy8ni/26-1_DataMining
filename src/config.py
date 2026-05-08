@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import List
+from typing import List, Optional
 
 # v1: all 24 numeric features (includes high-missingness columns)
 FEATURE_COLS_V1: List[str] = [
@@ -43,6 +43,9 @@ class Config:
 
     # Model version tag — used in wandb run name and checkpoint filename
     version: str = "v2"
+
+    # Engine filter: "openai" | "anthropic" | None (use both — not recommended)
+    engine_filter: Optional[str] = "openai"
 
     # Columns that identify a unique trial
     trial_keys: List[str] = field(default_factory=lambda: ["set_id", "engine", "round"])
