@@ -28,6 +28,7 @@ class PoolScorer:
         scaler: StandardScaler,
         id_col: str = "url",          # column used as item identifier in the report
         device: str = "cpu",
+        log_transform_cols: list = None,
     ):
         self.model       = model.to(device).eval()
         self.calibration = calibration
@@ -35,6 +36,9 @@ class PoolScorer:
         self.item_ids    = pool_df[id_col].tolist()
 
         X = pool_df[feature_cols].copy()
+        if log_transform_cols:
+            cols = [c for c in log_transform_cols if c in feature_cols]
+            X[cols] = np.log1p(X[cols].clip(lower=0))
         X = X.fillna(X.median())
         X = scaler.transform(X)
         self._feats = torch.tensor(X, dtype=torch.float32).to(device)
