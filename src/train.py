@@ -10,7 +10,7 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau
 from config import Config
 from data import build_loaders
 from model import RecommendationScoreModel
-from loss import plackett_luce_loss
+from loss import plackett_luce_loss, hybrid_loss
 from calibration import TemperatureCalibration
 from metrics import evaluate_all
 
@@ -40,12 +40,13 @@ class Trainer:
     # ------------------------------------------------------------------
 
     def _forward(self, batch):
-        feats, ranks, _ = batch
-        feats = feats.to(self.device)   # (B, K, D)
-        ranks = ranks.to(self.device)   # (B, K)
+        feats, ranks, _, pl_theta = batch
+        feats    = feats.to(self.device)      # (B, K, D)
+        ranks    = ranks.to(self.device)      # (B, K)
+        pl_theta = pl_theta.to(self.device)   # (B, K)
         B, K, D = feats.shape
         scores = self.model(feats.view(B * K, D)).view(B, K)
-        return scores, ranks
+        return scores, ranks, pl_theta
 
     # ------------------------------------------------------------------
     # Training
@@ -55,8 +56,8 @@ class Trainer:
         self.model.train()
         total_loss = 0.0
         for batch in loader:
-            scores, ranks = self._forward(batch)
-            loss = plackett_luce_loss(scores, ranks)
+            scores, ranks, pl_theta = self._forward(batch)
+            loss = hybrid_loss(scores, ranks, pl_theta, self.cfg.lambda_mse)
             self.optim.zero_grad()
             loss.backward()
             self.optim.step()
@@ -73,7 +74,7 @@ class Trainer:
         self.model.eval()
         all_scores, all_ranks = [], []
         for batch in loader:
-            scores, ranks = self._forward(batch)
+            scores, ranks, _ = self._forward(batch)
             all_scores.append(scores.cpu())
             all_ranks.append(ranks.cpu())
         return torch.cat(all_scores).numpy(), torch.cat(all_ranks).numpy()
@@ -100,7 +101,7 @@ class Trainer:
             val_scores, val_ranks = self.collect_scores(val_loader)
             val_loss = plackett_luce_loss(
                 torch.tensor(val_scores), torch.tensor(val_ranks)
-            ).item()
+            ).item()   # early stopping tracks PL loss only (no pl_theta needed)
 
             self.sched.step(val_loss)
             lr = self.optim.param_groups[0]["lr"]
@@ -164,6 +165,7 @@ def main():
             "n_epochs":      cfg.n_epochs,
             "patience":      cfg.patience,
             "seed":          cfg.seed,
+            "lambda_mse":    cfg.lambda_mse,
         },
     )
 

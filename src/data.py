@@ -28,6 +28,7 @@ class RankingDataset(Dataset):
         filter_ambiguous: bool = True,
         log_transform_cols: Optional[List[str]] = None,
         use_position_feature: bool = False,
+        pl_df: Optional[pd.DataFrame] = None,  # columns: resolved_url, pl_theta
     ):
         df = df.copy()
 
@@ -53,24 +54,46 @@ class RankingDataset(Dataset):
             if scaler is not None:
                 df[feature_cols] = scaler.transform(df[feature_cols])
 
-        self.trials: List[Tuple[torch.Tensor, torch.Tensor, torch.Tensor]] = []
+        # Merge PL-fitted theta (if provided); default 0.0 for missing items
+        if pl_df is not None:
+            df = df.merge(
+                pl_df[["resolved_url", "pl_theta"]],
+                on="resolved_url",
+                how="left",
+            )
+            df["pl_theta"] = df["pl_theta"].fillna(0.0)
+        else:
+            df["pl_theta"] = 0.0
+
+        self.trials: List[Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]] = []
         for _, group in df.groupby(trial_keys, sort=False):
             if len(group) != 3:
                 continue  # skip malformed / filtered-down trials
             group = group.sort_values("sku_pos")
-            feats   = torch.tensor(group[feature_cols].values, dtype=torch.float32)
-            ranks   = torch.tensor(group["ai_rank"].values,  dtype=torch.long)
-            sku_pos = torch.tensor(group["sku_pos"].values,  dtype=torch.long)
+            feats    = torch.tensor(group[feature_cols].values,  dtype=torch.float32)
+            ranks    = torch.tensor(group["ai_rank"].values,     dtype=torch.long)
+            sku_pos  = torch.tensor(group["sku_pos"].values,     dtype=torch.long)
+            pl_theta = torch.tensor(group["pl_theta"].values,    dtype=torch.float32)
             if use_position_feature:
                 pos_feat = (sku_pos.float() - 1) / 2  # normalize 1/2/3 → 0/0.5/1
                 feats = torch.cat([feats, pos_feat.unsqueeze(1)], dim=1)
-            self.trials.append((feats, ranks, sku_pos))
+            self.trials.append((feats, ranks, sku_pos, pl_theta))
 
     def __len__(self) -> int:
         return len(self.trials)
 
     def __getitem__(self, idx: int):
         return self.trials[idx]
+
+
+def _load_pl_df(cfg: Config) -> Optional[pd.DataFrame]:
+    path = getattr(cfg, "pl_labels_path", None)
+    if path is None:
+        return None
+    try:
+        return pd.read_csv(path)[["resolved_url", "pl_theta"]]
+    except FileNotFoundError:
+        return None
 
 
 def build_loaders(
@@ -92,9 +115,10 @@ def build_loaders(
 
     log_cols = getattr(cfg, "log_transform_cols", None)
     use_pos  = getattr(cfg, "use_position_feature", False)
-    train_ds = RankingDataset(train_df, cfg.feature_cols, cfg.trial_keys, fit_scaler=True,  log_transform_cols=log_cols, use_position_feature=use_pos)
-    val_ds   = RankingDataset(val_df,   cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler, log_transform_cols=log_cols, use_position_feature=use_pos)
-    test_ds  = RankingDataset(test_df,  cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler, log_transform_cols=log_cols, use_position_feature=use_pos)
+    pl_df    = _load_pl_df(cfg)
+    train_ds = RankingDataset(train_df, cfg.feature_cols, cfg.trial_keys, fit_scaler=True,  log_transform_cols=log_cols, use_position_feature=use_pos, pl_df=pl_df)
+    val_ds   = RankingDataset(val_df,   cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler, log_transform_cols=log_cols, use_position_feature=use_pos, pl_df=pl_df)
+    test_ds  = RankingDataset(test_df,  cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler, log_transform_cols=log_cols, use_position_feature=use_pos, pl_df=pl_df)
 
     train_loader = DataLoader(train_ds, batch_size=cfg.batch_size, shuffle=True,  drop_last=False)
     val_loader   = DataLoader(val_ds,   batch_size=cfg.batch_size, shuffle=False, drop_last=False)

@@ -83,6 +83,10 @@ class Config:
     patience: int = 15        # early stopping patience (val loss)
     seed: int = 42
 
+    # PL-fitted labels for hybrid loss
+    pl_labels_path: str = "data/processed/pl_labels_step2_openai.csv"
+    lambda_mse: float = 0.5   # weight on MSE(score, pl_theta)
+
     # Temperature calibration grid
     temp_candidates: List[float] = field(default_factory=lambda: [
         0.1, 0.2, 0.5, 0.7, 1.0, 1.5, 2.0, 3.0, 5.0

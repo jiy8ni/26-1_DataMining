@@ -1,4 +1,5 @@
 import torch
+import torch.nn.functional as F
 
 
 def plackett_luce_loss(scores: torch.Tensor, ranks: torch.Tensor) -> torch.Tensor:
@@ -32,3 +33,21 @@ def plackett_luce_loss(scores: torch.Tensor, ranks: torch.Tensor) -> torch.Tenso
     # Exclude last position (k = K-1) — deterministic, contributes 0.
     nll = -(sorted_scores[:, :-1] - log_cumsum[:, :-1]).sum(dim=1)   # (B,)
     return nll.mean()
+
+
+def hybrid_loss(
+    scores: torch.Tensor,
+    ranks: torch.Tensor,
+    pl_theta: torch.Tensor,
+    lambda_mse: float,
+) -> torch.Tensor:
+    """
+    PL ranking loss + MSE regression toward PL-fitted theta.
+
+    scores   : (B, K)  model scores
+    ranks    : (B, K)  AI ranks, 1=best
+    pl_theta : (B, K)  PL-fitted log-strength (ground truth)
+    """
+    rank_loss = plackett_luce_loss(scores, ranks)
+    mse       = F.mse_loss(scores, pl_theta)
+    return rank_loss + lambda_mse * mse
