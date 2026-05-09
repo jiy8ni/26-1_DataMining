@@ -2,77 +2,93 @@ import numpy as np
 import pandas as pd
 import torch
 from sklearn.preprocessing import StandardScaler
+from typing import Callable, List, Union
+
+import lightgbm as lgb
+import xgboost as xgb
 
 from model import RecommendationScoreModel
 from calibration import TemperatureCalibration
 
 
-class PoolScorer:
+# ──────────────────────────────────────────────────────────────────────────────
+# Base class
+# ──────────────────────────────────────────────────────────────────────────────
+
+class _BasePoolScorer:
     """
-    Scores every item in the 300-product pool and computes the report metrics
-    described in the model plan:
+    Shared logic for pool scoring across model types.
 
-        score, pool_rank, percentile (top X%), rec_prob, odds_uplift
-
-    Usage:
-        scorer = PoolScorer(model, calib, pool_df, cfg.feature_cols, scaler)
-        report = scorer.get_report()
+    Subclasses supply `_predict_fns`: a list of callables
+        fn(X: np.ndarray) -> np.ndarray  shape (N,)
+    one per fold.  Raw scores are averaged across folds, then divided by
+    the mean temperature for calibration.
     """
 
     def __init__(
         self,
-        model: RecommendationScoreModel,
-        calibration: TemperatureCalibration,
-        pool_df: pd.DataFrame,        # one row per product; must contain feature_cols
+        predict_fns:  List[Callable],
+        calibrations: List[TemperatureCalibration],
+        pool_df:      pd.DataFrame,
         feature_cols: list,
-        scaler: StandardScaler,
-        id_col: str = "url",          # column used as item identifier in the report
-        device: str = "cpu",
+        scalers:      List[StandardScaler],
+        id_col:       str = "url",
     ):
-        self.model       = model.to(device).eval()
-        self.calibration = calibration
-        self.device      = device
-        self.item_ids    = pool_df[id_col].tolist()
+        self._predict_fns = predict_fns
+        self.temperature  = float(np.mean([c.temperature for c in calibrations]))
+        self.item_ids     = pool_df[id_col].tolist()
 
-        X = pool_df[feature_cols].copy()
-        X = X.fillna(X.median())
-        X = scaler.transform(X)
-        self._feats = torch.tensor(X, dtype=torch.float32).to(device)
+        base_X = pool_df[feature_cols].copy().fillna(pool_df[feature_cols].median())
+        self._X_list: List[np.ndarray] = [sc.transform(base_X) for sc in scalers]
 
-    @torch.no_grad()
-    def _raw_scores(self) -> torch.Tensor:
-        return self.model(self._feats)                        # (N,)
-
-    @torch.no_grad()
     def score_pool(self) -> np.ndarray:
-        """Returns temperature-calibrated scores for every pool item."""
-        return self.calibration.calibrate(self._raw_scores()).cpu().numpy()
+        """Temperature-calibrated scores for every pool item."""
+        raw = np.mean([fn(X) for fn, X in zip(self._predict_fns, self._X_list)], axis=0)
+        return raw / self.temperature
+
+    def _score_new_item_raw(
+        self,
+        item_df:      pd.DataFrame,
+        feature_cols: list,
+        scalers:      List[StandardScaler],
+    ) -> float:
+        base_X = item_df[feature_cols].copy().fillna(item_df[feature_cols].median())
+        per_fold = [fn(sc.transform(base_X)) for fn, sc in zip(self._predict_fns, scalers)]
+        return float(np.mean(per_fold) / self.temperature)
+
+    def score_new_item(
+        self,
+        item_df:      pd.DataFrame,
+        feature_cols: list,
+        scaler:       Union[StandardScaler, List[StandardScaler]],
+    ) -> dict:
+        """
+        Score a single new product against the fixed pool distribution.
+
+        Returns: score, pool_rank (1 = best), top_pct (lower = better).
+        """
+        scalers   = scaler if isinstance(scaler, list) else [scaler] * len(self._predict_fns)
+        new_score = self._score_new_item_raw(item_df, feature_cols, scalers)
+
+        pool_scores = self.score_pool()
+        rank    = int((pool_scores > new_score).sum()) + 1
+        top_pct = rank / len(pool_scores) * 100
+        return {"score": new_score, "pool_rank": rank, "top_pct": top_pct}
 
     def get_report(self, reference_item_id: str = None) -> pd.DataFrame:
         """
-        Returns a DataFrame sorted by pool_rank (ascending), with columns:
-
-            item_id      : product identifier
-            score        : calibrated recommendation score
-            pool_rank    : rank within pool (1 = most likely to be recommended)
-            top_pct      : "top X%" — fraction of pool this item outscores (lower = better)
-            rec_prob     : P(this item chosen) via softmax over pool scores
-            odds_uplift  : recommendation odds relative to pool average
+        DataFrame sorted by pool_rank with columns:
+            item_id, score, pool_rank, top_pct, rec_prob, odds_uplift
         """
         scores = self.score_pool()
-        N = len(scores)
+        N      = len(scores)
 
-        # pool_rank: 1 = highest score
-        # argsort().argsort() gives 0-indexed position in ascending order;
-        # N - that value converts to descending (rank 1 for highest).
-        pool_rank = N - scores.argsort().argsort()           # 1-indexed, (N,)
-        top_pct   = pool_rank / N * 100                      # "top X%" of pool
+        pool_rank = N - scores.argsort().argsort()
+        top_pct   = pool_rank / N * 100
 
-        # Softmax over the whole pool to get recommendation probabilities
-        exp_s   = np.exp(scores - scores.max())              # numerically stable
+        exp_s    = np.exp(scores - scores.max())
         rec_prob = exp_s / exp_s.sum()
 
-        # Odds uplift vs. pool average
         mean_prob   = rec_prob.mean()
         mean_odds   = mean_prob / (1 - mean_prob + 1e-12)
         item_odds   = rec_prob / (1 - rec_prob + 1e-12)
@@ -99,3 +115,114 @@ class PoolScorer:
                 )
 
         return report
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# MLP (PyTorch)
+# ──────────────────────────────────────────────────────────────────────────────
+
+class PoolScorer(_BasePoolScorer):
+    """
+    Pool scorer for the MLP ranker.
+
+    Accepts single model or a list of k-fold models.
+
+    Usage (single):
+        scorer = PoolScorer(model, calib, pool_df, feature_cols, scaler)
+    Usage (k-fold ensemble):
+        scorer = PoolScorer(models, calibs, pool_df, feature_cols, scalers)
+    """
+
+    def __init__(
+        self,
+        model:        Union[RecommendationScoreModel, List[RecommendationScoreModel]],
+        calibration:  Union[TemperatureCalibration,   List[TemperatureCalibration]],
+        pool_df:      pd.DataFrame,
+        feature_cols: list,
+        scaler:       Union[StandardScaler, List[StandardScaler]],
+        id_col:       str = "url",
+        device:       str = "cpu",
+    ):
+        models       = model       if isinstance(model,       list) else [model]
+        calibrations = calibration if isinstance(calibration, list) else [calibration]
+        scalers      = scaler      if isinstance(scaler,      list) else [scaler]
+
+        fitted_models = [m.to(device).eval() for m in models]
+
+        def _make_predict_fn(m):
+            @torch.no_grad()
+            def fn(X: np.ndarray) -> np.ndarray:
+                t = torch.tensor(X, dtype=torch.float32).to(device)
+                return m(t).cpu().numpy()
+            return fn
+
+        predict_fns = [_make_predict_fn(m) for m in fitted_models]
+        super().__init__(predict_fns, calibrations, pool_df, feature_cols, scalers, id_col)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# LightGBM
+# ──────────────────────────────────────────────────────────────────────────────
+
+class LGBMPoolScorer(_BasePoolScorer):
+    """
+    Pool scorer for the LightGBM LambdaRank ranker.
+
+    Usage (single):
+        scorer = LGBMPoolScorer(booster, calib, pool_df, feature_cols, scaler)
+    Usage (k-fold ensemble):
+        scorer = LGBMPoolScorer(boosters, calibs, pool_df, feature_cols, scalers)
+    """
+
+    def __init__(
+        self,
+        model:        Union[lgb.Booster, List[lgb.Booster]],
+        calibration:  Union[TemperatureCalibration, List[TemperatureCalibration]],
+        pool_df:      pd.DataFrame,
+        feature_cols: list,
+        scaler:       Union[StandardScaler, List[StandardScaler]],
+        id_col:       str = "url",
+    ):
+        models       = model       if isinstance(model,       list) else [model]
+        calibrations = calibration if isinstance(calibration, list) else [calibration]
+        scalers      = scaler      if isinstance(scaler,      list) else [scaler]
+
+        predict_fns = [
+            lambda X, m=m: m.predict(X, raw_score=True)
+            for m in models
+        ]
+        super().__init__(predict_fns, calibrations, pool_df, feature_cols, scalers, id_col)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# XGBoost
+# ──────────────────────────────────────────────────────────────────────────────
+
+class XGBPoolScorer(_BasePoolScorer):
+    """
+    Pool scorer for the XGBoost LambdaRank ranker.
+
+    Usage (single):
+        scorer = XGBPoolScorer(booster, calib, pool_df, feature_cols, scaler)
+    Usage (k-fold ensemble):
+        scorer = XGBPoolScorer(boosters, calibs, pool_df, feature_cols, scalers)
+    """
+
+    def __init__(
+        self,
+        model:        Union[xgb.Booster, List[xgb.Booster]],
+        calibration:  Union[TemperatureCalibration, List[TemperatureCalibration]],
+        pool_df:      pd.DataFrame,
+        feature_cols: list,
+        scaler:       Union[StandardScaler, List[StandardScaler]],
+        id_col:       str = "url",
+    ):
+        models       = model       if isinstance(model,       list) else [model]
+        calibrations = calibration if isinstance(calibration, list) else [calibration]
+        scalers      = scaler      if isinstance(scaler,      list) else [scaler]
+
+        predict_fns = [
+            lambda X, m=m: m.predict(xgb.DMatrix(X))
+            for m in models
+        ]
+        super().__init__(predict_fns, calibrations, pool_df, feature_cols, scalers, id_col)
