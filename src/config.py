@@ -55,6 +55,9 @@ class Config:
     # Model version tag — used in wandb run name and checkpoint filename
     version: str = "v3"
 
+    # K-fold cross-validation (brand-level holdout)
+    n_folds: int = 5
+
     # Engine filter: "openai" | "anthropic" | None (use both — not recommended)
     engine_filter: Optional[str] = "openai"
 

@@ -127,6 +127,61 @@ def build_loaders(
     return train_loader, val_loader, test_loader, train_ds.scaler
 
 
+def _ds_to_arrays(ds: RankingDataset) -> Tuple:
+    """Convert a RankingDataset to numpy arrays for tree-based models.
+
+    Returns: (X, relevance, ranks_2d, groups)
+        X         : (N*3, D)  scaled feature matrix
+        relevance : (N*3,)    4 - ai_rank  (LightGBM convention: higher = better)
+        ranks_2d  : (N, 3)    original ai_rank values
+        groups    : (N,)      all-3 array
+    """
+    X_list, rel_list, rank_list = [], [], []
+    for feats, ranks, _ in ds:
+        X_list.append(feats.numpy())
+        rank_list.append(ranks.numpy())
+        rel_list.append((4 - ranks).numpy())
+    X         = np.concatenate(X_list, axis=0)
+    relevance = np.concatenate(rel_list, axis=0).astype(np.float32)
+    ranks_2d  = np.stack(rank_list, axis=0)
+    groups    = np.full(len(ds), 3, dtype=np.int32)
+    return X, relevance, ranks_2d, groups
+
+
+def _brand_kfold_splits(
+    df: pd.DataFrame,
+    n_folds: int,
+    seed: int,
+) -> list:
+    """Brand-level k-fold: assign brands round-robin to folds, then mark any
+    trial that contains a held-out brand as the val fold.
+
+    A trial goes to fold k's val set if ANY of its brands belongs to fold k.
+    A trial goes to fold k's train set if NONE of its brands belongs to fold k.
+    (Trials whose brands span multiple folds appear in multiple val sets — this
+    is correct for ensemble training.)
+
+    Returns list of n_folds (train_df, val_df) tuples.
+    """
+    brands   = sorted(df["brand_ko"].dropna().unique())
+    rng      = np.random.default_rng(seed)
+    shuffled = rng.permutation(brands)
+    brand_fold = {b: int(i % n_folds) for i, b in enumerate(shuffled)}
+
+    trial_brands = df.groupby("set_id")["brand_ko"].apply(set)
+
+    folds = []
+    for k in range(n_folds):
+        val_brand_set = {b for b, f in brand_fold.items() if f == k}
+        val_ids   = frozenset(sid for sid, bs in trial_brands.items() if bs & val_brand_set)
+        train_ids = frozenset(sid for sid in trial_brands.index if sid not in val_ids)
+        folds.append((
+            df[df["set_id"].isin(train_ids)].reset_index(drop=True),
+            df[df["set_id"].isin(val_ids)].reset_index(drop=True),
+        ))
+    return folds
+
+
 def build_arrays(
     cfg: Config,
 ) -> Tuple:
@@ -158,21 +213,94 @@ def build_arrays(
     val_ds   = RankingDataset(val_df,   cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler,   log_transform_cols=log_cols, use_position_feature=use_pos)
     test_ds  = RankingDataset(test_df,  cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler,   log_transform_cols=log_cols, use_position_feature=use_pos)
 
-    def _extract(ds: RankingDataset):
-        X_list, rel_list, rank_list = [], [], []
-        for feats, ranks, _ in ds:
-            X_list.append(feats.numpy())
-            rank_list.append(ranks.numpy())
-            rel_list.append((4 - ranks).numpy())          # rank1→3, rank2→2, rank3→1
-        X         = np.concatenate(X_list, axis=0)        # (N*3, D)
-        relevance = np.concatenate(rel_list, axis=0).astype(np.float32)
-        ranks_2d  = np.stack(rank_list, axis=0)           # (N, 3)
-        groups    = np.full(len(ds), 3, dtype=np.int32)
-        return X, relevance, ranks_2d, groups
-
     return (
-        _extract(train_ds),
-        _extract(val_ds),
-        _extract(test_ds),
+        _ds_to_arrays(train_ds),
+        _ds_to_arrays(val_ds),
+        _ds_to_arrays(test_ds),
         train_ds.scaler,
     )
+
+
+def build_kfold_arrays(cfg: Config) -> Tuple:
+    """Brand-level k-fold for LightGBM / XGBoost.
+
+    Combines protocol train+val, splits into cfg.n_folds brand-level folds.
+
+    Returns:
+        folds      : list of n_folds (train_arrays, val_arrays) where each
+                     arrays tuple is (X, relevance, ranks_2d, groups)
+        test_folds : list of n_folds test_arrays, each scaled with the
+                     corresponding fold's scaler (needed for ensemble scoring)
+        scalers    : list of n_folds StandardScalers
+    """
+    def _load(split: str) -> pd.DataFrame:
+        df = pd.read_csv(f"{cfg.data_dir}/{cfg.protocol}_{split}_features.csv")
+        if cfg.engine_filter is not None:
+            df = df[df["engine"] == cfg.engine_filter]
+        return df
+
+    combined = pd.concat([_load("train"), _load("val")], ignore_index=True)
+    test_df  = _load("test")
+
+    log_cols = getattr(cfg, "log_transform_cols", None)
+    use_pos  = getattr(cfg, "use_position_feature", False)
+
+    folds, test_folds, scalers = [], [], []
+    for train_df, val_df in _brand_kfold_splits(combined, cfg.n_folds, cfg.seed):
+        train_ds = RankingDataset(train_df, cfg.feature_cols, cfg.trial_keys,
+                                  fit_scaler=True, log_transform_cols=log_cols,
+                                  use_position_feature=use_pos)
+        val_ds   = RankingDataset(val_df, cfg.feature_cols, cfg.trial_keys,
+                                  scaler=train_ds.scaler, log_transform_cols=log_cols,
+                                  use_position_feature=use_pos)
+        test_ds  = RankingDataset(test_df, cfg.feature_cols, cfg.trial_keys,
+                                  scaler=train_ds.scaler, log_transform_cols=log_cols,
+                                  use_position_feature=use_pos)
+        folds.append((_ds_to_arrays(train_ds), _ds_to_arrays(val_ds)))
+        test_folds.append(_ds_to_arrays(test_ds))
+        scalers.append(train_ds.scaler)
+
+    return folds, test_folds, scalers
+
+
+def build_kfold_loaders(cfg: Config) -> Tuple:
+    """Brand-level k-fold for the MLP trainer.
+
+    Returns:
+        folds        : list of n_folds (train_loader, val_loader) tuples
+        test_loaders : list of n_folds test DataLoaders (fold-specific scaler)
+        scalers      : list of n_folds StandardScalers
+    """
+    def _load(split: str) -> pd.DataFrame:
+        df = pd.read_csv(f"{cfg.data_dir}/{cfg.protocol}_{split}_features.csv")
+        if cfg.engine_filter is not None:
+            df = df[df["engine"] == cfg.engine_filter]
+        return df
+
+    combined = pd.concat([_load("train"), _load("val")], ignore_index=True)
+    test_df  = _load("test")
+
+    log_cols = getattr(cfg, "log_transform_cols", None)
+    use_pos  = getattr(cfg, "use_position_feature", False)
+
+    folds, test_loaders, scalers = [], [], []
+    for train_df, val_df in _brand_kfold_splits(combined, cfg.n_folds, cfg.seed):
+        train_ds = RankingDataset(train_df, cfg.feature_cols, cfg.trial_keys,
+                                  fit_scaler=True, log_transform_cols=log_cols,
+                                  use_position_feature=use_pos)
+        val_ds   = RankingDataset(val_df, cfg.feature_cols, cfg.trial_keys,
+                                  scaler=train_ds.scaler, log_transform_cols=log_cols,
+                                  use_position_feature=use_pos)
+        test_ds  = RankingDataset(test_df, cfg.feature_cols, cfg.trial_keys,
+                                  scaler=train_ds.scaler, log_transform_cols=log_cols,
+                                  use_position_feature=use_pos)
+        folds.append((
+            DataLoader(train_ds, batch_size=cfg.batch_size, shuffle=True,  drop_last=False),
+            DataLoader(val_ds,   batch_size=cfg.batch_size, shuffle=False, drop_last=False),
+        ))
+        test_loaders.append(
+            DataLoader(test_ds, batch_size=cfg.batch_size, shuffle=False, drop_last=False)
+        )
+        scalers.append(train_ds.scaler)
+
+    return folds, test_loaders, scalers

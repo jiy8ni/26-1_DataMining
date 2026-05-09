@@ -18,13 +18,13 @@ def main():
         project="formcleaner-ranker",
         name=run_name,
         config={
-            "model":               "lightgbm_lambdarank",
-            "protocol":            cfg.protocol,
-            "version":             cfg.version,
-            "engine_filter":       engine_tag,
-            "n_features":          len(cfg.feature_cols) + (1 if cfg.use_position_feature else 0),
+            "model":                "lightgbm_lambdarank",
+            "protocol":             cfg.protocol,
+            "version":              cfg.version,
+            "engine_filter":        engine_tag,
+            "n_features":           len(cfg.feature_cols) + (1 if cfg.use_position_feature else 0),
             "use_position_feature": cfg.use_position_feature,
-            "log_transform":       bool(cfg.log_transform_cols),
+            "log_transform":        bool(cfg.log_transform_cols),
         },
     )
 
