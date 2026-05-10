@@ -248,7 +248,8 @@ pip install torch numpy pandas scikit-learn scipy wandb lightgbm xgboost
 cd src
 python pl_regression.py  # Plackett-Luce 점수 회귀 (기준 모델, 별도 설치 불필요)
 python train.py          # 심층 신경망
-python lgbm_train.py     # LightGBM
+python lgbm_kfold.py     # LightGBM (5-fold 교차검증 앙상블)
+python xgb_kfold.py      # XGBoost (5-fold 교차검증 앙상블)
 ```
 
 기본 설정은 학습 중 한 번도 보지 않은 새 브랜드 상품에 대한 예측 방식으로 실행됩니다. 학습 진행 상황은 Weights & Biases를 통해 실시간으로 확인할 수 있으며, 처음 실행 시 터미널에서 로그인 안내가 표시됩니다. 버전별 실험 기록은 `EXPERIMENTS.md`를 참고하세요.
