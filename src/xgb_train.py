@@ -74,6 +74,12 @@ def main():
         ],
     )
 
+    for i, (tr, val) in enumerate(zip(
+        evals_result.get("train", {}).get("ndcg@1", []),
+        evals_result.get("val",   {}).get("ndcg@1", []),
+    )):
+        wandb.log({"iter/train_ndcg1": tr, "iter/val_ndcg1": val}, step=i)
+
     wandb.summary["best_iteration"] = model.best_iteration
 
     # ---- Temperature calibration on val set ----

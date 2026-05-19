@@ -50,6 +50,7 @@ def main():
     os.makedirs(cfg.ckpt_dir, exist_ok=True)
     fold_models = []
     fold_calibs = []
+    fold_val_results: list[dict] = []
 
     for fold_idx, ((X_tr, y_tr, _, g_tr), (X_val, y_val, ranks_val, g_val)) in enumerate(folds):
         print(f"\n{'='*50}")
@@ -58,6 +59,7 @@ def main():
         train_data = lgb.Dataset(X_tr,  label=y_tr,  group=g_tr)
         val_data   = lgb.Dataset(X_val, label=y_val, group=g_val, reference=train_data)
 
+        evals_result = {}
         model = lgb.train(
             params,
             train_data,
@@ -66,8 +68,11 @@ def main():
             callbacks=[
                 lgb.early_stopping(stopping_rounds=20),
                 lgb.log_evaluation(period=50),
+                lgb.record_evaluation(evals_result),
             ],
         )
+        for i, ndcg_val in enumerate(evals_result.get("valid_0", {}).get("ndcg@1", [])):
+            wandb.log({f"fold{fold_idx}/iter_ndcg1": ndcg_val}, step=fold_idx * 500 + i)
 
         wandb.summary[f"fold{fold_idx}/best_iteration"] = model.best_iteration
 
@@ -92,6 +97,14 @@ def main():
 
         fold_models.append(model)
         fold_calibs.append(calib)
+        fold_val_results.append(val_results)
+
+    cv_log = {}
+    for metric in fold_val_results[0]:
+        vals = [r[metric] for r in fold_val_results]
+        cv_log[f"cv/val_{metric}_mean"] = float(np.nanmean(vals))
+        cv_log[f"cv/val_{metric}_std"]  = float(np.nanstd(vals))
+    wandb.log(cv_log)
 
     # ---- Ensemble test evaluation ----
     print(f"\n{'='*50}")

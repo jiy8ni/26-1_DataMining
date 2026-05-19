@@ -53,6 +53,7 @@ def main():
         "verbose":           -1,
     }
 
+    evals_result = {}
     model = lgb.train(
         params,
         train_data,
@@ -61,8 +62,14 @@ def main():
         callbacks=[
             lgb.early_stopping(stopping_rounds=20),
             lgb.log_evaluation(period=10),
+            lgb.record_evaluation(evals_result),
         ],
     )
+    for i, (n1, n3) in enumerate(zip(
+        evals_result.get("valid_0", {}).get("ndcg@1", []),
+        evals_result.get("valid_0", {}).get("ndcg@3", []),
+    )):
+        wandb.log({"iter/val_ndcg1": n1, "iter/val_ndcg3": n3}, step=i)
 
     wandb.summary["best_iteration"] = model.best_iteration
 
