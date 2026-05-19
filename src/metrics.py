@@ -60,7 +60,7 @@ def kendall_tau(scores: np.ndarray, true_ranks: np.ndarray) -> float:
     """Mean Kendall tau between predicted score ordering and AI rank ordering."""
     from scipy.stats import kendalltau as _kt
     taus = [_kt(-scores[b], true_ranks[b]).statistic for b in range(len(scores))]
-    return float(np.mean(taus))
+    return float(np.nanmean(taus))
 
 
 # ---------------------------------------------------------------------------

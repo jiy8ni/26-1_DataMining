@@ -37,7 +37,7 @@ class Trainer:
         self.sched   = ReduceLROnPlateau(self.optim, mode="min", patience=5, factor=0.5)
 
     def _forward(self, batch):
-        feats, ranks, _ = batch
+        feats, ranks, _, _ = batch
         feats = feats.to(self.device)
         ranks = ranks.to(self.device)
         B, K, D = feats.shape
@@ -155,6 +155,7 @@ def main():
 
     fold_trainers: list[Trainer] = []
     fold_calibs:   list[TemperatureCalibration] = []
+    fold_val_results: list[dict] = []
 
     for fold_idx, ((train_loader, val_loader), scaler) in enumerate(zip(folds, scalers)):
         print(f"\n{'='*50}")
@@ -186,6 +187,14 @@ def main():
 
         fold_trainers.append(trainer)
         fold_calibs.append(calib)
+        fold_val_results.append(val_results)
+
+    cv_log = {}
+    for metric in fold_val_results[0]:
+        vals = [r[metric] for r in fold_val_results]
+        cv_log[f"cv/val_{metric}_mean"] = float(np.nanmean(vals))
+        cv_log[f"cv/val_{metric}_std"]  = float(np.nanstd(vals))
+    wandb.log(cv_log)
 
     # ---- Ensemble test evaluation ----
     print(f"\n{'='*50}")

@@ -169,7 +169,7 @@ def main():
         },
     )
 
-    print(f"Device: {device}  |  Protocol: {cfg.protocol}  |  Version: {cfg.version}  |  Engine: {engine_tag}  |  Features: {len(cfg.feature_cols)}")
+    print(f"Device: {device}  |  Protocol: {cfg.protocol}  |  Version: {cfg.version}  |  Engine: {engine_tag}  |  Features: {len(cfg.feature_cols) + (1 if cfg.use_position_feature else 0)}")
 
     train_loader, val_loader, test_loader, _ = build_loaders(cfg)
     print(

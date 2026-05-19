@@ -137,7 +137,7 @@ def _ds_to_arrays(ds: RankingDataset) -> Tuple:
         groups    : (N,)      all-3 array
     """
     X_list, rel_list, rank_list = [], [], []
-    for feats, ranks, _ in ds:
+    for feats, ranks, _, _ in ds:
         X_list.append(feats.numpy())
         rank_list.append(ranks.numpy())
         rel_list.append((4 - ranks).numpy())
