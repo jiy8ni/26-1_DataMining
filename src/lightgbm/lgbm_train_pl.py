@@ -1,7 +1,10 @@
 import numpy as np
 import torch
 import wandb
-import xgboost as xgb
+import lightgbm as lgb
+
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
 
 from config import Config
 from data import build_arrays
@@ -10,20 +13,16 @@ from metrics import evaluate_all
 from pl_objective import pl_grad_hess
 
 
-def _make_qid(groups: np.ndarray) -> np.ndarray:
-    return np.repeat(np.arange(len(groups)), groups)
-
-
 def main():
     cfg = Config()
     engine_tag = cfg.engine_filter or "all"
-    run_name   = f"{cfg.protocol}_{cfg.version}_{engine_tag}_xgb_pl"
+    run_name   = f"{cfg.protocol}_{cfg.version}_{engine_tag}_lgbm_pl"
 
     wandb.init(
         project="formcleaner-ranker",
         name=run_name,
         config={
-            "model":                "xgboost_plackett_luce",
+            "model":                "lightgbm_plackett_luce",
             "protocol":             cfg.protocol,
             "version":              cfg.version,
             "engine_filter":        engine_tag,
@@ -43,53 +42,49 @@ def main():
         f"Features: {X_train.shape[1]}"
     )
 
-    dtrain = xgb.DMatrix(X_train, label=y_train, qid=_make_qid(g_train))
-    dval   = xgb.DMatrix(X_val,   label=y_val,   qid=_make_qid(g_val))
-    dtest  = xgb.DMatrix(X_test,  label=y_test,  qid=_make_qid(g_test))
+    train_data = lgb.Dataset(X_train, label=y_train, group=g_train)
+    val_data   = lgb.Dataset(X_val,   label=y_val,   group=g_val, reference=train_data)
 
     # PL custom objective — captures train group array in closure
-    def pl_obj_train(preds: np.ndarray, dtrain: xgb.DMatrix):
-        labels = dtrain.get_label()
+    def pl_obj_train(preds, train_data):
+        labels = train_data.get_label()
         return pl_grad_hess(preds, labels, g_train)
 
     params = {
-        # No "objective" key — we supply it via obj
-        "eval_metric":      "ndcg@1",
-        "learning_rate":    0.05,
-        "max_depth":        5,
-        "min_child_weight": 5,
-        "subsample":        0.8,
-        "colsample_bytree": 0.8,
-        "reg_alpha":        0.1,
-        "reg_lambda":       1.0,
-        "seed":             cfg.seed,
-        "verbosity":        0,
+        "objective":         pl_obj_train,   # callable: (labels, preds) -> (grad, hess)
+        "metric":            "ndcg",
+        "ndcg_eval_at":      [1, 3],
+        "learning_rate":     0.05,
+        "num_leaves":        31,
+        "min_child_samples": 5,
+        "reg_alpha":         0.1,
+        "reg_lambda":        0.1,
+        "verbose":           -1,
     }
 
     evals_result = {}
-    model = xgb.train(
+    model = lgb.train(
         params,
-        dtrain,
-        obj=pl_obj_train,
+        train_data,
         num_boost_round=500,
-        evals=[(dtrain, "train"), (dval, "val")],
-        evals_result=evals_result,
+        valid_sets=[val_data],
         callbacks=[
-            xgb.callback.EvaluationMonitor(period=10),
-            xgb.callback.EarlyStopping(rounds=20),
+            lgb.early_stopping(stopping_rounds=20),
+            lgb.log_evaluation(period=10),
+            lgb.record_evaluation(evals_result),
         ],
     )
 
-    for i, (tr, val) in enumerate(zip(
-        evals_result.get("train", {}).get("ndcg@1", []),
-        evals_result.get("val",   {}).get("ndcg@1", []),
+    for i, (n1, n3) in enumerate(zip(
+        evals_result.get("valid_0", {}).get("ndcg@1", []),
+        evals_result.get("valid_0", {}).get("ndcg@3", []),
     )):
-        wandb.log({"iter/train_ndcg1": tr, "iter/val_ndcg1": val}, step=i)
+        wandb.log({"iter/val_ndcg1": n1, "iter/val_ndcg3": n3}, step=i)
 
     wandb.summary["best_iteration"] = model.best_iteration
 
     # ---- Temperature calibration on val set ----
-    val_scores = model.predict(dval).reshape(-1, 3)
+    val_scores = model.predict(X_val).reshape(-1, 3)
     calib = TemperatureCalibration(cfg.temp_candidates)
     calib.fit(
         torch.tensor(val_scores, dtype=torch.float32),
@@ -100,7 +95,7 @@ def main():
 
     # ---- Test set evaluation ----
     print("\n=== Test Set Results ===")
-    test_scores = model.predict(dtest).reshape(-1, 3)
+    test_scores = model.predict(X_test).reshape(-1, 3)
 
     exp_cal    = np.exp(test_scores / calib.temperature)
     test_probs = exp_cal / exp_cal.sum(axis=1, keepdims=True)

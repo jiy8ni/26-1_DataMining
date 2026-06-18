@@ -21,9 +21,11 @@ from sklearn.preprocessing import StandardScaler
 from torch.optim import Adam
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
-_SRC_DIR  = os.path.dirname(os.path.abspath(__file__))
-_ROOT_DIR = os.path.dirname(_SRC_DIR)
+_PKG_DIR  = os.path.dirname(os.path.abspath(__file__))   # src/mlp
+_SRC_DIR  = os.path.dirname(_PKG_DIR)                     # src
+_ROOT_DIR = os.path.dirname(_SRC_DIR)                     # repo root
 sys.path.insert(0, _SRC_DIR)
+sys.path.insert(0, _PKG_DIR)
 os.chdir(_ROOT_DIR)
 
 from calibration import TemperatureCalibration

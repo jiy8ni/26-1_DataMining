@@ -3,27 +3,30 @@ import torch
 import wandb
 import xgboost as xgb
 
+import os as _os, sys as _sys
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
+
 from config import Config
 from data import build_arrays
 from calibration import TemperatureCalibration
 from metrics import evaluate_all
+from pl_objective import pl_grad_hess
 
 
 def _make_qid(groups: np.ndarray) -> np.ndarray:
-    """Convert group-count array → per-item query ID (e.g. [3,3,...] → [0,0,0,1,1,1,...])."""
     return np.repeat(np.arange(len(groups)), groups)
 
 
 def main():
     cfg = Config()
     engine_tag = cfg.engine_filter or "all"
-    run_name   = f"{cfg.protocol}_{cfg.version}_{engine_tag}_xgb"
+    run_name   = f"{cfg.protocol}_{cfg.version}_{engine_tag}_xgb_pl"
 
     wandb.init(
         project="formcleaner-ranker",
         name=run_name,
         config={
-            "model":                "xgboost_lambdarank",
+            "model":                "xgboost_plackett_luce",
             "protocol":             cfg.protocol,
             "version":              cfg.version,
             "engine_filter":        engine_tag,
@@ -47,8 +50,13 @@ def main():
     dval   = xgb.DMatrix(X_val,   label=y_val,   qid=_make_qid(g_val))
     dtest  = xgb.DMatrix(X_test,  label=y_test,  qid=_make_qid(g_test))
 
+    # PL custom objective — captures train group array in closure
+    def pl_obj_train(preds: np.ndarray, dtrain: xgb.DMatrix):
+        labels = dtrain.get_label()
+        return pl_grad_hess(preds, labels, g_train)
+
     params = {
-        "objective":        "rank:ndcg",
+        # No "objective" key — we supply it via obj
         "eval_metric":      "ndcg@1",
         "learning_rate":    0.05,
         "max_depth":        5,
@@ -65,6 +73,7 @@ def main():
     model = xgb.train(
         params,
         dtrain,
+        obj=pl_obj_train,
         num_boost_round=500,
         evals=[(dtrain, "train"), (dval, "val")],
         evals_result=evals_result,

@@ -3,9 +3,30 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader
 from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 from typing import List, Tuple, Optional
 
 from config import Config
+
+
+def load_embeddings(cfg: Config) -> Tuple[Optional[pd.DataFrame], Optional[pd.DataFrame]]:
+    """Load raw text/image embedding tables (keyed by resolved_url) if semantic
+    features are enabled and the files exist. Returns (text_df, image_df); either
+    may be None when missing."""
+    if not getattr(cfg, "use_semantic_features", False):
+        return None, None
+
+    def _try(path: Optional[str]) -> Optional[pd.DataFrame]:
+        if not path:
+            return None
+        try:
+            return pd.read_parquet(path)
+        except FileNotFoundError:
+            return None
+
+    text_df = _try(getattr(cfg, "text_emb_path", None))
+    image_df = _try(getattr(cfg, "image_emb_path", None))
+    return text_df, image_df
 
 
 class RankingDataset(Dataset):
@@ -29,11 +50,36 @@ class RankingDataset(Dataset):
         log_transform_cols: Optional[List[str]] = None,
         use_position_feature: bool = False,
         pl_df: Optional[pd.DataFrame] = None,  # columns: resolved_url, pl_theta
+        text_emb_df: Optional[pd.DataFrame] = None,   # resolved_url + txt_*
+        image_emb_df: Optional[pd.DataFrame] = None,  # resolved_url + img_* (+img_missing)
+        text_pca_dim: int = 0,
+        image_pca_dim: int = 0,
+        pca: Optional[Tuple[Optional[PCA], Optional[PCA]]] = None,  # (text_pca, image_pca) for val/test
     ):
         df = df.copy()
 
         if filter_ambiguous and "is_ambiguous" in df.columns:
             df = df[~df["is_ambiguous"].astype(bool)]
+
+        # --- Semantic embeddings: merge raw vectors, PCA-reduce (train-fit) ---
+        # Produces txt_pca_* / img_pca_* columns appended to feature_cols. PCA is
+        # fit on the training fold only (when fit_scaler=True) to avoid leakage,
+        # mirroring the StandardScaler pattern below. self.text_pca / self.image_pca
+        # are stored so callers can pass them to val/test datasets.
+        feature_cols = list(feature_cols)
+        self.text_pca: Optional[PCA] = None
+        self.image_pca: Optional[PCA] = None
+        in_text_pca, in_image_pca = (pca if pca is not None else (None, None))
+
+        df, feature_cols = self._add_pca_block(
+            df, feature_cols, text_emb_df, "txt_", "txt_pca_",
+            text_pca_dim, fit_scaler, in_text_pca, which="text",
+        )
+        df, feature_cols = self._add_pca_block(
+            df, feature_cols, image_emb_df, "img_", "img_pca_",
+            image_pca_dim, fit_scaler, in_image_pca, which="image",
+        )
+        self.feature_cols = feature_cols
 
         # log1p-transform skewed count/price features before imputation so that
         # medians and StandardScaler operate on the already-compressed scale
@@ -79,6 +125,73 @@ class RankingDataset(Dataset):
                 feats = torch.cat([feats, pos_feat.unsqueeze(1)], dim=1)
             self.trials.append((feats, ranks, sku_pos, pl_theta))
 
+    def _add_pca_block(
+        self,
+        df: pd.DataFrame,
+        feature_cols: List[str],
+        emb_df: Optional[pd.DataFrame],
+        raw_prefix: str,     # e.g. "txt_" / "img_"
+        out_prefix: str,     # e.g. "txt_pca_" / "img_pca_"
+        n_dim: int,
+        fit: bool,
+        in_pca: Optional[PCA],
+        which: str,          # "text" | "image" (which attribute to store on self)
+    ) -> Tuple[pd.DataFrame, List[str]]:
+        """Merge raw per-URL embeddings by resolved_url, PCA-reduce to n_dim, and
+        append the reduced columns (out_prefix0..n) to feature_cols.
+
+        PCA is fit on the training fold's UNIQUE items only (when fit=True) to
+        avoid leakage and frequency-weighting bias; val/test reuse in_pca. URLs
+        with no embedding row (failed crawl) get a zero raw vector, which maps to
+        the origin in PCA space and is then median/scaler-handled downstream.
+        """
+        if emb_df is None or n_dim <= 0:
+            return df, feature_cols
+
+        # raw embedding dims only — exclude flag columns like 'img_missing'
+        # (prefix-match alone would wrongly treat the flag as a dimension)
+        raw_cols = [c for c in emb_df.columns
+                    if c.startswith(raw_prefix) and c[len(raw_prefix):].isdigit()]
+        if not raw_cols:
+            return df, feature_cols
+
+        # cap dims at the available embedding rank
+        n_comp = min(n_dim, len(raw_cols))
+
+        merged = df.merge(emb_df[["resolved_url"] + raw_cols],
+                          on="resolved_url", how="left")
+        raw = merged[raw_cols].to_numpy(dtype=np.float32)
+        missing_mask = np.isnan(raw).any(axis=1)
+        raw = np.nan_to_num(raw, nan=0.0)  # failed-crawl URLs -> zero vector
+
+        if fit:
+            # fit on unique resolved_urls present in this (train) split, excluding
+            # missing-embedding rows, so PCA isn't dominated by row frequency
+            uniq = merged.loc[~missing_mask, ["resolved_url"] + raw_cols] \
+                         .drop_duplicates("resolved_url")
+            fit_mat = uniq[raw_cols].to_numpy(dtype=np.float32)
+            n_comp = min(n_comp, fit_mat.shape[0], fit_mat.shape[1])
+            pca = PCA(n_components=n_comp, random_state=0)
+            pca.fit(fit_mat)
+            if which == "text":
+                self.text_pca = pca
+            else:
+                self.image_pca = pca
+        else:
+            pca = in_pca
+            if pca is None:
+                return df, feature_cols
+            if which == "text":
+                self.text_pca = pca
+            else:
+                self.image_pca = pca
+
+        reduced = pca.transform(raw)                      # (N_rows, n_comp)
+        out_cols = [f"{out_prefix}{i}" for i in range(reduced.shape[1])]
+        for j, col in enumerate(out_cols):
+            df[col] = reduced[:, j]
+        return df, feature_cols + out_cols
+
     def __len__(self) -> int:
         return len(self.trials)
 
@@ -94,6 +207,45 @@ def _load_pl_df(cfg: Config) -> Optional[pd.DataFrame]:
         return pd.read_csv(path)[["resolved_url", "pl_theta"]]
     except FileNotFoundError:
         return None
+
+
+def _semantic_kwargs(cfg: Config, text_df, image_df) -> dict:
+    """RankingDataset kwargs for semantic embeddings (empty if disabled)."""
+    if not getattr(cfg, "use_semantic_features", False):
+        return {}
+    return dict(
+        text_emb_df=text_df,
+        image_emb_df=image_df,
+        text_pca_dim=getattr(cfg, "text_pca_dim", 0),
+        image_pca_dim=getattr(cfg, "image_pca_dim", 0),
+    )
+
+
+def _train_pca(train_ds: "RankingDataset") -> Tuple[Optional[PCA], Optional[PCA]]:
+    return (train_ds.text_pca, train_ds.image_pca)
+
+
+def semantic_added_dims(cfg: Config) -> int:
+    """Number of feature columns the semantic block appends (txt_pca_* + img_pca_*).
+    Returns 0 when semantic features are disabled or embedding files are absent."""
+    if not getattr(cfg, "use_semantic_features", False):
+        return 0
+    text_df, image_df = load_embeddings(cfg)
+    added = 0
+    if text_df is not None and getattr(cfg, "text_pca_dim", 0) > 0:
+        n_raw = sum(c.startswith("txt_") and c[4:].isdigit() for c in text_df.columns)
+        added += min(cfg.text_pca_dim, n_raw)
+    if image_df is not None and getattr(cfg, "image_pca_dim", 0) > 0:
+        n_raw = sum(c.startswith("img_") and c[4:].isdigit() for c in image_df.columns)
+        added += min(cfg.image_pca_dim, n_raw)
+    return added
+
+
+def effective_feature_dim(cfg: Config) -> int:
+    """Total model input width: structural features + semantic PCA dims + position."""
+    return (len(cfg.feature_cols)
+            + semantic_added_dims(cfg)
+            + (1 if cfg.use_position_feature else 0))
 
 
 def build_loaders(
@@ -116,9 +268,12 @@ def build_loaders(
     log_cols = getattr(cfg, "log_transform_cols", None)
     use_pos  = getattr(cfg, "use_position_feature", False)
     pl_df    = _load_pl_df(cfg)
-    train_ds = RankingDataset(train_df, cfg.feature_cols, cfg.trial_keys, fit_scaler=True,  log_transform_cols=log_cols, use_position_feature=use_pos, pl_df=pl_df)
-    val_ds   = RankingDataset(val_df,   cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler, log_transform_cols=log_cols, use_position_feature=use_pos, pl_df=pl_df)
-    test_ds  = RankingDataset(test_df,  cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler, log_transform_cols=log_cols, use_position_feature=use_pos, pl_df=pl_df)
+    text_df, image_df = load_embeddings(cfg)
+    sem = _semantic_kwargs(cfg, text_df, image_df)
+    train_ds = RankingDataset(train_df, cfg.feature_cols, cfg.trial_keys, fit_scaler=True,  log_transform_cols=log_cols, use_position_feature=use_pos, pl_df=pl_df, **sem)
+    pca = _train_pca(train_ds)
+    val_ds   = RankingDataset(val_df,   cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler, log_transform_cols=log_cols, use_position_feature=use_pos, pl_df=pl_df, pca=pca, **sem)
+    test_ds  = RankingDataset(test_df,  cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler, log_transform_cols=log_cols, use_position_feature=use_pos, pl_df=pl_df, pca=pca, **sem)
 
     train_loader = DataLoader(train_ds, batch_size=cfg.batch_size, shuffle=True,  drop_last=False)
     val_loader   = DataLoader(val_ds,   batch_size=cfg.batch_size, shuffle=False, drop_last=False)
@@ -208,10 +363,13 @@ def build_arrays(
 
     log_cols = getattr(cfg, "log_transform_cols", None)
     use_pos  = getattr(cfg, "use_position_feature", False)
+    text_df, image_df = load_embeddings(cfg)
+    sem = _semantic_kwargs(cfg, text_df, image_df)
 
-    train_ds = RankingDataset(train_df, cfg.feature_cols, cfg.trial_keys, fit_scaler=True,          log_transform_cols=log_cols, use_position_feature=use_pos)
-    val_ds   = RankingDataset(val_df,   cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler,   log_transform_cols=log_cols, use_position_feature=use_pos)
-    test_ds  = RankingDataset(test_df,  cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler,   log_transform_cols=log_cols, use_position_feature=use_pos)
+    train_ds = RankingDataset(train_df, cfg.feature_cols, cfg.trial_keys, fit_scaler=True,          log_transform_cols=log_cols, use_position_feature=use_pos, **sem)
+    pca = _train_pca(train_ds)
+    val_ds   = RankingDataset(val_df,   cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler,   log_transform_cols=log_cols, use_position_feature=use_pos, pca=pca, **sem)
+    test_ds  = RankingDataset(test_df,  cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler,   log_transform_cols=log_cols, use_position_feature=use_pos, pca=pca, **sem)
 
     return (
         _ds_to_arrays(train_ds),
@@ -232,6 +390,8 @@ def build_kfold_arrays(cfg: Config) -> Tuple:
         test_folds : list of n_folds test_arrays, each scaled with the
                      corresponding fold's scaler (needed for ensemble scoring)
         scalers    : list of n_folds StandardScalers
+        pcas       : list of n_folds (text_pca, image_pca) tuples (None when
+                     semantic features are disabled) — for inference-time reuse
     """
     def _load(split: str) -> pd.DataFrame:
         df = pd.read_csv(f"{cfg.data_dir}/{cfg.protocol}_{split}_features.csv")
@@ -244,23 +404,27 @@ def build_kfold_arrays(cfg: Config) -> Tuple:
 
     log_cols = getattr(cfg, "log_transform_cols", None)
     use_pos  = getattr(cfg, "use_position_feature", False)
+    text_df, image_df = load_embeddings(cfg)
+    sem = _semantic_kwargs(cfg, text_df, image_df)
 
-    folds, test_folds, scalers = [], [], []
+    folds, test_folds, scalers, pcas = [], [], [], []
     for train_df, val_df in _brand_kfold_splits(combined, cfg.n_folds, cfg.seed):
         train_ds = RankingDataset(train_df, cfg.feature_cols, cfg.trial_keys,
                                   fit_scaler=True, log_transform_cols=log_cols,
-                                  use_position_feature=use_pos)
+                                  use_position_feature=use_pos, **sem)
+        pca = _train_pca(train_ds)
         val_ds   = RankingDataset(val_df, cfg.feature_cols, cfg.trial_keys,
                                   scaler=train_ds.scaler, log_transform_cols=log_cols,
-                                  use_position_feature=use_pos)
+                                  use_position_feature=use_pos, pca=pca, **sem)
         test_ds  = RankingDataset(test_df, cfg.feature_cols, cfg.trial_keys,
                                   scaler=train_ds.scaler, log_transform_cols=log_cols,
-                                  use_position_feature=use_pos)
+                                  use_position_feature=use_pos, pca=pca, **sem)
         folds.append((_ds_to_arrays(train_ds), _ds_to_arrays(val_ds)))
         test_folds.append(_ds_to_arrays(test_ds))
         scalers.append(train_ds.scaler)
+        pcas.append(pca)
 
-    return folds, test_folds, scalers
+    return folds, test_folds, scalers, pcas
 
 
 def build_kfold_loaders(cfg: Config) -> Tuple:
@@ -282,18 +446,21 @@ def build_kfold_loaders(cfg: Config) -> Tuple:
 
     log_cols = getattr(cfg, "log_transform_cols", None)
     use_pos  = getattr(cfg, "use_position_feature", False)
+    text_df, image_df = load_embeddings(cfg)
+    sem = _semantic_kwargs(cfg, text_df, image_df)
 
     folds, test_loaders, scalers = [], [], []
     for train_df, val_df in _brand_kfold_splits(combined, cfg.n_folds, cfg.seed):
         train_ds = RankingDataset(train_df, cfg.feature_cols, cfg.trial_keys,
                                   fit_scaler=True, log_transform_cols=log_cols,
-                                  use_position_feature=use_pos)
+                                  use_position_feature=use_pos, **sem)
+        pca = _train_pca(train_ds)
         val_ds   = RankingDataset(val_df, cfg.feature_cols, cfg.trial_keys,
                                   scaler=train_ds.scaler, log_transform_cols=log_cols,
-                                  use_position_feature=use_pos)
+                                  use_position_feature=use_pos, pca=pca, **sem)
         test_ds  = RankingDataset(test_df, cfg.feature_cols, cfg.trial_keys,
                                   scaler=train_ds.scaler, log_transform_cols=log_cols,
-                                  use_position_feature=use_pos)
+                                  use_position_feature=use_pos, pca=pca, **sem)
         folds.append((
             DataLoader(train_ds, batch_size=cfg.batch_size, shuffle=True,  drop_last=False),
             DataLoader(val_ds,   batch_size=cfg.batch_size, shuffle=False, drop_last=False),

@@ -97,7 +97,7 @@ Batch B개 = (B, 3, D)
 
 ## 3. MLP Backbone (공유 구조)
 
-`src/model.py` — `RecommendationScoreModel`
+`src/mlp/model.py` — `RecommendationScoreModel`
 
 ### 구조 다이어그램
 
@@ -231,7 +231,7 @@ rec_prob_i = softmax(θ)_i = exp(θ_i) / Σ_j exp(θ_j)
 
 ## 5. Option B — Hybrid Loss (trial-level)
 
-`src/train.py`, `src/loss.py`
+`src/mlp/train.py`, `src/loss.py`
 
 ### 전체 학습 흐름
 
@@ -309,7 +309,7 @@ L = L_rank + 0.5 × L_mse
 
 ## 6. Option C — Pool-level KL Divergence
 
-`src/train_pool.py`
+`src/mlp/train_pool.py`
 
 ### 핵심 차이
 

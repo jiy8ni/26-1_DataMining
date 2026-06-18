@@ -1,0 +1,428 @@
+{
+  "model": "mlp",
+  "params": {
+    "lr": 0.001,
+    "lambda_mse": 0.5,
+    "hidden_dims": [
+      128,
+      64,
+      32
+    ],
+    "dropout": 0.1,
+    "weight_decay": 0.001
+  },
+  "cv_balanced": 3.6064320740730853,
+  "per_metric": {
+    "top1_accuracy": 0.6752129081411132,
+    "pairwise_accuracy": 0.7704321902332207,
+    "ndcg@3": 0.9573294923756004,
+    "kendall_tau": 0.5408643804664415,
+    "nll": 1.2961913824081421,
+    "brier_score": 0.440469963433737,
+    "temperature": 0.5
+  },
+  "all_candidates": [
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          64,
+          32
+        ],
+        "dropout": 0.1,
+        "weight_decay": 0.0001
+      },
+      "balanced": -1.1215321628995274,
+      "metrics": {
+        "top1_accuracy": 0.667330512258343,
+        "pairwise_accuracy": 0.7643994902826249,
+        "ndcg@3": 0.9562759235958227,
+        "kendall_tau": 0.5287989805652498,
+        "nll": 1.3106582164764404,
+        "brier_score": 0.4465055617979424,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          64,
+          32
+        ],
+        "dropout": 0.1,
+        "weight_decay": 0.001
+      },
+      "balanced": 2.2048991201510253,
+      "metrics": {
+        "top1_accuracy": 0.672748021577275,
+        "pairwise_accuracy": 0.7691420431426336,
+        "ndcg@3": 0.9570886053992037,
+        "kendall_tau": 0.5382840862852671,
+        "nll": 1.303622031211853,
+        "brier_score": 0.4434383172171552,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          64,
+          32
+        ],
+        "dropout": 0.3,
+        "weight_decay": 0.0001
+      },
+      "balanced": 2.2245603934349676,
+      "metrics": {
+        "top1_accuracy": 0.6754834979311866,
+        "pairwise_accuracy": 0.7691239160114491,
+        "ndcg@3": 0.9570608991765168,
+        "kendall_tau": 0.5382478320228982,
+        "nll": 1.3173674106597901,
+        "brier_score": 0.4457752240029274,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          64,
+          32
+        ],
+        "dropout": 0.3,
+        "weight_decay": 0.001
+      },
+      "balanced": 2.049600813255643,
+      "metrics": {
+        "top1_accuracy": 0.673935008308362,
+        "pairwise_accuracy": 0.7695142852672874,
+        "ndcg@3": 0.9570302099331853,
+        "kendall_tau": 0.5390285705345749,
+        "nll": 1.316025972366333,
+        "brier_score": 0.445742626432312,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          64,
+          32
+        ],
+        "dropout": 0.5,
+        "weight_decay": 0.0001
+      },
+      "balanced": -3.336184879901272,
+      "metrics": {
+        "top1_accuracy": 0.6674500901462308,
+        "pairwise_accuracy": 0.7625685080111665,
+        "ndcg@3": 0.9557831823525411,
+        "kendall_tau": 0.5251370160223329,
+        "nll": 1.3449870586395263,
+        "brier_score": 0.4557524253904749,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          64,
+          32
+        ],
+        "dropout": 0.5,
+        "weight_decay": 0.001
+      },
+      "balanced": -2.2407759337177753,
+      "metrics": {
+        "top1_accuracy": 0.6699189351967803,
+        "pairwise_accuracy": 0.7632149623119135,
+        "ndcg@3": 0.9560990828959268,
+        "kendall_tau": 0.526429924623827,
+        "nll": 1.3392459869384765,
+        "brier_score": 0.45450922213743905,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          32,
+          16
+        ],
+        "dropout": 0.1,
+        "weight_decay": 0.0001
+      },
+      "balanced": -1.437115464382558,
+      "metrics": {
+        "top1_accuracy": 0.664852489143702,
+        "pairwise_accuracy": 0.7644877484769781,
+        "ndcg@3": 0.9558085899349841,
+        "kendall_tau": 0.528975496953956,
+        "nll": 1.3051723957061767,
+        "brier_score": 0.44826208892457425,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          32,
+          16
+        ],
+        "dropout": 0.1,
+        "weight_decay": 0.001
+      },
+      "balanced": 1.247446203673538,
+      "metrics": {
+        "top1_accuracy": 0.6697505488511255,
+        "pairwise_accuracy": 0.7676261707256034,
+        "ndcg@3": 0.9565741684666215,
+        "kendall_tau": 0.5352523414512069,
+        "nll": 1.296970748901367,
+        "brier_score": 0.4446361661395361,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          32,
+          16
+        ],
+        "dropout": 0.3,
+        "weight_decay": 0.0001
+      },
+      "balanced": -1.0403066762599937,
+      "metrics": {
+        "top1_accuracy": 0.6646440389426189,
+        "pairwise_accuracy": 0.7682758532240246,
+        "ndcg@3": 0.9563311295430397,
+        "kendall_tau": 0.5365127460618344,
+        "nll": 1.3243788242340089,
+        "brier_score": 0.4554400732293768,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          32,
+          16
+        ],
+        "dropout": 0.3,
+        "weight_decay": 0.001
+      },
+      "balanced": 1.0338295902611145,
+      "metrics": {
+        "top1_accuracy": 0.6688845237888424,
+        "pairwise_accuracy": 0.7705207797785654,
+        "ndcg@3": 0.9568662260186656,
+        "kendall_tau": 0.5410415595571306,
+        "nll": 1.319200348854065,
+        "brier_score": 0.45287098905467077,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          32,
+          16
+        ],
+        "dropout": 0.5,
+        "weight_decay": 0.0001
+      },
+      "balanced": -4.232778719225645,
+      "metrics": {
+        "top1_accuracy": 0.6656666836789589,
+        "pairwise_accuracy": 0.7640779813204451,
+        "ndcg@3": 0.9556602767521156,
+        "kendall_tau": 0.5281559626408904,
+        "nll": 1.3665318489074707,
+        "brier_score": 0.46531431152019487,
+        "temperature": 0.44000000000000006
+      }
+    },
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          32,
+          16
+        ],
+        "dropout": 0.5,
+        "weight_decay": 0.001
+      },
+      "balanced": -5.377242309310476,
+      "metrics": {
+        "top1_accuracy": 0.662259740558066,
+        "pairwise_accuracy": 0.7630871237323256,
+        "ndcg@3": 0.9553541925500723,
+        "kendall_tau": 0.526174247464651,
+        "nll": 1.3657870054244996,
+        "brier_score": 0.47022582283100833,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          128,
+          64,
+          32
+        ],
+        "dropout": 0.1,
+        "weight_decay": 0.0001
+      },
+      "balanced": 3.276641870701577,
+      "metrics": {
+        "top1_accuracy": 0.6745223662806659,
+        "pairwise_accuracy": 0.769775590246997,
+        "ndcg@3": 0.9573781472359709,
+        "kendall_tau": 0.5395511804939942,
+        "nll": 1.2946595430374146,
+        "brier_score": 0.44035406667986987,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          128,
+          64,
+          32
+        ],
+        "dropout": 0.1,
+        "weight_decay": 0.001
+      },
+      "balanced": 3.6064320740730853,
+      "metrics": {
+        "top1_accuracy": 0.6752129081411132,
+        "pairwise_accuracy": 0.7704321902332207,
+        "ndcg@3": 0.9573294923756004,
+        "kendall_tau": 0.5408643804664415,
+        "nll": 1.2961913824081421,
+        "brier_score": 0.440469963433737,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          128,
+          64,
+          32
+        ],
+        "dropout": 0.3,
+        "weight_decay": 0.0001
+      },
+      "balanced": 2.860800021564814,
+      "metrics": {
+        "top1_accuracy": 0.673479107290911,
+        "pairwise_accuracy": 0.7708531965553901,
+        "ndcg@3": 0.9573265463892963,
+        "kendall_tau": 0.5417063931107803,
+        "nll": 1.3064113140106202,
+        "brier_score": 0.44396023351279607,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          128,
+          64,
+          32
+        ],
+        "dropout": 0.3,
+        "weight_decay": 0.001
+      },
+      "balanced": 2.4758751764640836,
+      "metrics": {
+        "top1_accuracy": 0.6748568854681329,
+        "pairwise_accuracy": 0.7694552970220346,
+        "ndcg@3": 0.9573519847434415,
+        "kendall_tau": 0.5389105940440693,
+        "nll": 1.3112114667892456,
+        "brier_score": 0.4460413238714532,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          128,
+          64,
+          32
+        ],
+        "dropout": 0.5,
+        "weight_decay": 0.0001
+      },
+      "balanced": -1.9377875778653386,
+      "metrics": {
+        "top1_accuracy": 0.665939228984948,
+        "pairwise_accuracy": 0.7670261527380497,
+        "ndcg@3": 0.9559412631394822,
+        "kendall_tau": 0.5340523054760996,
+        "nll": 1.3410743951797486,
+        "brier_score": 0.4558665968501793,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lr": 0.001,
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          128,
+          64,
+          32
+        ],
+        "dropout": 0.5,
+        "weight_decay": 0.001
+      },
+      "balanced": -0.2563615400172866,
+      "metrics": {
+        "top1_accuracy": 0.6676892197180658,
+        "pairwise_accuracy": 0.7689959442922252,
+        "ndcg@3": 0.9566187584319593,
+        "kendall_tau": 0.5379918885844502,
+        "nll": 1.3290760278701783,
+        "brier_score": 0.451309662228675,
+        "temperature": 0.5
+      }
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import json
 import os
 import random
 
@@ -7,12 +8,16 @@ import wandb
 from torch.optim import Adam
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
+import sys as _sys
+_sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from config import Config
-from data import build_loaders
+from data import build_loaders, effective_feature_dim
 from model import RecommendationScoreModel
 from loss import plackett_luce_loss, hybrid_loss
 from calibration import TemperatureCalibration
 from metrics import evaluate_all
+from preds_io import save_scores
 
 
 def set_seed(seed: int) -> None:
@@ -87,10 +92,14 @@ class Trainer:
     # Fit loop
     # ------------------------------------------------------------------
 
-    def fit(self, train_loader, val_loader) -> None:
+    def fit(self, train_loader, val_loader, seed_idx: int = 0) -> float:
         os.makedirs(self.cfg.ckpt_dir, exist_ok=True)
         engine_tag = self.cfg.engine_filter or "all"
-        ckpt_path  = os.path.join(self.cfg.ckpt_dir, f"{self.cfg.protocol}_{self.cfg.version}_{engine_tag}_best.pt")
+        ckpt_path  = os.path.join(
+            self.cfg.ckpt_dir,
+            f"{self.cfg.protocol}_{self.cfg.version}_{engine_tag}_seed{seed_idx}_best.pt",
+        )
+        step_offset = seed_idx * self.cfg.n_epochs
 
         best_val_loss = float("inf")
         no_improve    = 0
@@ -106,8 +115,10 @@ class Trainer:
             self.sched.step(val_loss)
             lr = self.optim.param_groups[0]["lr"]
 
-            print(f"Epoch {epoch:3d} | train={train_loss:.4f}  val={val_loss:.4f}  lr={lr:.2e}")
-            wandb.log({"train/loss": train_loss, "val/loss": val_loss, "lr": lr}, step=epoch)
+            print(f"[seed {seed_idx}] Epoch {epoch:3d} | train={train_loss:.4f}  val={val_loss:.4f}  lr={lr:.2e}")
+            wandb.log({f"seed{seed_idx}/train_loss": train_loss,
+                       f"seed{seed_idx}/val_loss": val_loss,
+                       f"seed{seed_idx}/lr": lr}, step=step_offset + epoch)
 
             if val_loss < best_val_loss:
                 best_val_loss = val_loss
@@ -116,12 +127,12 @@ class Trainer:
             else:
                 no_improve += 1
                 if no_improve >= self.cfg.patience:
-                    print(f"Early stopping at epoch {epoch}.")
+                    print(f"[seed {seed_idx}] Early stopping at epoch {epoch}.")
                     break
 
         self.model.load_state_dict(torch.load(ckpt_path, weights_only=True))
-        wandb.summary["best_val_loss"] = best_val_loss
-        print(f"Best val loss: {best_val_loss:.4f}")
+        print(f"[seed {seed_idx}] Best val loss: {best_val_loss:.4f}")
+        return best_val_loss
 
     # ------------------------------------------------------------------
     # Calibration
@@ -141,9 +152,27 @@ class Trainer:
 # Entry point
 # ----------------------------------------------------------------------
 
+def apply_tuned_params(cfg: Config) -> None:
+    """Override architecture/optim fields from artifacts/tuning/mlp_best_params.json
+    if it exists (written by tune_mlp.py). No-op otherwise — cfg keeps its
+    regularized defaults."""
+    path = os.path.join(cfg.tuning_dir, "mlp_best_params.json")
+    if not os.path.exists(path):
+        print("No tuned params found — using Config defaults.")
+        return
+    with open(path) as f:
+        p = json.load(f)["params"]
+    for key in ("hidden_dims", "dropout", "weight_decay", "lr", "lambda_mse"):
+        if key in p:
+            setattr(cfg, key, p[key])
+    print(f"Loaded tuned MLP params from {path}: "
+          f"dims={cfg.hidden_dims} dropout={cfg.dropout} wd={cfg.weight_decay} "
+          f"lr={cfg.lr} lambda_mse={cfg.lambda_mse}")
+
+
 def main():
     cfg    = Config()
-    set_seed(cfg.seed)
+    apply_tuned_params(cfg)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     engine_tag = cfg.engine_filter or "all"
@@ -156,7 +185,7 @@ def main():
             "protocol":      cfg.protocol,
             "version":       cfg.version,
             "engine_filter": engine_tag,
-            "n_features":    len(cfg.feature_cols),
+            "n_features":    effective_feature_dim(cfg),
             "hidden_dims":   cfg.hidden_dims,
             "dropout":       cfg.dropout,
             "lr":            cfg.lr,
@@ -165,11 +194,12 @@ def main():
             "n_epochs":      cfg.n_epochs,
             "patience":      cfg.patience,
             "seed":          cfg.seed,
+            "n_seeds":       cfg.n_seeds,
             "lambda_mse":    cfg.lambda_mse,
         },
     )
 
-    print(f"Device: {device}  |  Protocol: {cfg.protocol}  |  Version: {cfg.version}  |  Engine: {engine_tag}  |  Features: {len(cfg.feature_cols) + (1 if cfg.use_position_feature else 0)}")
+    print(f"Device: {device}  |  Protocol: {cfg.protocol}  |  Version: {cfg.version}  |  Engine: {engine_tag}  |  Features: {effective_feature_dim(cfg)}  |  seeds: {cfg.n_seeds}")
 
     train_loader, val_loader, test_loader, _ = build_loaders(cfg)
     print(
@@ -178,29 +208,48 @@ def main():
         f"test: {len(test_loader.dataset)}"
     )
 
-    model = RecommendationScoreModel(
-        input_dim=len(cfg.feature_cols) + (1 if cfg.use_position_feature else 0),
-        hidden_dims=cfg.hidden_dims,
-        dropout=cfg.dropout,
-        use_batch_norm=cfg.use_batch_norm,
-    )
-    print(f"Parameters: {sum(p.numel() for p in model.parameters()):,}")
+    # ---- Seed ensemble: independent inits/SGD noise give diverse models ----
+    val_scores_per_seed, test_scores_per_seed, temps = [], [], []
+    val_ranks_ref = test_ranks_ref = None
+    for i in range(cfg.n_seeds):
+        set_seed(cfg.seed + i)
+        model = RecommendationScoreModel(
+            input_dim=effective_feature_dim(cfg),
+            hidden_dims=cfg.hidden_dims,
+            dropout=cfg.dropout,
+            use_batch_norm=cfg.use_batch_norm,
+        )
+        if i == 0:
+            print(f"Parameters: {sum(p.numel() for p in model.parameters()):,}")
 
-    trainer = Trainer(model, cfg, device)
-    trainer.fit(train_loader, val_loader)
+        trainer = Trainer(model, cfg, device)
+        trainer.fit(train_loader, val_loader, seed_idx=i)
 
-    calib = trainer.calibrate(val_loader)
+        calib = trainer.calibrate(val_loader)
+        val_s,  val_ranks_ref  = trainer.collect_scores(val_loader)
+        test_s, test_ranks_ref = trainer.collect_scores(test_loader)
 
-    # ---- Test-set evaluation ----
+        val_scores_per_seed.append(val_s)
+        test_scores_per_seed.append(test_s)
+        temps.append(calib.temperature)
+
+    val_scores  = np.mean(val_scores_per_seed,  axis=0)
+    test_scores = np.mean(test_scores_per_seed, axis=0)
+    avg_temp    = float(np.mean(temps))
+    wandb.summary["ensemble/temperature"] = avg_temp
+
+    # ---- Test-set evaluation (ensembled scores, averaged temperature) ----
     print("\n=== Test Set Results ===")
-    test_scores, test_ranks = trainer.collect_scores(test_loader)
-
-    exp_cal = np.exp(test_scores / calib.temperature)
+    exp_cal    = np.exp(test_scores / avg_temp)
     test_probs = exp_cal / exp_cal.sum(axis=1, keepdims=True)
 
-    results = evaluate_all(test_scores, test_ranks, test_probs)
+    results = evaluate_all(test_scores, test_ranks_ref, test_probs)
     for metric, value in results.items():
         print(f"  {metric:<22} {value:.4f}")
+
+    # ---- Persist scores for blending ----
+    save_scores(cfg.preds_dir, "mlp", "val",  val_scores,  val_ranks_ref)
+    save_scores(cfg.preds_dir, "mlp", "test", test_scores, test_ranks_ref)
 
     wandb.log({f"test/{k}": v for k, v in results.items()})
     wandb.finish()

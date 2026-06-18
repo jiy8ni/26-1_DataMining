@@ -8,8 +8,11 @@ import wandb
 from torch.optim import Adam
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
+import sys as _sys
+_sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from config import Config
-from data import build_kfold_loaders
+from data import build_kfold_loaders, effective_feature_dim
 from model import RecommendationScoreModel
 from loss import plackett_luce_loss
 from calibration import TemperatureCalibration
@@ -125,7 +128,7 @@ def main():
 
     engine_tag = cfg.engine_filter or "all"
     run_name   = f"{cfg.protocol}_{cfg.version}_{engine_tag}_mlp"
-    input_dim  = len(cfg.feature_cols) + (1 if cfg.use_position_feature else 0)
+    input_dim  = effective_feature_dim(cfg)
 
     wandb.init(
         project="formcleaner-ranker",

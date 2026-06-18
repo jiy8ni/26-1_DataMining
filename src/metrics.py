@@ -1,6 +1,6 @@
 import numpy as np
 import torch
-from typing import Optional
+from typing import List, Optional
 
 from loss import plackett_luce_loss
 
@@ -113,3 +113,47 @@ def evaluate_all(
         result["nll"]         = nll_score(probs, true_ranks)
         result["brier_score"] = brier_score(probs, true_ranks)
     return result
+
+
+# ---------------------------------------------------------------------------
+# Model-selection composite (used by the brand-CV tuning harness)
+# ---------------------------------------------------------------------------
+
+# Metrics combined into the balanced selection score. Higher-is-better metrics
+# keep their sign; nll is lower-is-better so it enters with sign=-1.
+_BALANCED_SPEC = (
+    ("top1_accuracy", +1.0),
+    ("kendall_tau",   +1.0),
+    ("nll",           -1.0),
+)
+
+
+def balanced_score(results_list: List[dict]) -> List[float]:
+    """Composite score for comparing HP candidates on a balanced objective.
+
+    Each candidate is summarised by an ``evaluate_all`` dict (probs required so
+    that ``nll`` is present). For every metric in ``_BALANCED_SPEC`` we z-score
+    across the candidate set, flip nll's sign, and sum:
+
+        balanced = z(top1_accuracy) + z(kendall_tau) + z(-nll)
+
+    Normalisation is *between candidates* so the metrics' different scales don't
+    dominate. Returns one composite per candidate, in input order. With a single
+    candidate (or a degenerate metric whose std=0) that metric contributes 0.
+    """
+    n = len(results_list)
+    if n == 0:
+        return []
+
+    composites = [0.0] * n
+    for key, sign in _BALANCED_SPEC:
+        vals = np.array([float(r.get(key, np.nan)) for r in results_list], dtype=float)
+        mu   = np.nanmean(vals)
+        sd   = np.nanstd(vals)
+        if not np.isfinite(sd) or sd == 0:
+            continue  # degenerate / single candidate -> no contribution
+        z = (vals - mu) / sd
+        z = np.nan_to_num(z, nan=0.0)
+        for i in range(n):
+            composites[i] += sign * float(z[i])
+    return composites

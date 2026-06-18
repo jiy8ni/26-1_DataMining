@@ -1,0 +1,20 @@
+# Core ML / data
+numpy
+pandas
+pyarrow
+scikit-learn
+torch
+lightgbm
+xgboost
+wandb
+matplotlib
+
+# Crawling (semantic features)
+requests
+beautifulsoup4
+lxml
+Pillow
+
+# Embeddings (semantic features)
+sentence-transformers   # text: BAAI/bge-m3
+transformers            # image: CLIP (openai/clip-vit-base-patch32)

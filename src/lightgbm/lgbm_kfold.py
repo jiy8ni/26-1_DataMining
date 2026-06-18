@@ -4,54 +4,51 @@ import pickle
 import numpy as np
 import torch
 import wandb
-import xgboost as xgb
+import lightgbm as lgb
+
+import sys as _sys
+_sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from config import Config
-from data import build_kfold_arrays
+from data import build_kfold_arrays, effective_feature_dim
 from calibration import TemperatureCalibration
 from metrics import evaluate_all
-
-
-def _make_qid(groups: np.ndarray) -> np.ndarray:
-    return np.repeat(np.arange(len(groups)), groups)
 
 
 def main():
     cfg = Config()
     cfg.version = "v4"
     engine_tag  = cfg.engine_filter or "all"
-    run_name    = f"{cfg.protocol}_{cfg.version}_{engine_tag}_xgb"
+    run_name    = f"{cfg.protocol}_{cfg.version}_{engine_tag}_lgbm"
 
     wandb.init(
         project="formcleaner-ranker",
         name=run_name,
         config={
-            "model":                "xgboost_lambdarank",
+            "model":                "lightgbm_lambdarank",
             "protocol":             cfg.protocol,
             "version":              cfg.version,
             "engine_filter":        engine_tag,
             "n_folds":              cfg.n_folds,
-            "n_features":           len(cfg.feature_cols) + (1 if cfg.use_position_feature else 0),
+            "n_features":           effective_feature_dim(cfg),
             "use_position_feature": cfg.use_position_feature,
             "log_transform":        bool(cfg.log_transform_cols),
         },
     )
 
     params = {
-        "objective":        "rank:ndcg",
-        "eval_metric":      "ndcg@1",
-        "learning_rate":    0.05,
-        "max_depth":        5,
-        "min_child_weight": 5,
-        "subsample":        0.8,
-        "colsample_bytree": 0.8,
-        "reg_alpha":        0.1,
-        "reg_lambda":       1.0,
-        "seed":             cfg.seed,
-        "verbosity":        0,
+        "objective":         "lambdarank",
+        "metric":            "ndcg",
+        "ndcg_eval_at":      [1, 3],
+        "learning_rate":     0.05,
+        "num_leaves":        31,
+        "min_child_samples": 5,
+        "reg_alpha":         0.1,
+        "reg_lambda":        0.1,
+        "verbose":           -1,
     }
 
-    folds, test_folds, scalers = build_kfold_arrays(cfg)
+    folds, test_folds, scalers, pcas = build_kfold_arrays(cfg)
 
     os.makedirs(cfg.ckpt_dir, exist_ok=True)
     fold_models = []
@@ -62,33 +59,36 @@ def main():
         print(f"\n{'='*50}")
         print(f"Fold {fold_idx + 1}/{cfg.n_folds}  — train trials: {len(g_tr)}  val trials: {len(g_val)}")
 
-        dtrain = xgb.DMatrix(X_tr,  label=y_tr,  qid=_make_qid(g_tr))
-        dval   = xgb.DMatrix(X_val, label=y_val, qid=_make_qid(g_val))
+        train_data = lgb.Dataset(X_tr,  label=y_tr,  group=g_tr)
+        val_data   = lgb.Dataset(X_val, label=y_val, group=g_val, reference=train_data)
 
         evals_result = {}
-        model = xgb.train(
+        model = lgb.train(
             params,
-            dtrain,
+            train_data,
             num_boost_round=500,
-            evals=[(dval, "val")],
-            evals_result=evals_result,
+            valid_sets=[val_data],
             callbacks=[
-                xgb.callback.EvaluationMonitor(period=50),
-                xgb.callback.EarlyStopping(rounds=20),
+                lgb.early_stopping(stopping_rounds=20),
+                lgb.log_evaluation(period=50),
+                lgb.record_evaluation(evals_result),
             ],
         )
-        for i, ndcg_val in enumerate(evals_result.get("val", {}).get("ndcg@1", [])):
+        for i, ndcg_val in enumerate(evals_result.get("valid_0", {}).get("ndcg@1", [])):
             wandb.log({f"fold{fold_idx}/iter_ndcg1": ndcg_val}, step=fold_idx * 500 + i)
 
         wandb.summary[f"fold{fold_idx}/best_iteration"] = model.best_iteration
 
-        ckpt_path   = os.path.join(cfg.ckpt_dir, f"{cfg.protocol}_{cfg.version}_{engine_tag}_xgb_fold{fold_idx}.ubj")
-        scaler_path = os.path.join(cfg.ckpt_dir, f"{cfg.protocol}_{cfg.version}_{engine_tag}_xgb_fold{fold_idx}_scaler.pkl")
+        ckpt_path   = os.path.join(cfg.ckpt_dir, f"{cfg.protocol}_{cfg.version}_{engine_tag}_lgbm_fold{fold_idx}.txt")
+        scaler_path = os.path.join(cfg.ckpt_dir, f"{cfg.protocol}_{cfg.version}_{engine_tag}_lgbm_fold{fold_idx}_scaler.pkl")
+        pca_path    = os.path.join(cfg.ckpt_dir, f"{cfg.protocol}_{cfg.version}_{engine_tag}_lgbm_fold{fold_idx}_pca.pkl")
         model.save_model(ckpt_path)
         with open(scaler_path, "wb") as f:
             pickle.dump(scalers[fold_idx], f)
+        with open(pca_path, "wb") as f:
+            pickle.dump(pcas[fold_idx], f)
 
-        val_scores = model.predict(dval).reshape(-1, 3)
+        val_scores = model.predict(X_val, raw_score=True).reshape(-1, 3)
         calib = TemperatureCalibration(cfg.temp_candidates)
         calib.fit(
             torch.tensor(val_scores, dtype=torch.float32),
@@ -119,8 +119,7 @@ def main():
     test_scores_per_fold = []
     ranks_test_ref = None
     for model, (X_test, y_test, ranks_test, g_test) in zip(fold_models, test_folds):
-        dtest = xgb.DMatrix(X_test, label=y_test, qid=_make_qid(g_test))
-        test_scores_per_fold.append(model.predict(dtest).reshape(-1, 3))
+        test_scores_per_fold.append(model.predict(X_test, raw_score=True).reshape(-1, 3))
         ranks_test_ref = ranks_test
 
     ensemble_scores = np.mean(test_scores_per_fold, axis=0)
