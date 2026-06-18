@@ -1,0 +1,9 @@
+# Python caches
+__pycache__/
+*.pyc
+
+# Generated outputs (recreate by running the scripts). semantic_best_config.json
+# is a copied input and is NOT ignored.
+artifacts/preds/*.npz
+artifacts/tuning/*_best_params*.json
+artifacts/ebm/
