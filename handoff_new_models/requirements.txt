@@ -1,0 +1,10 @@
+# Dependencies for the handoff_new_models pairwise rankers.
+# torch is used only by the shared loss / temperature-calibration code (copied
+# from the original project); the four models themselves are scikit-learn / EBM.
+numpy
+pandas
+scipy
+torch
+scikit-learn
+interpret      # ExplainableBoostingClassifier (EBM / model 4)
+pyarrow        # reading data/processed/*.parquet embeddings
