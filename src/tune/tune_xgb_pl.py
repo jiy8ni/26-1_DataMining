@@ -1,4 +1,4 @@
-"""Brand-CV hyperparameter selection for the vanilla XGBoost ranker."""
+"""Brand-CV hyperparameter selection for the XGBoost PL-objective ranker."""
 import os as _os, sys as _sys
 
 _sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
@@ -8,6 +8,7 @@ import xgboost as xgb
 
 from config import Config
 from data import build_kfold_arrays
+from pl_objective import pl_grad_hess
 from tune.cv_common import aggregate_candidate, eval_fold, grid_candidates, select_and_save
 from tune.runtime import (
     apply_saved_semantic_config,
@@ -24,25 +25,24 @@ def _make_qid(groups: np.ndarray) -> np.ndarray:
 
 
 FIXED = {
-    "objective": "rank:ndcg",
     "eval_metric": "ndcg@1",
     "subsample": 0.8,
-    "colsample_bytree": 0.7,
-    "reg_alpha": 0.0,
+    "colsample_bytree": 0.8,
+    "reg_alpha": 0.1,
     "verbosity": 0,
 }
 
 GRID = {
     "eta": [0.03, 0.05],
     "max_depth": [3, 4, 5],
-    "min_child_weight": [3, 5, 10],
+    "min_child_weight": [3, 5],
     "gamma": [0.0, 0.5],
     "reg_lambda": [0.5, 1.0],
 }
 
 
 def main():
-    args = parse_tuner_args("Brand-CV hyperparameter selection for the vanilla XGBoost ranker.")
+    args = parse_tuner_args("Brand-CV hyperparameter selection for the XGBoost PL ranker.")
     cfg = Config()
     if args.smoke:
         apply_smoke_overrides(cfg)
@@ -53,7 +53,7 @@ def main():
     if args.smoke:
         candidates = smoke_candidates(candidates, limit=3)
     print(
-        f"XGBoost brand-CV tuning {'[smoke] ' if args.smoke else ''}"
+        f"XGBoost-PL brand-CV tuning {'[smoke] ' if args.smoke else ''}"
         f"x {len(candidates)} candidates x {cfg.n_folds} folds"
     )
 
@@ -63,9 +63,15 @@ def main():
         for (X_tr, y_tr, _, g_tr), (X_val, y_val, ranks_val, g_val) in folds:
             dtrain = xgb.DMatrix(X_tr, label=y_tr, qid=_make_qid(g_tr))
             dval = xgb.DMatrix(X_val, label=y_val, qid=_make_qid(g_val))
+
+            def pl_obj_train(preds: np.ndarray, train_matrix: xgb.DMatrix):
+                labels = train_matrix.get_label()
+                return pl_grad_hess(preds, labels, g_tr)
+
             model = xgb.train(
                 cand,
                 dtrain,
+                obj=pl_obj_train,
                 num_boost_round=smoke_num_boost_round(args.smoke),
                 evals=[(dval, "val")],
                 verbose_eval=False,
@@ -83,7 +89,7 @@ def main():
             f"k?={means['kendall_tau']:.4f} nll={means['nll']:.4f}"
         )
 
-    select_and_save("xgb", candidates, candidate_means, cfg.tuning_dir, smoke=args.smoke)
+    select_and_save("xgb_pl", candidates, candidate_means, cfg.tuning_dir, smoke=args.smoke)
 
 
 if __name__ == "__main__":

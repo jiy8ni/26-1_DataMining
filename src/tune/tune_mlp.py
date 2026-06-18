@@ -1,17 +1,9 @@
-"""Brand-CV hyperparameter selection for the vanilla MLP ranker.
-
-Coarse grid over capacity / regularization (the original [128,64,32] over-fits
-~259 unique items). Self-contained train loop (no wandb) mirroring mlp/train.py:
-hybrid loss for training, val PL loss for early stopping. Writes
-artifacts/tuning/mlp_best_params.json.
-
-Run:  python src/tune/tune_mlp.py
-"""
-import os as _os, sys as _sys
-_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
-
+"""Brand-CV hyperparameter selection for the vanilla MLP ranker."""
 import copy
+import os as _os, sys as _sys
 import random
+
+_sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
 
 import numpy as np
 import torch
@@ -20,18 +12,23 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau
 
 from config import Config
 from data import build_kfold_loaders, effective_feature_dim
+from loss import hybrid_loss, plackett_luce_loss
 from mlp.model import RecommendationScoreModel
-from loss import plackett_luce_loss, hybrid_loss
-from tune.cv_common import grid_candidates, eval_fold, aggregate_candidate, select_and_save
+from tune.cv_common import aggregate_candidate, eval_fold, grid_candidates, select_and_save
+from tune.runtime import (
+    apply_saved_semantic_config,
+    apply_smoke_overrides,
+    parse_tuner_args,
+    smoke_candidates,
+)
 
-
-# 18 candidates.
 GRID = {
-    "hidden_dims":  [[64, 32], [32, 16], [128, 64, 32]],
-    "dropout":      [0.1, 0.3, 0.5],
+    "hidden_dims": [[64, 32], [96, 48, 24], [128, 64, 32]],
+    "dropout": [0.1, 0.3, 0.5],
     "weight_decay": [1e-4, 1e-3],
+    "lr": [5e-4, 1e-3],
 }
-FIXED = {"lr": 1e-3, "lambda_mse": 0.5}
+FIXED = {"lambda_mse": 0.5}
 
 
 def _set_seed(seed: int) -> None:
@@ -47,8 +44,8 @@ def _collect(model, loader, device):
     all_s, all_r = [], []
     for feats, ranks, _, _ in loader:
         feats = feats.to(device)
-        B, K, D = feats.shape
-        all_s.append(model(feats.view(B * K, D)).view(B, K).cpu())
+        batch_size, group_size, width = feats.shape
+        all_s.append(model(feats.view(batch_size * group_size, width)).view(batch_size, group_size).cpu())
         all_r.append(ranks)
     return torch.cat(all_s).numpy(), torch.cat(all_r).numpy()
 
@@ -68,11 +65,11 @@ def _train_fold(cfg, cand, train_loader, val_loader, device):
     for _epoch in range(cfg.n_epochs):
         model.train()
         for feats, ranks, _, pl_theta in train_loader:
-            feats    = feats.to(device)
-            ranks    = ranks.to(device)
+            feats = feats.to(device)
+            ranks = ranks.to(device)
             pl_theta = pl_theta.to(device)
-            B, K, D  = feats.shape
-            scores   = model(feats.view(B * K, D)).view(B, K)
+            batch_size, group_size, width = feats.shape
+            scores = model(feats.view(batch_size * group_size, width)).view(batch_size, group_size)
             loss = hybrid_loss(scores, ranks, pl_theta, cand["lambda_mse"])
             optim.zero_grad()
             loss.backward()
@@ -93,12 +90,21 @@ def _train_fold(cfg, cand, train_loader, val_loader, device):
 
 
 def main():
+    args = parse_tuner_args("Brand-CV hyperparameter selection for the vanilla MLP ranker.")
     cfg = Config()
+    if args.smoke:
+        apply_smoke_overrides(cfg)
+    apply_saved_semantic_config(cfg, smoke=args.smoke)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     folds, _test_loaders, _scalers = build_kfold_loaders(cfg)
 
     candidates = [{**FIXED, **g} for g in grid_candidates(GRID)]
-    print(f"MLP brand-CV tuning — {len(candidates)} candidates x {cfg.n_folds} folds  (device={device})")
+    if args.smoke:
+        candidates = smoke_candidates(candidates, limit=3)
+    print(
+        f"MLP brand-CV tuning {'[smoke] ' if args.smoke else ''}"
+        f"x {len(candidates)} candidates x {cfg.n_folds} folds  (device={device})"
+    )
 
     candidate_means = []
     for ci, cand in enumerate(candidates):
@@ -108,11 +114,15 @@ def main():
             fold_results.append(eval_fold(vs, vr, cfg.temp_candidates))
         means = aggregate_candidate(fold_results)
         candidate_means.append(means)
-        print(f"  [{ci+1:2d}/{len(candidates)}] dims={cand['hidden_dims']} "
-              f"do={cand['dropout']} wd={cand['weight_decay']:.0e} | "
-              f"top1={means['top1_accuracy']:.4f} kτ={means['kendall_tau']:.4f} nll={means['nll']:.4f}")
+        print(
+            f"  [{ci+1:2d}/{len(candidates)}] "
+            f"dims={cand['hidden_dims']} do={cand['dropout']} "
+            f"wd={cand['weight_decay']:.0e} lr={cand['lr']:.0e} | "
+            f"top1={means['top1_accuracy']:.4f} "
+            f"k?={means['kendall_tau']:.4f} nll={means['nll']:.4f}"
+        )
 
-    select_and_save("mlp", candidates, candidate_means, cfg.tuning_dir)
+    select_and_save("mlp", candidates, candidate_means, cfg.tuning_dir, smoke=args.smoke)
 
 
 if __name__ == "__main__":

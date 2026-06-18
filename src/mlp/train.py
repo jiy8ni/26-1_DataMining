@@ -18,6 +18,7 @@ from loss import plackett_luce_loss, hybrid_loss
 from calibration import TemperatureCalibration
 from metrics import evaluate_all
 from preds_io import save_scores
+from tune.runtime import apply_saved_semantic_config
 
 
 def set_seed(seed: int) -> None:
@@ -154,11 +155,11 @@ class Trainer:
 
 def apply_tuned_params(cfg: Config) -> None:
     """Override architecture/optim fields from artifacts/tuning/mlp_best_params.json
-    if it exists (written by tune_mlp.py). No-op otherwise — cfg keeps its
+    if it exists (written by tune_mlp.py). No-op otherwise - cfg keeps its
     regularized defaults."""
     path = os.path.join(cfg.tuning_dir, "mlp_best_params.json")
     if not os.path.exists(path):
-        print("No tuned params found — using Config defaults.")
+        print("No tuned params found - using Config defaults.")
         return
     with open(path) as f:
         p = json.load(f)["params"]
@@ -172,6 +173,7 @@ def apply_tuned_params(cfg: Config) -> None:
 
 def main():
     cfg    = Config()
+    apply_saved_semantic_config(cfg)
     apply_tuned_params(cfg)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -203,7 +205,7 @@ def main():
 
     train_loader, val_loader, test_loader, _ = build_loaders(cfg)
     print(
-        f"Trials — train: {len(train_loader.dataset)}  "
+        f"Trials - train: {len(train_loader.dataset)}  "
         f"val: {len(val_loader.dataset)}  "
         f"test: {len(test_loader.dataset)}"
     )

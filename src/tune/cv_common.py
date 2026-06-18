@@ -17,6 +17,7 @@ import torch
 
 from calibration import TemperatureCalibration
 from metrics import evaluate_all, balanced_score
+from tune.runtime import tuning_artifact_path
 
 
 def grid_candidates(grid: Dict[str, list]) -> List[dict]:
@@ -45,22 +46,29 @@ def aggregate_candidate(fold_results: List[dict]) -> dict:
     return {k: float(np.nanmean([r[k] for r in fold_results])) for k in fold_results[0]}
 
 
+def _select_best(candidate_means: List[dict]) -> tuple[list[float], int]:
+    composites = balanced_score(candidate_means)
+    best_idx = int(np.argmax(composites))
+    return composites, best_idx
+
+
 def select_and_save(
     model_name: str,
     candidates: List[dict],
     candidate_means: List[dict],
     tuning_dir: str,
+    *,
+    smoke: bool = False,
 ) -> int:
     """Pick the best candidate by balanced_score and dump the result JSON.
 
     Returns the index of the winning candidate. ``candidates`` are the FULL param
     dicts (fixed + grid) so the saved file is directly loadable by a trainer.
     """
-    composites = balanced_score(candidate_means)
-    best_idx   = int(np.argmax(composites))
+    composites, best_idx = _select_best(candidate_means)
 
     os.makedirs(tuning_dir, exist_ok=True)
-    path = os.path.join(tuning_dir, f"{model_name}_best_params.json")
+    path = tuning_artifact_path(tuning_dir, f"{model_name}_best_params.json", smoke=smoke)
     payload = {
         "model":       model_name,
         "params":      candidates[best_idx],
@@ -75,6 +83,43 @@ def select_and_save(
         json.dump(payload, f, indent=2)
 
     print(f"\n{'='*60}\nBest {model_name} candidate (idx {best_idx}, balanced={composites[best_idx]:.4f}):")
+    for k, v in candidates[best_idx].items():
+        print(f"    {k}: {v}")
+    print("  CV-mean metrics:")
+    for k, v in candidate_means[best_idx].items():
+        print(f"    {k:<16} {v:.4f}")
+    print(f"  -> saved to {path}")
+    return best_idx
+
+
+def select_and_save_semantic(
+    candidates: List[dict],
+    candidate_means: List[dict],
+    tuning_dir: str,
+    *,
+    smoke: bool = False,
+) -> int:
+    """Pick the best semantic configuration by balanced_score and dump JSON."""
+    composites, best_idx = _select_best(candidate_means)
+
+    os.makedirs(tuning_dir, exist_ok=True)
+    path = tuning_artifact_path(tuning_dir, "semantic_best_config.json", smoke=smoke)
+    payload = {
+        "semantic_config": candidates[best_idx],
+        "cv_balanced": float(composites[best_idx]),
+        "per_metric": candidate_means[best_idx],
+        "all_candidates": [
+            {"semantic_config": candidates[i], "balanced": float(composites[i]), "metrics": candidate_means[i]}
+            for i in range(len(candidates))
+        ],
+    }
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2)
+
+    print(
+        f"\n{'='*60}\nBest semantic config (idx {best_idx}, "
+        f"balanced={composites[best_idx]:.4f}):"
+    )
     for k, v in candidates[best_idx].items():
         print(f"    {k}: {v}")
     print("  CV-mean metrics:")
