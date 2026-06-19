@@ -64,6 +64,7 @@ class _BasePoolScorer:
         text_emb_df:        Optional[pd.DataFrame] = None,
         image_emb_df:       Optional[pd.DataFrame] = None,
         pcas:               Optional[List[Tuple[Optional[PCA], Optional[PCA]]]] = None,
+        medians:            Optional[List[pd.Series]] = None,
     ):
         self._predict_fns        = predict_fns
         self._log_transform_cols = log_transform_cols or []
@@ -75,6 +76,11 @@ class _BasePoolScorer:
         self._text_emb_df  = text_emb_df
         self._image_emb_df = image_emb_df
         self._pcas         = pcas if pcas is not None else [(None, None)] * len(scalers)
+
+        # one training-fold median Series per fold (post-log1p scale). When None,
+        # falls back to the pool's own median — kept only for backward compat;
+        # pass the train medians to avoid train/serving skew.
+        self._medians      = medians if medians is not None else [None] * len(scalers)
 
         self._X_list: List[np.ndarray] = self._build_fold_matrices(
             pool_df, feature_cols, scalers, id_col
@@ -90,14 +96,15 @@ class _BasePoolScorer:
         """Per fold: structural (log1p+median) + fold-specific PCA-reduced
         embedding columns, in the same column order used at training time, then
         scaler.transform. Returns one matrix per fold."""
-        base = df[feature_cols].copy()
+        base_log = df[feature_cols].copy()
         if self._log_transform_cols:
             cols = [c for c in self._log_transform_cols if c in feature_cols]
-            base[cols] = np.log1p(base[cols].clip(lower=0))
-        base = base.fillna(base.median())
+            base_log[cols] = np.log1p(base_log[cols].clip(lower=0))
 
         matrices = []
-        for sc, (text_pca, image_pca) in zip(scalers, self._pcas):
+        for sc, (text_pca, image_pca), med in zip(scalers, self._pcas, self._medians):
+            # impute with this fold's train medians (fallback: pool median)
+            base = base_log.fillna(med if med is not None else base_log.median())
             txt = _reduce_with_pca(df, id_col, self._text_emb_df, text_pca, "txt_", "txt_pca_")
             img = _reduce_with_pca(df, id_col, self._image_emb_df, image_pca, "img_", "img_pca_")
             fold_X = pd.concat([base.reset_index(drop=True),
@@ -212,6 +219,7 @@ class PoolScorer(_BasePoolScorer):
         text_emb_df:        Optional[pd.DataFrame] = None,
         image_emb_df:       Optional[pd.DataFrame] = None,
         pcas:               Optional[List[Tuple[Optional[PCA], Optional[PCA]]]] = None,
+        medians:            Optional[List[pd.Series]] = None,
     ):
         models       = model       if isinstance(model,       list) else [model]
         calibrations = calibration if isinstance(calibration, list) else [calibration]
@@ -228,7 +236,7 @@ class PoolScorer(_BasePoolScorer):
 
         predict_fns = [_make_predict_fn(m) for m in fitted_models]
         super().__init__(predict_fns, calibrations, pool_df, feature_cols, scalers, id_col,
-                         log_transform_cols, text_emb_df, image_emb_df, pcas)
+                         log_transform_cols, text_emb_df, image_emb_df, pcas, medians)
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -257,6 +265,7 @@ class LGBMPoolScorer(_BasePoolScorer):
         text_emb_df:        Optional[pd.DataFrame] = None,
         image_emb_df:       Optional[pd.DataFrame] = None,
         pcas:               Optional[List[Tuple[Optional[PCA], Optional[PCA]]]] = None,
+        medians:            Optional[List[pd.Series]] = None,
     ):
         models       = model       if isinstance(model,       list) else [model]
         calibrations = calibration if isinstance(calibration, list) else [calibration]
@@ -267,7 +276,7 @@ class LGBMPoolScorer(_BasePoolScorer):
             for m in models
         ]
         super().__init__(predict_fns, calibrations, pool_df, feature_cols, scalers, id_col,
-                         log_transform_cols, text_emb_df, image_emb_df, pcas)
+                         log_transform_cols, text_emb_df, image_emb_df, pcas, medians)
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -296,6 +305,7 @@ class XGBPoolScorer(_BasePoolScorer):
         text_emb_df:        Optional[pd.DataFrame] = None,
         image_emb_df:       Optional[pd.DataFrame] = None,
         pcas:               Optional[List[Tuple[Optional[PCA], Optional[PCA]]]] = None,
+        medians:            Optional[List[pd.Series]] = None,
     ):
         models       = model       if isinstance(model,       list) else [model]
         calibrations = calibration if isinstance(calibration, list) else [calibration]
@@ -306,4 +316,4 @@ class XGBPoolScorer(_BasePoolScorer):
             for m in models
         ]
         super().__init__(predict_fns, calibrations, pool_df, feature_cols, scalers, id_col,
-                         log_transform_cols, text_emb_df, image_emb_df, pcas)
+                         log_transform_cols, text_emb_df, image_emb_df, pcas, medians)

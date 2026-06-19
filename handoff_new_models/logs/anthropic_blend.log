@@ -1,0 +1,24 @@
+Blending ['ranksvm', 'rf', 'logreg', 'ebm'] - val trials: 275  test trials: 800
+
+Best weights - ranksvm=0.0  rf=0.8  logreg=0.1  ebm=0.1  (T*=1.0)
+  Val balanced metrics:
+    top1_accuracy    0.6618
+    pairwise_accuracy 0.7806
+    ndcg@3           0.9571
+    kendall_tau      0.5612
+    nll              1.2605
+    brier_score      0.4529
+
+=== Blended Test Results ===
+  top1_accuracy          0.5425
+  pairwise_accuracy      0.6917
+  ndcg@3                 0.9370
+  kendall_tau            0.3833
+  nll                    1.6662
+  brier_score            0.6005
+
+=== Single-model test (for comparison) ===
+  ranksvm  top1=0.5288  ndcg@3=0.9350  ktau=0.3658  nll=1.9612
+  rf       top1=0.5487  ndcg@3=0.9377  ktau=0.3858  nll=1.6423
+  logreg   top1=0.5012  ndcg@3=0.9318  ktau=0.3450  nll=1.8710
+  ebm      top1=0.5188  ndcg@3=0.9340  ktau=0.3642  nll=1.8138

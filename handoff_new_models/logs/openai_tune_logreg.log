@@ -1,0 +1,23 @@
+Loaded semantic config from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=8
+Logistic Regression brand-CV x 4 candidates x 5 folds
+  [ 1/4] {'fit_intercept': False, 'class_weight': 'balanced', 'solver': 'lbfgs', 'max_iter': 5000, 'C': 0.01} | top1=0.6006 ndcg@3=0.9443 ktau=0.4209 nll=1.4821
+  [ 2/4] {'fit_intercept': False, 'class_weight': 'balanced', 'solver': 'lbfgs', 'max_iter': 5000, 'C': 0.1} | top1=0.5982 ndcg@3=0.9438 ktau=0.4188 nll=1.4904
+  [ 3/4] {'fit_intercept': False, 'class_weight': 'balanced', 'solver': 'lbfgs', 'max_iter': 5000, 'C': 1.0} | top1=0.5953 ndcg@3=0.9435 ktau=0.4150 nll=1.4928
+  [ 4/4] {'fit_intercept': False, 'class_weight': 'balanced', 'solver': 'lbfgs', 'max_iter': 5000, 'C': 10.0} | top1=0.5949 ndcg@3=0.9434 ktau=0.4145 nll=1.4931
+
+============================================================
+Best logreg candidate (idx 0, balanced=4.4768):
+    fit_intercept: False
+    class_weight: balanced
+    solver: lbfgs
+    max_iter: 5000
+    C: 0.01
+  CV-mean metrics:
+    top1_accuracy    0.6006
+    pairwise_accuracy 0.7104
+    ndcg@3           0.9443
+    kendall_tau      0.4209
+    nll              1.4821
+    brier_score      0.5117
+    temperature      0.7400
+  -> saved to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\logreg_best_params.json

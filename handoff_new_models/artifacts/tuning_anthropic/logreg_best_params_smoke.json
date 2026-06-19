@@ -1,0 +1,79 @@
+{
+  "model": "logreg",
+  "params": {
+    "fit_intercept": false,
+    "class_weight": "balanced",
+    "solver": "lbfgs",
+    "max_iter": 5000,
+    "C": 0.01
+  },
+  "cv_balanced": 3.6887615562133815,
+  "per_metric": {
+    "top1_accuracy": 0.6209598094213479,
+    "pairwise_accuracy": 0.7345013960398575,
+    "ndcg@3": 0.9488142112755392,
+    "kendall_tau": 0.4690027920797152,
+    "nll": 1.4064001441001892,
+    "brier_score": 0.4917790898451653,
+    "temperature": 0.6
+  },
+  "all_candidates": [
+    {
+      "params": {
+        "fit_intercept": false,
+        "class_weight": "balanced",
+        "solver": "lbfgs",
+        "max_iter": 5000,
+        "C": 0.01
+      },
+      "balanced": 3.6887615562133815,
+      "metrics": {
+        "top1_accuracy": 0.6209598094213479,
+        "pairwise_accuracy": 0.7345013960398575,
+        "ndcg@3": 0.9488142112755392,
+        "kendall_tau": 0.4690027920797152,
+        "nll": 1.4064001441001892,
+        "brier_score": 0.4917790898451653,
+        "temperature": 0.6
+      }
+    },
+    {
+      "params": {
+        "fit_intercept": false,
+        "class_weight": "balanced",
+        "solver": "lbfgs",
+        "max_iter": 5000,
+        "C": 0.1
+      },
+      "balanced": -0.06271826545575698,
+      "metrics": {
+        "top1_accuracy": 0.6092772612003381,
+        "pairwise_accuracy": 0.7288295038295038,
+        "ndcg@3": 0.9471467390498544,
+        "kendall_tau": 0.4576590076590077,
+        "nll": 1.4446847438812256,
+        "brier_score": 0.5052909191000835,
+        "temperature": 0.7
+      }
+    },
+    {
+      "params": {
+        "fit_intercept": false,
+        "class_weight": "balanced",
+        "solver": "lbfgs",
+        "max_iter": 5000,
+        "C": 1.0
+      },
+      "balanced": -3.6260432907576545,
+      "metrics": {
+        "top1_accuracy": 0.5988280949819411,
+        "pairwise_accuracy": 0.720511539742309,
+        "ndcg@3": 0.9451905346584748,
+        "kendall_tau": 0.44102307948461794,
+        "nll": 1.4696449637413025,
+        "brier_score": 0.5187499691098936,
+        "temperature": 0.85
+      }
+    }
+  ]
+}

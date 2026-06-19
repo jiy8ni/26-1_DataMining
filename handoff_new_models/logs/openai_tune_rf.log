@@ -1,0 +1,36 @@
+Loaded semantic config from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=8
+Random Forest brand-CV x 16 candidates x 5 folds
+  [ 1/16] {'class_weight': 'balanced', 'n_jobs': -1, 'n_estimators': 300, 'max_depth': 8, 'min_samples_leaf': 5, 'max_features': 'sqrt'} | top1=0.5942 ndcg@3=0.9426 ktau=0.4032 nll=1.5206
+  [ 2/16] {'class_weight': 'balanced', 'n_jobs': -1, 'n_estimators': 300, 'max_depth': 8, 'min_samples_leaf': 5, 'max_features': 0.5} | top1=0.5848 ndcg@3=0.9411 ktau=0.3962 nll=1.5274
+  [ 3/16] {'class_weight': 'balanced', 'n_jobs': -1, 'n_estimators': 300, 'max_depth': 8, 'min_samples_leaf': 20, 'max_features': 'sqrt'} | top1=0.5902 ndcg@3=0.9418 ktau=0.3981 nll=1.5287
+  [ 4/16] {'class_weight': 'balanced', 'n_jobs': -1, 'n_estimators': 300, 'max_depth': 8, 'min_samples_leaf': 20, 'max_features': 0.5} | top1=0.5797 ndcg@3=0.9404 ktau=0.3886 nll=1.5372
+  [ 5/16] {'class_weight': 'balanced', 'n_jobs': -1, 'n_estimators': 300, 'max_depth': None, 'min_samples_leaf': 5, 'max_features': 'sqrt'} | top1=0.6142 ndcg@3=0.9464 ktau=0.4402 nll=1.4687
+  [ 6/16] {'class_weight': 'balanced', 'n_jobs': -1, 'n_estimators': 300, 'max_depth': None, 'min_samples_leaf': 5, 'max_features': 0.5} | top1=0.6124 ndcg@3=0.9458 ktau=0.4379 nll=1.4779
+  [ 7/16] {'class_weight': 'balanced', 'n_jobs': -1, 'n_estimators': 300, 'max_depth': None, 'min_samples_leaf': 20, 'max_features': 'sqrt'} | top1=0.5963 ndcg@3=0.9433 ktau=0.4126 nll=1.5060
+  [ 8/16] {'class_weight': 'balanced', 'n_jobs': -1, 'n_estimators': 300, 'max_depth': None, 'min_samples_leaf': 20, 'max_features': 0.5} | top1=0.5915 ndcg@3=0.9425 ktau=0.4081 nll=1.5117
+  [ 9/16] {'class_weight': 'balanced', 'n_jobs': -1, 'n_estimators': 500, 'max_depth': 8, 'min_samples_leaf': 5, 'max_features': 'sqrt'} | top1=0.5954 ndcg@3=0.9425 ktau=0.4041 nll=1.5194
+  [10/16] {'class_weight': 'balanced', 'n_jobs': -1, 'n_estimators': 500, 'max_depth': 8, 'min_samples_leaf': 5, 'max_features': 0.5} | top1=0.5846 ndcg@3=0.9411 ktau=0.3956 nll=1.5274
+  [11/16] {'class_weight': 'balanced', 'n_jobs': -1, 'n_estimators': 500, 'max_depth': 8, 'min_samples_leaf': 20, 'max_features': 'sqrt'} | top1=0.5891 ndcg@3=0.9418 ktau=0.3963 nll=1.5286
+  [12/16] {'class_weight': 'balanced', 'n_jobs': -1, 'n_estimators': 500, 'max_depth': 8, 'min_samples_leaf': 20, 'max_features': 0.5} | top1=0.5773 ndcg@3=0.9401 ktau=0.3860 nll=1.5378
+  [13/16] {'class_weight': 'balanced', 'n_jobs': -1, 'n_estimators': 500, 'max_depth': None, 'min_samples_leaf': 5, 'max_features': 'sqrt'} | top1=0.6132 ndcg@3=0.9464 ktau=0.4431 nll=1.4698
+  [14/16] {'class_weight': 'balanced', 'n_jobs': -1, 'n_estimators': 500, 'max_depth': None, 'min_samples_leaf': 5, 'max_features': 0.5} | top1=0.6117 ndcg@3=0.9458 ktau=0.4359 nll=1.4771
+  [15/16] {'class_weight': 'balanced', 'n_jobs': -1, 'n_estimators': 500, 'max_depth': None, 'min_samples_leaf': 20, 'max_features': 'sqrt'} | top1=0.5957 ndcg@3=0.9431 ktau=0.4102 nll=1.5059
+  [16/16] {'class_weight': 'balanced', 'n_jobs': -1, 'n_estimators': 500, 'max_depth': None, 'min_samples_leaf': 20, 'max_features': 0.5} | top1=0.5939 ndcg@3=0.9427 ktau=0.4097 nll=1.5117
+
+============================================================
+Best rf candidate (idx 12, balanced=5.0934):
+    class_weight: balanced
+    n_jobs: -1
+    n_estimators: 500
+    max_depth: None
+    min_samples_leaf: 5
+    max_features: sqrt
+  CV-mean metrics:
+    top1_accuracy    0.6132
+    pairwise_accuracy 0.7216
+    ndcg@3           0.9464
+    kendall_tau      0.4431
+    nll              1.4698
+    brier_score      0.5081
+    temperature      0.5400
+  -> saved to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\rf_best_params.json

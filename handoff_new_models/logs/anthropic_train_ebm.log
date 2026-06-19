@@ -1,0 +1,20 @@
+Loaded semantic config from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning_anthropic\semantic_best_config.json: use_semantic=True text_pca_dim=8 image_pca_dim=0
+Loaded tuned EBM params from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning_anthropic\ebm_best_params.json
+Features: 29  params: {'max_bins': 256, 'outer_bags': 8, 'interactions': 0, 'learning_rate': 0.05, 'min_samples_leaf': 10}
+Pairwise train rows: 9306  features: 29  trials val/test: 275/800  seeds: 5
+  seed 0: T*=0.5
+  seed 1: T*=0.5
+  seed 2: T*=0.7
+  seed 3: T*=0.7
+  seed 4: T*=0.7
+
+=== ebm Test Results (avg T=0.620) ===
+  top1_accuracy          0.5188
+  pairwise_accuracy      0.6821
+  ndcg@3                 0.9340
+  kendall_tau            0.3642
+  nll                    1.7357
+  brier_score            0.6343
+  -> saved ebm_val.npz / ebm_test.npz to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\preds_anthropic
+  -> saved EBM global importances to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\ebm
+  -> saved EBM global plot to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\ebm/ebm_global.html

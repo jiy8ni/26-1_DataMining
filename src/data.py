@@ -55,6 +55,7 @@ class RankingDataset(Dataset):
         text_pca_dim: int = 0,
         image_pca_dim: int = 0,
         pca: Optional[Tuple[Optional[PCA], Optional[PCA]]] = None,  # (text_pca, image_pca) for val/test
+        medians: Optional[pd.Series] = None,  # train-fold medians for val/test imputation
     ):
         df = df.copy()
 
@@ -87,10 +88,16 @@ class RankingDataset(Dataset):
             cols_to_transform = [c for c in log_transform_cols if c in feature_cols]
             df[cols_to_transform] = np.log1p(df[cols_to_transform].clip(lower=0))
 
-        # Impute NaN with column-level median (computed from this df slice;
-        # callers ensure only training data is used when fit_scaler=True)
-        medians = df[feature_cols].median()
-        df[feature_cols] = df[feature_cols].fillna(medians)
+        # Impute NaN with column-level median. Medians are fit on the training
+        # fold only (fit_scaler=True) and reused for val/test/pool — mirroring the
+        # StandardScaler pattern — so the same missing feature is filled with the
+        # same value across splits (no train/serving skew, no test-distribution
+        # leakage). Falls back to this df's medians only when none were passed in.
+        if fit_scaler:
+            self.medians = df[feature_cols].median()
+        else:
+            self.medians = medians if medians is not None else df[feature_cols].median()
+        df[feature_cols] = df[feature_cols].fillna(self.medians)
 
         if fit_scaler:
             self.scaler = StandardScaler()
@@ -272,8 +279,8 @@ def build_loaders(
     sem = _semantic_kwargs(cfg, text_df, image_df)
     train_ds = RankingDataset(train_df, cfg.feature_cols, cfg.trial_keys, fit_scaler=True,  log_transform_cols=log_cols, use_position_feature=use_pos, pl_df=pl_df, **sem)
     pca = _train_pca(train_ds)
-    val_ds   = RankingDataset(val_df,   cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler, log_transform_cols=log_cols, use_position_feature=use_pos, pl_df=pl_df, pca=pca, **sem)
-    test_ds  = RankingDataset(test_df,  cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler, log_transform_cols=log_cols, use_position_feature=use_pos, pl_df=pl_df, pca=pca, **sem)
+    val_ds   = RankingDataset(val_df,   cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler, log_transform_cols=log_cols, use_position_feature=use_pos, pl_df=pl_df, pca=pca, medians=train_ds.medians, **sem)
+    test_ds  = RankingDataset(test_df,  cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler, log_transform_cols=log_cols, use_position_feature=use_pos, pl_df=pl_df, pca=pca, medians=train_ds.medians, **sem)
 
     train_loader = DataLoader(train_ds, batch_size=cfg.batch_size, shuffle=True,  drop_last=False)
     val_loader   = DataLoader(val_ds,   batch_size=cfg.batch_size, shuffle=False, drop_last=False)
@@ -368,8 +375,8 @@ def build_arrays(
 
     train_ds = RankingDataset(train_df, cfg.feature_cols, cfg.trial_keys, fit_scaler=True,          log_transform_cols=log_cols, use_position_feature=use_pos, **sem)
     pca = _train_pca(train_ds)
-    val_ds   = RankingDataset(val_df,   cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler,   log_transform_cols=log_cols, use_position_feature=use_pos, pca=pca, **sem)
-    test_ds  = RankingDataset(test_df,  cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler,   log_transform_cols=log_cols, use_position_feature=use_pos, pca=pca, **sem)
+    val_ds   = RankingDataset(val_df,   cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler,   log_transform_cols=log_cols, use_position_feature=use_pos, pca=pca, medians=train_ds.medians, **sem)
+    test_ds  = RankingDataset(test_df,  cfg.feature_cols, cfg.trial_keys, scaler=train_ds.scaler,   log_transform_cols=log_cols, use_position_feature=use_pos, pca=pca, medians=train_ds.medians, **sem)
 
     return (
         _ds_to_arrays(train_ds),
@@ -415,10 +422,12 @@ def build_kfold_arrays(cfg: Config) -> Tuple:
         pca = _train_pca(train_ds)
         val_ds   = RankingDataset(val_df, cfg.feature_cols, cfg.trial_keys,
                                   scaler=train_ds.scaler, log_transform_cols=log_cols,
-                                  use_position_feature=use_pos, pca=pca, **sem)
+                                  use_position_feature=use_pos, pca=pca,
+                                  medians=train_ds.medians, **sem)
         test_ds  = RankingDataset(test_df, cfg.feature_cols, cfg.trial_keys,
                                   scaler=train_ds.scaler, log_transform_cols=log_cols,
-                                  use_position_feature=use_pos, pca=pca, **sem)
+                                  use_position_feature=use_pos, pca=pca,
+                                  medians=train_ds.medians, **sem)
         folds.append((_ds_to_arrays(train_ds), _ds_to_arrays(val_ds)))
         test_folds.append(_ds_to_arrays(test_ds))
         scalers.append(train_ds.scaler)
@@ -457,10 +466,12 @@ def build_kfold_loaders(cfg: Config) -> Tuple:
         pca = _train_pca(train_ds)
         val_ds   = RankingDataset(val_df, cfg.feature_cols, cfg.trial_keys,
                                   scaler=train_ds.scaler, log_transform_cols=log_cols,
-                                  use_position_feature=use_pos, pca=pca, **sem)
+                                  use_position_feature=use_pos, pca=pca,
+                                  medians=train_ds.medians, **sem)
         test_ds  = RankingDataset(test_df, cfg.feature_cols, cfg.trial_keys,
                                   scaler=train_ds.scaler, log_transform_cols=log_cols,
-                                  use_position_feature=use_pos, pca=pca, **sem)
+                                  use_position_feature=use_pos, pca=pca,
+                                  medians=train_ds.medians, **sem)
         folds.append((
             DataLoader(train_ds, batch_size=cfg.batch_size, shuffle=True,  drop_last=False),
             DataLoader(val_ds,   batch_size=cfg.batch_size, shuffle=False, drop_last=False),

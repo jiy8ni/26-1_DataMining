@@ -1,0 +1,27 @@
+Loaded semantic config from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=8
+EBM brand-CV x 8 candidates x 5 folds
+  [ 1/8] {'max_bins': 256, 'outer_bags': 8, 'interactions': 0, 'learning_rate': 0.01, 'min_samples_leaf': 5} | top1=0.6108 ndcg@3=0.9460 ktau=0.4368 nll=1.4691
+  [ 2/8] {'max_bins': 256, 'outer_bags': 8, 'interactions': 0, 'learning_rate': 0.01, 'min_samples_leaf': 10} | top1=0.6111 ndcg@3=0.9461 ktau=0.4381 nll=1.4689
+  [ 3/8] {'max_bins': 256, 'outer_bags': 8, 'interactions': 0, 'learning_rate': 0.05, 'min_samples_leaf': 5} | top1=0.6116 ndcg@3=0.9459 ktau=0.4358 nll=1.4729
+  [ 4/8] {'max_bins': 256, 'outer_bags': 8, 'interactions': 0, 'learning_rate': 0.05, 'min_samples_leaf': 10} | top1=0.6112 ndcg@3=0.9458 ktau=0.4344 nll=1.4733
+  [ 5/8] {'max_bins': 256, 'outer_bags': 8, 'interactions': 5, 'learning_rate': 0.01, 'min_samples_leaf': 5} | top1=0.6144 ndcg@3=0.9463 ktau=0.4379 nll=1.4726
+  [ 6/8] {'max_bins': 256, 'outer_bags': 8, 'interactions': 5, 'learning_rate': 0.01, 'min_samples_leaf': 10} | top1=0.6157 ndcg@3=0.9467 ktau=0.4409 nll=1.4725
+  [ 7/8] {'max_bins': 256, 'outer_bags': 8, 'interactions': 5, 'learning_rate': 0.05, 'min_samples_leaf': 5} | top1=0.6105 ndcg@3=0.9459 ktau=0.4345 nll=1.4776
+  [ 8/8] {'max_bins': 256, 'outer_bags': 8, 'interactions': 5, 'learning_rate': 0.05, 'min_samples_leaf': 10} | top1=0.6096 ndcg@3=0.9458 ktau=0.4348 nll=1.4768
+
+============================================================
+Best ebm candidate (idx 5, balanced=4.1389):
+    max_bins: 256
+    outer_bags: 8
+    interactions: 5
+    learning_rate: 0.01
+    min_samples_leaf: 10
+  CV-mean metrics:
+    top1_accuracy    0.6157
+    pairwise_accuracy 0.7204
+    ndcg@3           0.9467
+    kendall_tau      0.4409
+    nll              1.4725
+    brier_score      0.5043
+    temperature      0.7200
+  -> saved to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\ebm_best_params.json

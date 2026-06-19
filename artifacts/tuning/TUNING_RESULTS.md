@@ -54,6 +54,18 @@ LightGBM 프록시로 선택된 공통 시맨틱 설정:
 | `lgbm_pl` | 24 | `lr=0.03, leaves=31, min_child=50, reg_lambda=0.1` | 5.2587 | 0.6689 | 0.7616 | 0.9557 | 0.5233 | 1.3532 | 0.4560 | 1.32 |
 | `xgb_pl` | 48 | `eta=0.03, depth=5, min_child=5, gamma=0.0, reg_lambda=0.5` | 4.4769 | 0.6388 | 0.7360 | 0.9500 | 0.4720 | 1.4636 | 0.5025 | 1.98 |
 | `mlp` | 36 | `hidden=[128,64,32], drop=0.1, wd=1e-4, lr=5e-4` | 4.4735 | 0.6815 | 0.7721 | 0.9579 | 0.5442 | 1.2984 | 0.4397 | 0.50 |
+| `rf` | 16 | `n_estimators=500, max_depth=None, min_samples_leaf=5, max_features=sqrt` | 5.0934 | 0.6132 | 0.7216 | 0.9464 | 0.4431 | 1.4698 | 0.5081 | 0.54 |
+| `ranksvm` | 8 | `kernel=rbf, C=1.0` | 4.8765 | 0.6310 | 0.7352 | 0.9498 | 0.4705 | 1.4270 | 0.4885 | 2.40 |
+| `logreg` | 4 | `C=0.01` | 4.4768 | 0.6006 | 0.7104 | 0.9443 | 0.4209 | 1.4821 | 0.5117 | 0.74 |
+| `ebm` | 8 | `interactions=5, learning_rate=0.01, min_samples_leaf=10` | 4.1389 | 0.6157 | 0.7204 | 0.9467 | 0.4409 | 1.4725 | 0.5043 | 0.72 |
+
+> **신규 pairwise 모델(`rf`/`ranksvm`/`logreg`/`ebm`)**: `handoff_new_models/`의 쌍 비교
+> 방식(입력 = 항목 쌍의 feature 차이 ΔX, 정답 = 어느 쪽이 상위인지)으로 학습한 4개 모델.
+> 동일한 시맨틱 설정(text_pca=16, image_pca=8)·브랜드 단위 5-fold CV·temperature 보정·
+> 5-seed 앙상블을 기존 모델과 똑같이 적용했습니다.
+> ⚠️ `cv_balanced`는 **각 튜너의 후보 집합 내부에서 z-score**로 계산되므로 모델 간 직접
+> 비교에는 적합하지 않습니다(기존 6개 모델도 동일). 모델 비교는 아래 **최종 테스트 결과**의
+> 절대 지표(top1/ndcg@3 등)로 판단하세요.
 
 ## 최종 테스트 결과
 
@@ -68,6 +80,19 @@ LightGBM 프록시로 선택된 공통 시맨틱 설정:
 | `xgb_pl` | 1.00 | 0.6614 | 0.7596 | 0.9534 | 0.5192 | 1.4327 | 0.4619 |
 | `blend` | 0.50 | 0.6540 | 0.7551 | 0.9516 | 0.5102 | 1.5026 | 0.4601 |
 | `mlp` | 0.70 | 0.6394 | 0.7490 | 0.9495 | 0.4980 | 1.6971 | 0.4916 |
+| `rf` | 0.50 | 0.4927 | 0.6255 | 0.9239 | 0.2510 | 1.7235 | 0.6010 |
+| `ebm` | 0.70 | 0.4804 | 0.6369 | 0.9253 | 0.2738 | 1.7844 | 0.6330 |
+| `ranksvm` | 1.50 | 0.4756 | 0.6451 | 0.9256 | 0.2901 | 2.1264 | 0.7006 |
+| `logreg` | 0.70 | 0.4352 | 0.6108 | 0.9184 | 0.2217 | 1.8242 | 0.6526 |
+
+> **신규 pairwise 모델 테스트 결과**: 4개 모델 모두 CV에서는 준수했으나(top1 0.60~0.63),
+> **미지의 브랜드 테스트에서 크게 하락**해 top1 0.44~0.49로, 기존 트리 모델(lgbm 0.7286,
+> xgb 0.7139)에 한참 못 미쳤습니다. 즉 CV→test 일반화 격차가 기존 모델보다 훨씬 큽니다.
+> 원인: ① ΔX 쌍 비교는 항목당 6개 쌍으로 표본을 늘리지만 본질적으로 trial 내 3개 항목의
+> 상호 비교라 강한 정규화(logreg C=0.01)에도 미지 브랜드로의 외삽이 약하고, ② lgbm/xgb의
+> lambdarank/rank:ndcg 직접 순위 목적함수가 이 소규모(≈259개 학습 항목) 순위 문제에서
+> 쌍 분류기보다 유리하기 때문으로 보입니다. RandomForest가 신규 4종 중 test top1 최고(0.4927),
+> LogisticRegression이 최저(0.4352)였습니다.
 
 > `blend` 선택 가중치: `mlp=0.9, lgbm=0.1, xgb=0.0` (T*=0.5). 검증셋 balanced 지표는
 > 매우 높았으나(val top1=0.8029) 테스트에서는 0.6540으로, **단일 트리 모델(lgbm 0.7286,
@@ -84,6 +109,7 @@ LightGBM 프록시로 선택된 공통 시맨틱 설정:
 - 튜닝된 PL 변형들은 비교용으로 유지할 만큼 경쟁력이 있었지만, 주요 테스트 지표에서는 여전히 바닐라 트리 모델에 뒤처졌습니다.
 - `mlp`는 튜닝을 통해 개선되었으나, 최종 테스트 성능에서는 트리 기반 모델보다 뒤처진 상태로 남았습니다.
 - `blend`(mlp/lgbm/xgb 가중평균)는 검증셋 가중치 과적합으로 테스트에서 단일 트리 모델에 미치지 못해, 운영 후보로는 부적합했습니다.
+- **신규 pairwise 모델 4종(`rf`/`ranksvm`/`logreg`/`ebm`)을 동일 파이프라인으로 통합 평가**한 결과, 모두 기존 트리 모델보다 테스트 성능이 낮았습니다(top1 0.44~0.49 vs lgbm 0.7286). 해석 가능성(EBM 효과 곡선, logreg 계수)이나 모델 다양성 확보 측면의 보조 후보로는 의미가 있으나, 단일 운영 모델로는 부적합합니다. 사후 분석은 `handoff_new_models/artifacts/analysis/ANALYSIS_RESULTS.md` 참조.
 
 ## 실행 노트
 
@@ -94,6 +120,12 @@ LightGBM 프록시로 선택된 공통 시맨틱 설정:
   - `artifacts/tuning/xgb_best_params.json`
   - `artifacts/tuning/lgbm_pl_best_params.json`
   - `artifacts/tuning/xgb_pl_best_params.json`
+- 신규 pairwise 모델 아티팩트(원본을 건드리지 않도록 `handoff_new_models/` 내부에 격리 저장):
+  - `handoff_new_models/artifacts/tuning/{rf,ranksvm,logreg,ebm}_best_params.json`
+  - `handoff_new_models/artifacts/preds/{rf,ranksvm,logreg,ebm}_{val,test}.npz`
+  - `handoff_new_models/artifacts/ebm/ebm_global_importances.json` (EBM feature 효과)
+  - 실행: `handoff_new_models/`에서 `tune/tune_*.py` → `*/*_train.py`. Anthropic 변형은
+    `DM_ENGINE=anthropic` 환경변수로 전환(`handoff_new_models/paths.py`).
 - 결측치 median 대치를 train-fit/transform 패턴으로 수정(`src/data.py`의 `RankingDataset`이
   train fold median을 `self.medians`로 저장 → val/test/k-fold·`src/inference.py` pool 스코어링에서
   재사용). OpenAI V3 피처는 무결측이라 수치 변화는 없었습니다.

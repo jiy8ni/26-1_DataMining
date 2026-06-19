@@ -1,0 +1,27 @@
+Loaded semantic config from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=8
+RankSVM brand-CV x 8 candidates x 5 folds
+  [ 1/8] {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'linear', 'C': 0.01} | top1=0.5937 ndcg@3=0.9433 ktau=0.4163 nll=1.4939
+  [ 2/8] {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'linear', 'C': 0.1} | top1=0.5911 ndcg@3=0.9429 ktau=0.4128 nll=1.4977
+  [ 3/8] {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'linear', 'C': 1.0} | top1=0.5910 ndcg@3=0.9429 ktau=0.4130 nll=1.4982
+  [ 4/8] {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'linear', 'C': 10.0} | top1=0.5910 ndcg@3=0.9429 ktau=0.4127 nll=1.4982
+  [ 5/8] {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'rbf', 'C': 0.01} | top1=0.5632 ndcg@3=0.9377 ktau=0.3613 nll=1.5593
+  [ 6/8] {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'rbf', 'C': 0.1} | top1=0.6000 ndcg@3=0.9446 ktau=0.4237 nll=1.4855
+  [ 7/8] {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'rbf', 'C': 1.0} | top1=0.6310 ndcg@3=0.9498 ktau=0.4705 nll=1.4270
+  [ 8/8] {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'rbf', 'C': 10.0} | top1=0.6187 ndcg@3=0.9487 ktau=0.4605 nll=1.4342
+
+============================================================
+Best ranksvm candidate (idx 6, balanced=4.8765):
+    class_weight: balanced
+    fit_intercept: False
+    max_iter: 10000
+    kernel: rbf
+    C: 1.0
+  CV-mean metrics:
+    top1_accuracy    0.6310
+    pairwise_accuracy 0.7352
+    ndcg@3           0.9498
+    kendall_tau      0.4705
+    nll              1.4270
+    brier_score      0.4885
+    temperature      2.4000
+  -> saved to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\ranksvm_best_params.json

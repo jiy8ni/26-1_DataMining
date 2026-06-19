@@ -1,0 +1,18 @@
+Loaded semantic config from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning_anthropic\semantic_best_config.json: use_semantic=True text_pca_dim=8 image_pca_dim=0
+Loaded tuned LogisticRegression params from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning_anthropic\logreg_best_params.json
+Features: 29  params: {'fit_intercept': False, 'class_weight': 'balanced', 'solver': 'lbfgs', 'max_iter': 5000, 'C': 0.01}
+Pairwise train rows: 9306  features: 29  trials val/test: 275/800  seeds: 5
+  seed 0: T*=0.5
+  seed 1: T*=0.5
+  seed 2: T*=0.5
+  seed 3: T*=0.5
+  seed 4: T*=0.5
+
+=== logreg Test Results (avg T=0.500) ===
+  top1_accuracy          0.5012
+  pairwise_accuracy      0.6725
+  ndcg@3                 0.9318
+  kendall_tau            0.3450
+  nll                    1.8769
+  brier_score            0.6815
+  -> saved logreg_val.npz / logreg_test.npz to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\preds_anthropic

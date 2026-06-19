@@ -7,7 +7,7 @@
 
 ---
 
-## 0. 5분 요약 (바쁘면 여기만)
+## 0. 요약
 
 1. 설치: `pip install -r requirements.txt`
 2. 튜닝(좋은 설정 찾기): `python tune/tune_logreg.py` (4개 모델 각각)

@@ -1,0 +1,18 @@
+Loaded semantic config from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=8
+Loaded tuned RandomForest params from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\rf_best_params.json
+Features: 45  params: {'class_weight': 'balanced', 'n_jobs': -1, 'n_estimators': 500, 'max_depth': None, 'min_samples_leaf': 5, 'max_features': 'sqrt'}
+Pairwise train rows: 9618  features: 45  trials val/test: 279/818  seeds: 5
+  seed 0: T*=0.5
+  seed 1: T*=0.5
+  seed 2: T*=0.5
+  seed 3: T*=0.5
+  seed 4: T*=0.5
+
+=== rf Test Results (avg T=0.500) ===
+  top1_accuracy          0.4927
+  pairwise_accuracy      0.6255
+  ndcg@3                 0.9239
+  kendall_tau            0.2510
+  nll                    1.7235
+  brier_score            0.6010
+  -> saved rf_val.npz / rf_test.npz to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\preds

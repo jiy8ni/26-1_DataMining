@@ -1,3 +1,4 @@
+import os
 from dataclasses import dataclass, field
 from typing import List, Optional
 
@@ -48,6 +49,17 @@ FEATURE_COLS_V3: List[str] = [
     "no_list_count", "cosmetic_cert_count",
     "T7_eat_score", "Q4_social_proof_count", "Q9_external_authority_count",
 ]
+
+# One-hot columns for the query-type–aware dataset (protocol "step2qt").
+# These are produced by src/prep_query_type.py and written as plain 0/1 feature
+# columns; they are appended to the structural features and scaled alongside them.
+# They are deliberately NOT in LOG_TRANSFORM_COLS. query_type/persona are constant
+# within a trial, so they only help via interactions the trees/MLP learn.
+QUERY_TYPE_ONEHOT_COLS: List[str] = [
+    "qt_USE", "qt_CAT", "qt_SYM", "qt_DEC", "qt_PRC",
+    "persona_PRIMARY", "persona_SECONDARY", "persona_TERTIARY1", "persona_TERTIARY2",
+]
+FEATURE_COLS_V3_QT: List[str] = FEATURE_COLS_V3 + QUERY_TYPE_ONEHOT_COLS
 
 
 @dataclass
@@ -132,3 +144,29 @@ class Config:
     temp_candidates: List[float] = field(default_factory=lambda: [
         0.1, 0.2, 0.5, 0.7, 1.0, 1.5, 2.0, 3.0, 5.0
     ])
+
+    def __post_init__(self):
+        # Opt-in to the query-type–aware dataset without editing every entry
+        # point: set DM_DATASET=query_type in the environment and any Config()
+        # call switches to the step2qt protocol / features / artifact dirs.
+        if os.environ.get("DM_DATASET") == "query_type":
+            self._apply_query_type()
+
+    def _apply_query_type(self) -> None:
+        """Reconfigure this Config for the query-type–aware dataset (step2qt).
+        query_type + persona are one-hot encoded into the feature matrix; the
+        engine is anthropic-only and round is constant, so those stay as-is.
+        Artifact dirs are separate so existing results are not overwritten."""
+        self.protocol       = "step2qt"
+        self.feature_cols   = list(FEATURE_COLS_V3_QT)
+        self.engine_filter  = "anthropic"
+        self.pl_labels_path = "data/processed/pl_labels_step2qt_anthropic.csv"
+        self.tuning_dir     = "artifacts/tuning_step2qt"
+        self.preds_dir      = "artifacts/preds_step2qt"
+
+    @classmethod
+    def for_query_type(cls) -> "Config":
+        """Build a Config preset for the query-type–aware dataset (step2qt)."""
+        cfg = cls()
+        cfg._apply_query_type()
+        return cfg

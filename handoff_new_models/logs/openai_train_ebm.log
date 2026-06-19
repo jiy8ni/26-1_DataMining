@@ -1,0 +1,20 @@
+Loaded semantic config from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=8
+Loaded tuned EBM params from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\ebm_best_params.json
+Features: 45  params: {'max_bins': 256, 'outer_bags': 8, 'interactions': 5, 'learning_rate': 0.01, 'min_samples_leaf': 10}
+Pairwise train rows: 9618  features: 45  trials val/test: 279/818  seeds: 5
+  seed 0: T*=0.7
+  seed 1: T*=0.7
+  seed 2: T*=0.7
+  seed 3: T*=0.7
+  seed 4: T*=0.7
+
+=== ebm Test Results (avg T=0.700) ===
+  top1_accuracy          0.4804
+  pairwise_accuracy      0.6369
+  ndcg@3                 0.9253
+  kendall_tau            0.2738
+  nll                    1.7844
+  brier_score            0.6330
+  -> saved ebm_val.npz / ebm_test.npz to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\preds
+  -> saved EBM global importances to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\ebm
+  -> saved EBM global plot to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\ebm/ebm_global.html

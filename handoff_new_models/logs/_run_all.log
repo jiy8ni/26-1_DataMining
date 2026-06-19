@@ -1,0 +1,273 @@
+############## ENGINE=openai ##############
+>>> python tune/tune_logreg.py | -> logs/openai_tune_logreg.log
+    OK
+    solver: lbfgs
+    max_iter: 5000
+    C: 0.01
+  CV-mean metrics:
+    top1_accuracy    0.6006
+    pairwise_accuracy 0.7104
+    ndcg@3           0.9443
+    kendall_tau      0.4209
+    nll              1.4821
+    brier_score      0.5117
+    temperature      0.7400
+  -> saved to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\logreg_best_params.json
+
+>>> python tune/tune_ranksvm.py | -> logs/openai_tune_ranksvm.log
+    OK
+    max_iter: 10000
+    kernel: rbf
+    C: 1.0
+  CV-mean metrics:
+    top1_accuracy    0.6310
+    pairwise_accuracy 0.7352
+    ndcg@3           0.9498
+    kendall_tau      0.4705
+    nll              1.4270
+    brier_score      0.4885
+    temperature      2.4000
+  -> saved to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\ranksvm_best_params.json
+
+>>> python tune/tune_rf.py | -> logs/openai_tune_rf.log
+    OK
+    max_depth: None
+    min_samples_leaf: 5
+    max_features: sqrt
+  CV-mean metrics:
+    top1_accuracy    0.6132
+    pairwise_accuracy 0.7216
+    ndcg@3           0.9464
+    kendall_tau      0.4431
+    nll              1.4698
+    brier_score      0.5081
+    temperature      0.5400
+  -> saved to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\rf_best_params.json
+
+>>> python tune/tune_ebm.py | -> logs/openai_tune_ebm.log
+    OK
+    interactions: 5
+    learning_rate: 0.01
+    min_samples_leaf: 10
+  CV-mean metrics:
+    top1_accuracy    0.6157
+    pairwise_accuracy 0.7204
+    ndcg@3           0.9467
+    kendall_tau      0.4409
+    nll              1.4725
+    brier_score      0.5043
+    temperature      0.7200
+  -> saved to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\ebm_best_params.json
+
+>>> python logreg/logreg_train.py | -> logs/openai_train_logreg.log
+    OK
+  seed 2: T*=0.7
+  seed 3: T*=0.7
+  seed 4: T*=0.7
+
+=== logreg Test Results (avg T=0.700) ===
+  top1_accuracy          0.4352
+  pairwise_accuracy      0.6108
+  ndcg@3                 0.9184
+  kendall_tau            0.2217
+  nll                    1.8242
+  brier_score            0.6526
+  -> saved logreg_val.npz / logreg_test.npz to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\preds
+
+>>> python ranksvm/ranksvm_train.py | -> logs/openai_train_ranksvm.log
+    OK
+  seed 2: T*=1.5
+  seed 3: T*=1.5
+  seed 4: T*=1.5
+
+=== ranksvm Test Results (avg T=1.500) ===
+  top1_accuracy          0.4756
+  pairwise_accuracy      0.6451
+  ndcg@3                 0.9256
+  kendall_tau            0.2901
+  nll                    2.1264
+  brier_score            0.7006
+  -> saved ranksvm_val.npz / ranksvm_test.npz to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\preds
+
+>>> python rforest/rf_train.py | -> logs/openai_train_rf.log
+    OK
+  seed 2: T*=0.5
+  seed 3: T*=0.5
+  seed 4: T*=0.5
+
+=== rf Test Results (avg T=0.500) ===
+  top1_accuracy          0.4927
+  pairwise_accuracy      0.6255
+  ndcg@3                 0.9239
+  kendall_tau            0.2510
+  nll                    1.7235
+  brier_score            0.6010
+  -> saved rf_val.npz / rf_test.npz to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\preds
+
+>>> python ebm/ebm_train.py | -> logs/openai_train_ebm.log
+    OK
+  seed 4: T*=0.7
+
+=== ebm Test Results (avg T=0.700) ===
+  top1_accuracy          0.4804
+  pairwise_accuracy      0.6369
+  ndcg@3                 0.9253
+  kendall_tau            0.2738
+  nll                    1.7844
+  brier_score            0.6330
+  -> saved ebm_val.npz / ebm_test.npz to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\preds
+  -> saved EBM global importances to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\ebm
+  -> saved EBM global plot to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\ebm/ebm_global.html
+
+>>> python blend_new.py | -> logs/openai_blend.log
+    OK
+  top1_accuracy          0.4804
+  pairwise_accuracy      0.6455
+  ndcg@3                 0.9257
+  kendall_tau            0.2910
+  nll                    1.9205
+  brier_score            0.6611
+
+=== Single-model test (for comparison) ===
+  ranksvm  top1=0.4756  ndcg@3=0.9256  ktau=0.2901  nll=1.9454
+  rf       top1=0.4927  ndcg@3=0.9239  ktau=0.2510  nll=1.8369
+  logreg   top1=0.4352  ndcg@3=0.9184  ktau=0.2217  nll=1.8263
+  ebm      top1=0.4804  ndcg@3=0.9253  ktau=0.2738  nll=1.9675
+
+############## ENGINE=anthropic ##############
+>>> python tune/tune_logreg.py | -> logs/anthropic_tune_logreg.log
+    OK
+    solver: lbfgs
+    max_iter: 5000
+    C: 0.01
+  CV-mean metrics:
+    top1_accuracy    0.6552
+    pairwise_accuracy 0.7574
+    ndcg@3           0.9538
+    kendall_tau      0.5149
+    nll              1.3501
+    brier_score      0.4632
+    temperature      0.5400
+  -> saved to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning_anthropic\logreg_best_params.json
+
+>>> python tune/tune_ranksvm.py | -> logs/anthropic_tune_ranksvm.log
+    OK
+    max_iter: 10000
+    kernel: rbf
+    C: 1.0
+  CV-mean metrics:
+    top1_accuracy    0.6532
+    pairwise_accuracy 0.7601
+    ndcg@3           0.9543
+    kendall_tau      0.5203
+    nll              1.3469
+    brier_score      0.4665
+    temperature      2.0000
+  -> saved to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning_anthropic\ranksvm_best_params.json
+
+>>> python tune/tune_rf.py | -> logs/anthropic_tune_rf.log
+    OK
+    max_depth: None
+    min_samples_leaf: 5
+    max_features: sqrt
+  CV-mean metrics:
+    top1_accuracy    0.6593
+    pairwise_accuracy 0.7606
+    ndcg@3           0.9549
+    kendall_tau      0.5212
+    nll              1.3384
+    brier_score      0.4561
+    temperature      0.5000
+  -> saved to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning_anthropic\rf_best_params.json
+
+>>> python tune/tune_ebm.py | -> logs/anthropic_tune_ebm.log
+    OK
+    interactions: 0
+    learning_rate: 0.05
+    min_samples_leaf: 10
+  CV-mean metrics:
+    top1_accuracy    0.6645
+    pairwise_accuracy 0.7619
+    ndcg@3           0.9554
+    kendall_tau      0.5238
+    nll              1.3342
+    brier_score      0.4564
+    temperature      0.6200
+  -> saved to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning_anthropic\ebm_best_params.json
+
+>>> python logreg/logreg_train.py | -> logs/anthropic_train_logreg.log
+    OK
+  seed 2: T*=0.5
+  seed 3: T*=0.5
+  seed 4: T*=0.5
+
+=== logreg Test Results (avg T=0.500) ===
+  top1_accuracy          0.5012
+  pairwise_accuracy      0.6725
+  ndcg@3                 0.9318
+  kendall_tau            0.3450
+  nll                    1.8769
+  brier_score            0.6815
+  -> saved logreg_val.npz / logreg_test.npz to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\preds_anthropic
+
+>>> python ranksvm/ranksvm_train.py | -> logs/anthropic_train_ranksvm.log
+    OK
+  seed 2: T*=2.0
+  seed 3: T*=2.0
+  seed 4: T*=2.0
+
+=== ranksvm Test Results (avg T=2.000) ===
+  top1_accuracy          0.5288
+  pairwise_accuracy      0.6829
+  ndcg@3                 0.9350
+  kendall_tau            0.3658
+  nll                    1.9788
+  brier_score            0.6760
+  -> saved ranksvm_val.npz / ranksvm_test.npz to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\preds_anthropic
+
+>>> python rforest/rf_train.py | -> logs/anthropic_train_rf.log
+    OK
+  seed 2: T*=0.5
+  seed 3: T*=0.5
+  seed 4: T*=0.5
+
+=== rf Test Results (avg T=0.500) ===
+  top1_accuracy          0.5487
+  pairwise_accuracy      0.6929
+  ndcg@3                 0.9377
+  kendall_tau            0.3858
+  nll                    1.5967
+  brier_score            0.5747
+  -> saved rf_val.npz / rf_test.npz to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\preds_anthropic
+
+>>> python ebm/ebm_train.py | -> logs/anthropic_train_ebm.log
+    OK
+  seed 4: T*=0.7
+
+=== ebm Test Results (avg T=0.620) ===
+  top1_accuracy          0.5188
+  pairwise_accuracy      0.6821
+  ndcg@3                 0.9340
+  kendall_tau            0.3642
+  nll                    1.7357
+  brier_score            0.6343
+  -> saved ebm_val.npz / ebm_test.npz to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\preds_anthropic
+  -> saved EBM global importances to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\ebm
+  -> saved EBM global plot to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\ebm/ebm_global.html
+
+>>> python blend_new.py | -> logs/anthropic_blend.log
+    OK
+  top1_accuracy          0.5425
+  pairwise_accuracy      0.6917
+  ndcg@3                 0.9370
+  kendall_tau            0.3833
+  nll                    1.6662
+  brier_score            0.6005
+
+=== Single-model test (for comparison) ===
+  ranksvm  top1=0.5288  ndcg@3=0.9350  ktau=0.3658  nll=1.9612
+  rf       top1=0.5487  ndcg@3=0.9377  ktau=0.3858  nll=1.6423
+  logreg   top1=0.5012  ndcg@3=0.9318  ktau=0.3450  nll=1.8710
+  ebm      top1=0.5188  ndcg@3=0.9340  ktau=0.3642  nll=1.8138
+
+ALL DONE

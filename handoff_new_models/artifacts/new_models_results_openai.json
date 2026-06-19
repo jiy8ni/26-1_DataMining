@@ -1,0 +1,139 @@
+[
+  {
+    "model": "ranksvm",
+    "label": "RankSVM",
+    "engine": "openai",
+    "params": {
+      "class_weight": "balanced",
+      "fit_intercept": false,
+      "max_iter": 10000,
+      "kernel": "rbf",
+      "C": 1.0
+    },
+    "params_str": "kernel=rbf, C=1.0",
+    "n_candidates": 8,
+    "cv_balanced": 4.876494606947346,
+    "cv": {
+      "top1_accuracy": 0.6309703802793596,
+      "pairwise_accuracy": 0.7352288144376169,
+      "ndcg@3": 0.9498296982081372,
+      "kendall_tau": 0.47045762887523407,
+      "nll": 1.4269874811172485,
+      "brier_score": 0.4884685683207962,
+      "temperature": 2.4
+    },
+    "test": {
+      "top1_accuracy": 0.4756,
+      "pairwise_accuracy": 0.6451,
+      "ndcg@3": 0.9256,
+      "kendall_tau": 0.2901,
+      "nll": 2.1264,
+      "brier_score": 0.7006,
+      "avg_temp": 1.5
+    },
+    "npz_check": "OK"
+  },
+  {
+    "model": "rf",
+    "label": "RandomForest",
+    "engine": "openai",
+    "params": {
+      "class_weight": "balanced",
+      "n_jobs": -1,
+      "n_estimators": 500,
+      "max_depth": null,
+      "min_samples_leaf": 5,
+      "max_features": "sqrt"
+    },
+    "params_str": "n_estimators=500, max_depth=None, min_samples_leaf=5, max_features=sqrt",
+    "n_candidates": 16,
+    "cv_balanced": 5.093414435683353,
+    "cv": {
+      "top1_accuracy": 0.613218868876962,
+      "pairwise_accuracy": 0.7215538561465482,
+      "ndcg@3": 0.9463985425244683,
+      "kendall_tau": 0.4431077122930963,
+      "nll": 1.4698440551757812,
+      "brier_score": 0.5081201013975336,
+      "temperature": 0.54
+    },
+    "test": {
+      "top1_accuracy": 0.4927,
+      "pairwise_accuracy": 0.6255,
+      "ndcg@3": 0.9239,
+      "kendall_tau": 0.251,
+      "nll": 1.7235,
+      "brier_score": 0.601,
+      "avg_temp": 0.5
+    },
+    "npz_check": "OK"
+  },
+  {
+    "model": "logreg",
+    "label": "LogisticRegression",
+    "engine": "openai",
+    "params": {
+      "fit_intercept": false,
+      "class_weight": "balanced",
+      "solver": "lbfgs",
+      "max_iter": 5000,
+      "C": 0.01
+    },
+    "params_str": "C=0.01",
+    "n_candidates": 4,
+    "cv_balanced": 4.476810244391871,
+    "cv": {
+      "top1_accuracy": 0.6005606608277553,
+      "pairwise_accuracy": 0.7104429619246936,
+      "ndcg@3": 0.9442767289040812,
+      "kendall_tau": 0.4208859238493873,
+      "nll": 1.4821447610855103,
+      "brier_score": 0.5116695509349409,
+      "temperature": 0.74
+    },
+    "test": {
+      "top1_accuracy": 0.4352,
+      "pairwise_accuracy": 0.6108,
+      "ndcg@3": 0.9184,
+      "kendall_tau": 0.2217,
+      "nll": 1.8242,
+      "brier_score": 0.6526,
+      "avg_temp": 0.7
+    },
+    "npz_check": "OK"
+  },
+  {
+    "model": "ebm",
+    "label": "EBM",
+    "engine": "openai",
+    "params": {
+      "max_bins": 256,
+      "outer_bags": 8,
+      "interactions": 5,
+      "learning_rate": 0.01,
+      "min_samples_leaf": 10
+    },
+    "params_str": "interactions=5, learning_rate=0.01, min_samples_leaf=10",
+    "n_candidates": 8,
+    "cv_balanced": 4.138922641278382,
+    "cv": {
+      "top1_accuracy": 0.615741844393589,
+      "pairwise_accuracy": 0.7204400552854674,
+      "ndcg@3": 0.9466983255416569,
+      "kendall_tau": 0.44088011057093474,
+      "nll": 1.4725248098373414,
+      "brier_score": 0.5042759184936052,
+      "temperature": 0.7200000000000001
+    },
+    "test": {
+      "top1_accuracy": 0.4804,
+      "pairwise_accuracy": 0.6369,
+      "ndcg@3": 0.9253,
+      "kendall_tau": 0.2738,
+      "nll": 1.7844,
+      "brier_score": 0.633,
+      "avg_temp": 0.7
+    },
+    "npz_check": "OK"
+  }
+]
