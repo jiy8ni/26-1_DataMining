@@ -1,0 +1,386 @@
+########## tune_semantic ##########
+Semantic brand-CV tuning x 8 candidates x 5 folds
+  [ 1/8] use_sem=False txt= 0 img= 0 | top1=0.6629 k?=0.4925 nll=1.3996
+  [ 2/8] use_sem=True txt= 8 img= 0 | top1=0.6656 k?=0.5041 nll=1.3690
+  [ 3/8] use_sem=True txt=16 img= 0 | top1=0.6746 k?=0.5141 nll=1.3604
+  [ 4/8] use_sem=True txt= 0 img= 4 | top1=0.6659 k?=0.4977 nll=1.3922
+  [ 5/8] use_sem=True txt= 0 img= 8 | top1=0.6594 k?=0.4955 nll=1.3942
+  [ 6/8] use_sem=True txt= 8 img= 4 | top1=0.6665 k?=0.5014 nll=1.3824
+  [ 7/8] use_sem=True txt=16 img= 8 | top1=0.6527 k?=0.4860 nll=1.3976
+  [ 8/8] use_sem=True txt=24 img= 8 | top1=0.6574 k?=0.4971 nll=1.4021
+
+============================================================
+Best semantic config (idx 2, balanced=5.7043):
+    use_semantic_features: True
+    text_pca_dim: 16
+    image_pca_dim: 0
+  CV-mean metrics:
+    top1_accuracy    0.6746
+    pairwise_accuracy 0.7571
+    ndcg@3           0.9554
+    kendall_tau      0.5141
+    nll              1.3604
+    brier_score      0.4514
+    temperature      0.6200
+  -> saved to artifacts/tuning_step2qt\semantic_best_config.json
+EXIT tune_semantic = 0
+########## tune_mlp ##########
+Loaded semantic config from artifacts/tuning_step2qt\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=0
+MLP brand-CV tuning x 36 candidates x 5 folds  (device=cpu)
+  [ 1/36] dims=[64, 32] do=0.1 wd=1e-04 lr=5e-04 | top1=0.6550 k?=0.5086 nll=1.3452
+  [ 2/36] dims=[64, 32] do=0.1 wd=1e-04 lr=1e-03 | top1=0.6610 k?=0.5220 nll=1.3292
+  [ 3/36] dims=[64, 32] do=0.1 wd=1e-03 lr=5e-04 | top1=0.6543 k?=0.5093 nll=1.3441
+  [ 4/36] dims=[64, 32] do=0.1 wd=1e-03 lr=1e-03 | top1=0.6599 k?=0.5247 nll=1.3251
+  [ 5/36] dims=[64, 32] do=0.3 wd=1e-04 lr=5e-04 | top1=0.6611 k?=0.5241 nll=1.3284
+  [ 6/36] dims=[64, 32] do=0.3 wd=1e-04 lr=1e-03 | top1=0.6663 k?=0.5352 nll=1.3067
+  [ 7/36] dims=[64, 32] do=0.3 wd=1e-03 lr=5e-04 | top1=0.6613 k?=0.5266 nll=1.3256
+  [ 8/36] dims=[64, 32] do=0.3 wd=1e-03 lr=1e-03 | top1=0.6675 k?=0.5346 nll=1.3053
+  [ 9/36] dims=[64, 32] do=0.5 wd=1e-04 lr=5e-04 | top1=0.6427 k?=0.4999 nll=1.3750
+  [10/36] dims=[64, 32] do=0.5 wd=1e-04 lr=1e-03 | top1=0.6527 k?=0.5117 nll=1.3546
+  [11/36] dims=[64, 32] do=0.5 wd=1e-03 lr=5e-04 | top1=0.6476 k?=0.5045 nll=1.3703
+  [12/36] dims=[64, 32] do=0.5 wd=1e-03 lr=1e-03 | top1=0.6545 k?=0.5169 nll=1.3502
+  [13/36] dims=[96, 48, 24] do=0.1 wd=1e-04 lr=5e-04 | top1=0.6570 k?=0.5269 nll=1.3227
+  [14/36] dims=[96, 48, 24] do=0.1 wd=1e-04 lr=1e-03 | top1=0.6692 k?=0.5399 nll=1.3006
+  [15/36] dims=[96, 48, 24] do=0.1 wd=1e-03 lr=5e-04 | top1=0.6551 k?=0.5214 nll=1.3248
+  [16/36] dims=[96, 48, 24] do=0.1 wd=1e-03 lr=1e-03 | top1=0.6679 k?=0.5330 nll=1.3142
+  [17/36] dims=[96, 48, 24] do=0.3 wd=1e-04 lr=5e-04 | top1=0.6723 k?=0.5323 nll=1.3244
+  [18/36] dims=[96, 48, 24] do=0.3 wd=1e-04 lr=1e-03 | top1=0.6809 k?=0.5470 nll=1.3044
+  [19/36] dims=[96, 48, 24] do=0.3 wd=1e-03 lr=5e-04 | top1=0.6728 k?=0.5325 nll=1.3254
+  [20/36] dims=[96, 48, 24] do=0.3 wd=1e-03 lr=1e-03 | top1=0.6821 k?=0.5484 nll=1.3028
+  [21/36] dims=[96, 48, 24] do=0.5 wd=1e-04 lr=5e-04 | top1=0.6389 k?=0.4837 nll=1.4178
+  [22/36] dims=[96, 48, 24] do=0.5 wd=1e-04 lr=1e-03 | top1=0.6632 k?=0.5159 nll=1.3663
+  [23/36] dims=[96, 48, 24] do=0.5 wd=1e-03 lr=5e-04 | top1=0.6393 k?=0.4820 nll=1.4149
+  [24/36] dims=[96, 48, 24] do=0.5 wd=1e-03 lr=1e-03 | top1=0.6690 k?=0.5234 nll=1.3531
+  [25/36] dims=[128, 64, 32] do=0.1 wd=1e-04 lr=5e-04 | top1=0.6675 k?=0.5231 nll=1.3288
+  [26/36] dims=[128, 64, 32] do=0.1 wd=1e-04 lr=1e-03 | top1=0.6703 k?=0.5310 nll=1.3209
+  [27/36] dims=[128, 64, 32] do=0.1 wd=1e-03 lr=5e-04 | top1=0.6672 k?=0.5259 nll=1.3291
+  [28/36] dims=[128, 64, 32] do=0.1 wd=1e-03 lr=1e-03 | top1=0.6708 k?=0.5310 nll=1.3236
+  [29/36] dims=[128, 64, 32] do=0.3 wd=1e-04 lr=5e-04 | top1=0.6709 k?=0.5332 nll=1.3224
+  [30/36] dims=[128, 64, 32] do=0.3 wd=1e-04 lr=1e-03 | top1=0.6784 k?=0.5446 nll=1.3082
+  [31/36] dims=[128, 64, 32] do=0.3 wd=1e-03 lr=5e-04 | top1=0.6775 k?=0.5405 nll=1.3148
+  [32/36] dims=[128, 64, 32] do=0.3 wd=1e-03 lr=1e-03 | top1=0.6765 k?=0.5423 nll=1.3049
+  [33/36] dims=[128, 64, 32] do=0.5 wd=1e-04 lr=5e-04 | top1=0.6550 k?=0.5182 nll=1.3628
+  [34/36] dims=[128, 64, 32] do=0.5 wd=1e-04 lr=1e-03 | top1=0.6688 k?=0.5281 nll=1.3432
+  [35/36] dims=[128, 64, 32] do=0.5 wd=1e-03 lr=5e-04 | top1=0.6556 k?=0.5176 nll=1.3599
+  [36/36] dims=[128, 64, 32] do=0.5 wd=1e-03 lr=1e-03 | top1=0.6677 k?=0.5284 nll=1.3394
+
+============================================================
+Best mlp candidate (idx 19, balanced=4.5138):
+    lambda_mse: 0.5
+    hidden_dims: [96, 48, 24]
+    dropout: 0.3
+    weight_decay: 0.001
+    lr: 0.001
+  CV-mean metrics:
+    top1_accuracy    0.6821
+    pairwise_accuracy 0.7742
+    ndcg@3           0.9583
+    kendall_tau      0.5484
+    nll              1.3028
+    brier_score      0.4389
+    temperature      0.5000
+  -> saved to artifacts/tuning_step2qt\mlp_best_params.json
+EXIT tune_mlp = 0
+########## tune_lgbm ##########
+Loaded semantic config from artifacts/tuning_step2qt\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=0
+LightGBM brand-CV tuning x 36 candidates x 5 folds
+  [ 1/36] lr=0.03 leaves=15 mcs=20 l2=0.1 | top1=0.6440 k?=0.4716 nll=1.4666
+  [ 2/36] lr=0.03 leaves=15 mcs=20 l2=0.5 | top1=0.6488 k?=0.4831 nll=1.4378
+  [ 3/36] lr=0.03 leaves=15 mcs=20 l2=1.0 | top1=0.6376 k?=0.4639 nll=1.4875
+  [ 4/36] lr=0.03 leaves=15 mcs=50 l2=0.1 | top1=0.6434 k?=0.4757 nll=1.4226
+  [ 5/36] lr=0.03 leaves=15 mcs=50 l2=0.5 | top1=0.6333 k?=0.4582 nll=1.4631
+  [ 6/36] lr=0.03 leaves=15 mcs=50 l2=1.0 | top1=0.6522 k?=0.4815 nll=1.4498
+  [ 7/36] lr=0.03 leaves=31 mcs=20 l2=0.1 | top1=0.6573 k?=0.4928 nll=1.3912
+  [ 8/36] lr=0.03 leaves=31 mcs=20 l2=0.5 | top1=0.6568 k?=0.4982 nll=1.3915
+  [ 9/36] lr=0.03 leaves=31 mcs=20 l2=1.0 | top1=0.6518 k?=0.4894 nll=1.4273
+  [10/36] lr=0.03 leaves=31 mcs=50 l2=0.1 | top1=0.6445 k?=0.4754 nll=1.4278
+  [11/36] lr=0.03 leaves=31 mcs=50 l2=0.5 | top1=0.6538 k?=0.4932 nll=1.3807
+  [12/36] lr=0.03 leaves=31 mcs=50 l2=1.0 | top1=0.6484 k?=0.4775 nll=1.4383
+  [13/36] lr=0.03 leaves=63 mcs=20 l2=0.1 | top1=0.6493 k?=0.4807 nll=1.4016
+  [14/36] lr=0.03 leaves=63 mcs=20 l2=0.5 | top1=0.6448 k?=0.4826 nll=1.4212
+  [15/36] lr=0.03 leaves=63 mcs=20 l2=1.0 | top1=0.6469 k?=0.4759 nll=1.4055
+  [16/36] lr=0.03 leaves=63 mcs=50 l2=0.1 | top1=0.6474 k?=0.4845 nll=1.4080
+  [17/36] lr=0.03 leaves=63 mcs=50 l2=0.5 | top1=0.6473 k?=0.4768 nll=1.4268
+  [18/36] lr=0.03 leaves=63 mcs=50 l2=1.0 | top1=0.6504 k?=0.4794 nll=1.4200
+  [19/36] lr=0.05 leaves=15 mcs=20 l2=0.1 | top1=0.6572 k?=0.4940 nll=1.3956
+  [20/36] lr=0.05 leaves=15 mcs=20 l2=0.5 | top1=0.6528 k?=0.4842 nll=1.4046
+  [21/36] lr=0.05 leaves=15 mcs=20 l2=1.0 | top1=0.6582 k?=0.4885 nll=1.4069
+  [22/36] lr=0.05 leaves=15 mcs=50 l2=0.1 | top1=0.6573 k?=0.4983 nll=1.3952
+  [23/36] lr=0.05 leaves=15 mcs=50 l2=0.5 | top1=0.6423 k?=0.4715 nll=1.4261
+  [24/36] lr=0.05 leaves=15 mcs=50 l2=1.0 | top1=0.6522 k?=0.4810 nll=1.4225
+  [25/36] lr=0.05 leaves=31 mcs=20 l2=0.1 | top1=0.6620 k?=0.5040 nll=1.3648
+  [26/36] lr=0.05 leaves=31 mcs=20 l2=0.5 | top1=0.6648 k?=0.5074 nll=1.3719
+  [27/36] lr=0.05 leaves=31 mcs=20 l2=1.0 | top1=0.6536 k?=0.4847 nll=1.4015
+  [28/36] lr=0.05 leaves=31 mcs=50 l2=0.1 | top1=0.6563 k?=0.4962 nll=1.3814
+  [29/36] lr=0.05 leaves=31 mcs=50 l2=0.5 | top1=0.6746 k?=0.5141 nll=1.3604
+  [30/36] lr=0.05 leaves=31 mcs=50 l2=1.0 | top1=0.6420 k?=0.4723 nll=1.4279
+  [31/36] lr=0.05 leaves=63 mcs=20 l2=0.1 | top1=0.6440 k?=0.4839 nll=1.3894
+  [32/36] lr=0.05 leaves=63 mcs=20 l2=0.5 | top1=0.6528 k?=0.4976 nll=1.3699
+  [33/36] lr=0.05 leaves=63 mcs=20 l2=1.0 | top1=0.6608 k?=0.5041 nll=1.3722
+  [34/36] lr=0.05 leaves=63 mcs=50 l2=0.1 | top1=0.6564 k?=0.4882 nll=1.3900
+  [35/36] lr=0.05 leaves=63 mcs=50 l2=0.5 | top1=0.6650 k?=0.4985 nll=1.3743
+  [36/36] lr=0.05 leaves=63 mcs=50 l2=1.0 | top1=0.6553 k?=0.4870 nll=1.4101
+
+============================================================
+Best lgbm candidate (idx 28, balanced=6.7757):
+    objective: lambdarank
+    metric: ndcg
+    ndcg_eval_at: [1, 3]
+    reg_alpha: 0.1
+    feature_fraction: 0.7
+    bagging_fraction: 0.8
+    bagging_freq: 1
+    verbose: -1
+    learning_rate: 0.05
+    num_leaves: 31
+    min_child_samples: 50
+    reg_lambda: 0.5
+  CV-mean metrics:
+    top1_accuracy    0.6746
+    pairwise_accuracy 0.7571
+    ndcg@3           0.9554
+    kendall_tau      0.5141
+    nll              1.3604
+    brier_score      0.4514
+    temperature      0.6200
+  -> saved to artifacts/tuning_step2qt\lgbm_best_params.json
+EXIT tune_lgbm = 0
+########## tune_xgb ##########
+Loaded semantic config from artifacts/tuning_step2qt\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=0
+XGBoost brand-CV tuning x 72 candidates x 5 folds
+  [ 1/72] eta=0.03 depth=3 mcw= 3 gamma=0.0 l2=0.5 | top1=0.5503 k?=0.3439 nll=1.5886
+  [ 2/72] eta=0.03 depth=3 mcw= 3 gamma=0.0 l2=1.0 | top1=0.5439 k?=0.3334 nll=1.6038
+  [ 3/72] eta=0.03 depth=3 mcw= 3 gamma=0.5 l2=0.5 | top1=0.5359 k?=0.3175 nll=1.6063
+  [ 4/72] eta=0.03 depth=3 mcw= 3 gamma=0.5 l2=1.0 | top1=0.5421 k?=0.3316 nll=1.6023
+  [ 5/72] eta=0.03 depth=3 mcw= 5 gamma=0.0 l2=0.5 | top1=0.5318 k?=0.3097 nll=1.6191
+  [ 6/72] eta=0.03 depth=3 mcw= 5 gamma=0.0 l2=1.0 | top1=0.5433 k?=0.3320 nll=1.6079
+  [ 7/72] eta=0.03 depth=3 mcw= 5 gamma=0.5 l2=0.5 | top1=0.5487 k?=0.3337 nll=1.5947
+  [ 8/72] eta=0.03 depth=3 mcw= 5 gamma=0.5 l2=1.0 | top1=0.5265 k?=0.3081 nll=1.6212
+  [ 9/72] eta=0.03 depth=3 mcw=10 gamma=0.0 l2=0.5 | top1=0.5570 k?=0.3428 nll=1.5891
+  [10/72] eta=0.03 depth=3 mcw=10 gamma=0.0 l2=1.0 | top1=0.5780 k?=0.3789 nll=1.5529
+  [11/72] eta=0.03 depth=3 mcw=10 gamma=0.5 l2=0.5 | top1=0.5279 k?=0.3087 nll=1.6199
+  [12/72] eta=0.03 depth=3 mcw=10 gamma=0.5 l2=1.0 | top1=0.5267 k?=0.3072 nll=1.6243
+  [13/72] eta=0.03 depth=4 mcw= 3 gamma=0.0 l2=0.5 | top1=0.5916 k?=0.3979 nll=1.5341
+  [14/72] eta=0.03 depth=4 mcw= 3 gamma=0.0 l2=1.0 | top1=0.5990 k?=0.4121 nll=1.5244
+  [15/72] eta=0.03 depth=4 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6119 k?=0.4344 nll=1.4906
+  [16/72] eta=0.03 depth=4 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6033 k?=0.4190 nll=1.5104
+  [17/72] eta=0.03 depth=4 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6048 k?=0.4247 nll=1.5125
+  [18/72] eta=0.03 depth=4 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6055 k?=0.4238 nll=1.5020
+  [19/72] eta=0.03 depth=4 mcw= 5 gamma=0.5 l2=0.5 | top1=0.5806 k?=0.3899 nll=1.5397
+  [20/72] eta=0.03 depth=4 mcw= 5 gamma=0.5 l2=1.0 | top1=0.5885 k?=0.3926 nll=1.5498
+  [21/72] eta=0.03 depth=4 mcw=10 gamma=0.0 l2=0.5 | top1=0.6115 k?=0.4298 nll=1.4998
+  [22/72] eta=0.03 depth=4 mcw=10 gamma=0.0 l2=1.0 | top1=0.6109 k?=0.4225 nll=1.5021
+  [23/72] eta=0.03 depth=4 mcw=10 gamma=0.5 l2=0.5 | top1=0.6134 k?=0.4297 nll=1.4872
+  [24/72] eta=0.03 depth=4 mcw=10 gamma=0.5 l2=1.0 | top1=0.5908 k?=0.4049 nll=1.5271
+  [25/72] eta=0.03 depth=5 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6337 k?=0.4640 nll=1.4309
+  [26/72] eta=0.03 depth=5 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6151 k?=0.4398 nll=1.4897
+  [27/72] eta=0.03 depth=5 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6368 k?=0.4612 nll=1.4551
+  [28/72] eta=0.03 depth=5 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6334 k?=0.4564 nll=1.4558
+  [29/72] eta=0.03 depth=5 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6184 k?=0.4342 nll=1.4736
+  [30/72] eta=0.03 depth=5 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6261 k?=0.4466 nll=1.4834
+  [31/72] eta=0.03 depth=5 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6384 k?=0.4664 nll=1.4465
+  [32/72] eta=0.03 depth=5 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6131 k?=0.4225 nll=1.4981
+  [33/72] eta=0.03 depth=5 mcw=10 gamma=0.0 l2=0.5 | top1=0.6143 k?=0.4362 nll=1.4796
+  [34/72] eta=0.03 depth=5 mcw=10 gamma=0.0 l2=1.0 | top1=0.6252 k?=0.4453 nll=1.4717
+  [35/72] eta=0.03 depth=5 mcw=10 gamma=0.5 l2=0.5 | top1=0.6158 k?=0.4382 nll=1.4710
+  [36/72] eta=0.03 depth=5 mcw=10 gamma=0.5 l2=1.0 | top1=0.6310 k?=0.4482 nll=1.4671
+  [37/72] eta=0.05 depth=3 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6045 k?=0.4188 nll=1.5086
+  [38/72] eta=0.05 depth=3 mcw= 3 gamma=0.0 l2=1.0 | top1=0.5792 k?=0.3799 nll=1.5462
+  [39/72] eta=0.05 depth=3 mcw= 3 gamma=0.5 l2=0.5 | top1=0.5743 k?=0.3763 nll=1.5522
+  [40/72] eta=0.05 depth=3 mcw= 3 gamma=0.5 l2=1.0 | top1=0.5561 k?=0.3514 nll=1.5785
+  [41/72] eta=0.05 depth=3 mcw= 5 gamma=0.0 l2=0.5 | top1=0.5592 k?=0.3546 nll=1.5803
+  [42/72] eta=0.05 depth=3 mcw= 5 gamma=0.0 l2=1.0 | top1=0.5790 k?=0.3805 nll=1.5427
+  [43/72] eta=0.05 depth=3 mcw= 5 gamma=0.5 l2=0.5 | top1=0.5655 k?=0.3642 nll=1.5678
+  [44/72] eta=0.05 depth=3 mcw= 5 gamma=0.5 l2=1.0 | top1=0.5565 k?=0.3513 nll=1.5783
+  [45/72] eta=0.05 depth=3 mcw=10 gamma=0.0 l2=0.5 | top1=0.5715 k?=0.3735 nll=1.5605
+  [46/72] eta=0.05 depth=3 mcw=10 gamma=0.0 l2=1.0 | top1=0.5552 k?=0.3504 nll=1.5700
+  [47/72] eta=0.05 depth=3 mcw=10 gamma=0.5 l2=0.5 | top1=0.5570 k?=0.3495 nll=1.5922
+  [48/72] eta=0.05 depth=3 mcw=10 gamma=0.5 l2=1.0 | top1=0.5563 k?=0.3513 nll=1.5730
+  [49/72] eta=0.05 depth=4 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6233 k?=0.4486 nll=1.4548
+  [50/72] eta=0.05 depth=4 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6236 k?=0.4479 nll=1.4637
+  [51/72] eta=0.05 depth=4 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6274 k?=0.4502 nll=1.4556
+  [52/72] eta=0.05 depth=4 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6337 k?=0.4595 nll=1.4523
+  [53/72] eta=0.05 depth=4 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6434 k?=0.4693 nll=1.4419
+  [54/72] eta=0.05 depth=4 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6396 k?=0.4717 nll=1.4412
+  [55/72] eta=0.05 depth=4 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6243 k?=0.4475 nll=1.4548
+  [56/72] eta=0.05 depth=4 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6044 k?=0.4119 nll=1.5063
+  [57/72] eta=0.05 depth=4 mcw=10 gamma=0.0 l2=0.5 | top1=0.6193 k?=0.4431 nll=1.4593
+  [58/72] eta=0.05 depth=4 mcw=10 gamma=0.0 l2=1.0 | top1=0.6281 k?=0.4474 nll=1.4751
+  [59/72] eta=0.05 depth=4 mcw=10 gamma=0.5 l2=0.5 | top1=0.6188 k?=0.4273 nll=1.4932
+  [60/72] eta=0.05 depth=4 mcw=10 gamma=0.5 l2=1.0 | top1=0.6364 k?=0.4618 nll=1.4321
+  [61/72] eta=0.05 depth=5 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6405 k?=0.4658 nll=1.4233
+  [62/72] eta=0.05 depth=5 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6370 k?=0.4671 nll=1.4271
+  [63/72] eta=0.05 depth=5 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6398 k?=0.4695 nll=1.4211
+  [64/72] eta=0.05 depth=5 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6440 k?=0.4747 nll=1.4298
+  [65/72] eta=0.05 depth=5 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6305 k?=0.4579 nll=1.4437
+  [66/72] eta=0.05 depth=5 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6365 k?=0.4725 nll=1.4148
+  [67/72] eta=0.05 depth=5 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6233 k?=0.4451 nll=1.4580
+  [68/72] eta=0.05 depth=5 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6414 k?=0.4760 nll=1.4015
+  [69/72] eta=0.05 depth=5 mcw=10 gamma=0.0 l2=0.5 | top1=0.6392 k?=0.4659 nll=1.4320
+  [70/72] eta=0.05 depth=5 mcw=10 gamma=0.0 l2=1.0 | top1=0.6361 k?=0.4630 nll=1.4327
+  [71/72] eta=0.05 depth=5 mcw=10 gamma=0.5 l2=0.5 | top1=0.6372 k?=0.4649 nll=1.4318
+  [72/72] eta=0.05 depth=5 mcw=10 gamma=0.5 l2=1.0 | top1=0.6225 k?=0.4378 nll=1.4765
+
+============================================================
+Best xgb candidate (idx 67, balanced=4.0983):
+    objective: rank:ndcg
+    eval_metric: ndcg@1
+    subsample: 0.8
+    colsample_bytree: 0.7
+    reg_alpha: 0.0
+    verbosity: 0
+    seed: 42
+    eta: 0.05
+    max_depth: 5
+    min_child_weight: 5
+    gamma: 0.5
+    reg_lambda: 1.0
+  CV-mean metrics:
+    top1_accuracy    0.6414
+    pairwise_accuracy 0.7380
+    ndcg@3           0.9509
+    kendall_tau      0.4760
+    nll              1.4015
+    brier_score      0.4734
+    temperature      0.6800
+  -> saved to artifacts/tuning_step2qt\xgb_best_params.json
+EXIT tune_xgb = 0
+########## tune_lgbm_pl ##########
+C:\Users\user\OneDrive\문서\DataMining\src\pl_objective.py:83: RuntimeWarning: overflow encountered in multiply
+  inv_Z2     = inv_Z * inv_Z
+C:\Users\user\OneDrive\문서\DataMining\src\pl_objective.py:82: RuntimeWarning: overflow encountered in divide
+  inv_Z      = 1.0 / Z
+C:\Users\user\OneDrive\문서\DataMining\src\pl_objective.py:94: RuntimeWarning: invalid value encountered in subtract
+  hessians = np.maximum(e * (A - e * C), 1e-6)        # (B, 3), ≥ 0
+C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\numpy\_core\fromnumeric.py:54: RuntimeWarning: overflow encountered in accumulate
+  return bound(*args, **kwds)
+Loaded semantic config from artifacts/tuning_step2qt\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=0
+LightGBM-PL brand-CV tuning x 24 candidates x 5 folds
+  [ 1/24] lr=0.03 leaves=15 mcs=10 l2=0.1 | top1=0.5366 k?=0.3542 nll=1.5756
+  [ 2/24] lr=0.03 leaves=15 mcs=10 l2=0.5 | top1=0.5329 k?=0.3505 nll=1.6036
+  [ 3/24] lr=0.03 leaves=15 mcs=30 l2=0.1 | top1=0.5354 k?=0.3570 nll=1.5872
+  [ 4/24] lr=0.03 leaves=15 mcs=30 l2=0.5 | top1=0.5247 k?=0.3349 nll=1.6029
+  [ 5/24] lr=0.03 leaves=15 mcs=50 l2=0.1 | top1=0.5447 k?=0.3588 nll=1.9053
+  [ 6/24] lr=0.03 leaves=15 mcs=50 l2=0.5 | top1=0.5238 k?=0.3367 nll=1.6011
+  [ 7/24] lr=0.03 leaves=31 mcs=10 l2=0.1 | top1=0.5826 k?=0.4122 nll=2.4271
+  [ 8/24] lr=0.03 leaves=31 mcs=10 l2=0.5 | top1=0.5550 k?=0.3765 nll=2.2757
+  [ 9/24] lr=0.03 leaves=31 mcs=30 l2=0.1 | top1=0.5832 k?=0.4052 nll=2.6772
+  [10/24] lr=0.03 leaves=31 mcs=30 l2=0.5 | top1=0.5507 k?=0.3666 nll=2.0305
+  [11/24] lr=0.03 leaves=31 mcs=50 l2=0.1 | top1=0.5770 k?=0.4023 nll=2.7607
+  [12/24] lr=0.03 leaves=31 mcs=50 l2=0.5 | top1=0.5428 k?=0.3496 nll=1.8190
+  [13/24] lr=0.05 leaves=15 mcs=10 l2=0.1 | top1=0.5511 k?=0.3720 nll=2.4338
+  [14/24] lr=0.05 leaves=15 mcs=10 l2=0.5 | top1=0.5456 k?=0.3587 nll=2.3324
+  [15/24] lr=0.05 leaves=15 mcs=30 l2=0.1 | top1=0.5519 k?=0.3729 nll=1.7562
+  [16/24] lr=0.05 leaves=15 mcs=30 l2=0.5 | top1=0.5461 k?=0.3594 nll=1.8032
+  [17/24] lr=0.05 leaves=15 mcs=50 l2=0.1 | top1=0.5522 k?=0.3733 nll=1.7327
+  [18/24] lr=0.05 leaves=15 mcs=50 l2=0.5 | top1=0.5439 k?=0.3567 nll=1.9180
+  [19/24] lr=0.05 leaves=31 mcs=10 l2=0.1 | top1=0.5796 k?=0.4051 nll=3.0236
+  [20/24] lr=0.05 leaves=31 mcs=10 l2=0.5 | top1=0.5504 k?=0.3577 nll=1.6551
+  [21/24] lr=0.05 leaves=31 mcs=30 l2=0.1 | top1=0.5869 k?=0.4115 nll=2.5042
+  [22/24] lr=0.05 leaves=31 mcs=30 l2=0.5 | top1=0.5548 k?=0.3688 nll=1.8133
+  [23/24] lr=0.05 leaves=31 mcs=50 l2=0.1 | top1=0.5808 k?=0.4054 nll=2.4305
+  [24/24] lr=0.05 leaves=31 mcs=50 l2=0.5 | top1=0.5735 k?=0.3862 nll=2.7443
+
+============================================================
+Best lgbm_pl candidate (idx 20, balanced=2.4892):
+    metric: ndcg
+    ndcg_eval_at: [1, 3]
+    feature_fraction: 0.7
+    bagging_fraction: 0.8
+    bagging_freq: 1
+    reg_alpha: 0.1
+    verbose: -1
+    learning_rate: 0.05
+    num_leaves: 31
+    min_child_samples: 30
+    reg_lambda: 0.1
+  CV-mean metrics:
+    top1_accuracy    0.5869
+    pairwise_accuracy 0.7058
+    ndcg@3           0.9435
+    kendall_tau      0.4115
+    nll              2.5042
+    brier_score      0.5773
+    temperature      4.2000
+  -> saved to artifacts/tuning_step2qt\lgbm_pl_best_params.json
+EXIT tune_lgbm_pl = 0
+########## tune_xgb_pl ##########
+C:\Users\user\OneDrive\문서\DataMining\src\pl_objective.py:83: RuntimeWarning: overflow encountered in multiply
+  inv_Z2     = inv_Z * inv_Z
+C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\numpy\_core\fromnumeric.py:54: RuntimeWarning: overflow encountered in accumulate
+  return bound(*args, **kwds)
+Loaded semantic config from artifacts/tuning_step2qt\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=0
+XGBoost-PL brand-CV tuning x 48 candidates x 5 folds
+  [ 1/48] eta=0.03 depth=3 mcw= 3 gamma=0.0 l2=0.5 | top1=0.5041 k?=0.2966 nll=1.6450
+  [ 2/48] eta=0.03 depth=3 mcw= 3 gamma=0.0 l2=1.0 | top1=0.5047 k?=0.2982 nll=1.6461
+  [ 3/48] eta=0.03 depth=3 mcw= 3 gamma=0.5 l2=0.5 | top1=0.5039 k?=0.2963 nll=1.6431
+  [ 4/48] eta=0.03 depth=3 mcw= 3 gamma=0.5 l2=1.0 | top1=0.5047 k?=0.2981 nll=1.6461
+  [ 5/48] eta=0.03 depth=3 mcw= 5 gamma=0.0 l2=0.5 | top1=0.5033 k?=0.2960 nll=1.6446
+  [ 6/48] eta=0.03 depth=3 mcw= 5 gamma=0.0 l2=1.0 | top1=0.5038 k?=0.2980 nll=1.6439
+  [ 7/48] eta=0.03 depth=3 mcw= 5 gamma=0.5 l2=0.5 | top1=0.5028 k?=0.2952 nll=1.6441
+  [ 8/48] eta=0.03 depth=3 mcw= 5 gamma=0.5 l2=1.0 | top1=0.5038 k?=0.2980 nll=1.6439
+  [ 9/48] eta=0.03 depth=4 mcw= 3 gamma=0.0 l2=0.5 | top1=0.5212 k?=0.3250 nll=1.6556
+  [10/48] eta=0.03 depth=4 mcw= 3 gamma=0.0 l2=1.0 | top1=0.5236 k?=0.3333 nll=1.6521
+  [11/48] eta=0.03 depth=4 mcw= 3 gamma=0.5 l2=0.5 | top1=0.5198 k?=0.3253 nll=1.6495
+  [12/48] eta=0.03 depth=4 mcw= 3 gamma=0.5 l2=1.0 | top1=0.5311 k?=0.3404 nll=1.6291
+  [13/48] eta=0.03 depth=4 mcw= 5 gamma=0.0 l2=0.5 | top1=0.5330 k?=0.3375 nll=1.7213
+  [14/48] eta=0.03 depth=4 mcw= 5 gamma=0.0 l2=1.0 | top1=0.5266 k?=0.3361 nll=1.6137
+  [15/48] eta=0.03 depth=4 mcw= 5 gamma=0.5 l2=0.5 | top1=0.5302 k?=0.3334 nll=2.0609
+  [16/48] eta=0.03 depth=4 mcw= 5 gamma=0.5 l2=1.0 | top1=0.5266 k?=0.3347 nll=1.6115
+  [17/48] eta=0.03 depth=5 mcw= 3 gamma=0.0 l2=0.5 | top1=0.5417 k?=0.3566 nll=1.7755
+  [18/48] eta=0.03 depth=5 mcw= 3 gamma=0.0 l2=1.0 | top1=0.5454 k?=0.3564 nll=1.5889
+  [19/48] eta=0.03 depth=5 mcw= 3 gamma=0.5 l2=0.5 | top1=0.5443 k?=0.3626 nll=1.7776
+  [20/48] eta=0.03 depth=5 mcw= 3 gamma=0.5 l2=1.0 | top1=0.5456 k?=0.3562 nll=1.5916
+  [21/48] eta=0.03 depth=5 mcw= 5 gamma=0.0 l2=0.5 | top1=0.5480 k?=0.3641 nll=1.5870
+  [22/48] eta=0.03 depth=5 mcw= 5 gamma=0.0 l2=1.0 | top1=0.5479 k?=0.3579 nll=1.5862
+  [23/48] eta=0.03 depth=5 mcw= 5 gamma=0.5 l2=0.5 | top1=0.5489 k?=0.3657 nll=1.5918
+  [24/48] eta=0.03 depth=5 mcw= 5 gamma=0.5 l2=1.0 | top1=0.5481 k?=0.3582 nll=1.5834
+  [25/48] eta=0.05 depth=3 mcw= 3 gamma=0.0 l2=0.5 | top1=0.5034 k?=0.2931 nll=1.6946
+  [26/48] eta=0.05 depth=3 mcw= 3 gamma=0.0 l2=1.0 | top1=0.5077 k?=0.2980 nll=1.6571
+  [27/48] eta=0.05 depth=3 mcw= 3 gamma=0.5 l2=0.5 | top1=0.5036 k?=0.2933 nll=1.6946
+  [28/48] eta=0.05 depth=3 mcw= 3 gamma=0.5 l2=1.0 | top1=0.5075 k?=0.2978 nll=1.6571
+  [29/48] eta=0.05 depth=3 mcw= 5 gamma=0.0 l2=0.5 | top1=0.5053 k?=0.2981 nll=1.7323
+  [30/48] eta=0.05 depth=3 mcw= 5 gamma=0.0 l2=1.0 | top1=0.5052 k?=0.2994 nll=1.7869
+  [31/48] eta=0.05 depth=3 mcw= 5 gamma=0.5 l2=0.5 | top1=0.5029 k?=0.2960 nll=2.1014
+  [32/48] eta=0.05 depth=3 mcw= 5 gamma=0.5 l2=1.0 | top1=0.5052 k?=0.2994 nll=1.7870
+  [33/48] eta=0.05 depth=4 mcw= 3 gamma=0.0 l2=0.5 | top1=0.5211 k?=0.3243 nll=1.6486
+  [34/48] eta=0.05 depth=4 mcw= 3 gamma=0.0 l2=1.0 | top1=0.5242 k?=0.3245 nll=1.9977
+  [35/48] eta=0.05 depth=4 mcw= 3 gamma=0.5 l2=0.5 | top1=0.5195 k?=0.3209 nll=1.6480
+  [36/48] eta=0.05 depth=4 mcw= 3 gamma=0.5 l2=1.0 | top1=0.5199 k?=0.3188 nll=1.6738
+  [37/48] eta=0.05 depth=4 mcw= 5 gamma=0.0 l2=0.5 | top1=0.5159 k?=0.3201 nll=2.1444
+  [38/48] eta=0.05 depth=4 mcw= 5 gamma=0.0 l2=1.0 | top1=0.5268 k?=0.3253 nll=2.2961
+  [39/48] eta=0.05 depth=4 mcw= 5 gamma=0.5 l2=0.5 | top1=0.5163 k?=0.3202 nll=1.9917
+  [40/48] eta=0.05 depth=4 mcw= 5 gamma=0.5 l2=1.0 | top1=0.5226 k?=0.3237 nll=2.2625
+  [41/48] eta=0.05 depth=5 mcw= 3 gamma=0.0 l2=0.5 | top1=0.5428 k?=0.3524 nll=2.0043
+  [42/48] eta=0.05 depth=5 mcw= 3 gamma=0.0 l2=1.0 | top1=0.5404 k?=0.3554 nll=1.6678
+  [43/48] eta=0.05 depth=5 mcw= 3 gamma=0.5 l2=0.5 | top1=0.5432 k?=0.3548 nll=1.8077
+  [44/48] eta=0.05 depth=5 mcw= 3 gamma=0.5 l2=1.0 | top1=0.5422 k?=0.3605 nll=1.6241
+  [45/48] eta=0.05 depth=5 mcw= 5 gamma=0.0 l2=0.5 | top1=0.5415 k?=0.3478 nll=1.9760
+  [46/48] eta=0.05 depth=5 mcw= 5 gamma=0.0 l2=1.0 | top1=0.5414 k?=0.3554 nll=1.6046
+  [47/48] eta=0.05 depth=5 mcw= 5 gamma=0.5 l2=0.5 | top1=0.5411 k?=0.3459 nll=2.1211
+  [48/48] eta=0.05 depth=5 mcw= 5 gamma=0.5 l2=1.0 | top1=0.5425 k?=0.3546 nll=2.0202
+
+============================================================
+Best xgb_pl candidate (idx 22, balanced=3.9209):
+    eval_metric: ndcg@1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    reg_alpha: 0.1
+    verbosity: 0
+    seed: 42
+    eta: 0.03
+    max_depth: 5
+    min_child_weight: 5
+    gamma: 0.5
+    reg_lambda: 0.5
+  CV-mean metrics:
+    top1_accuracy    0.5489
+    pairwise_accuracy 0.6828
+    ndcg@3           0.9376
+    kendall_tau      0.3657
+    nll              1.5918
+    brier_score      0.5787
+    temperature      2.1400
+  -> saved to artifacts/tuning_step2qt\xgb_pl_best_params.json
+EXIT tune_xgb_pl = 0
+TUNING_DONE

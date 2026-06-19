@@ -1,0 +1,27 @@
+Loaded semantic config from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning_anthropic\semantic_best_config.json: use_semantic=True text_pca_dim=8 image_pca_dim=0
+RankSVM brand-CV x 8 candidates x 5 folds
+  [ 1/8] {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'linear', 'C': 0.01} | top1=0.6505 ndcg@3=0.9534 ktau=0.5097 nll=1.3459
+  [ 2/8] {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'linear', 'C': 0.1} | top1=0.6535 ndcg@3=0.9537 ktau=0.5109 nll=1.3484
+  [ 3/8] {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'linear', 'C': 1.0} | top1=0.6529 ndcg@3=0.9536 ktau=0.5107 nll=1.3487
+  [ 4/8] {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'linear', 'C': 10.0} | top1=0.6527 ndcg@3=0.9536 ktau=0.5105 nll=1.3488
+  [ 5/8] {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'rbf', 'C': 0.01} | top1=0.6172 ndcg@3=0.9475 ktau=0.4533 nll=1.4689
+  [ 6/8] {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'rbf', 'C': 0.1} | top1=0.6393 ndcg@3=0.9521 ktau=0.5011 nll=1.3778
+  [ 7/8] {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'rbf', 'C': 1.0} | top1=0.6532 ndcg@3=0.9543 ktau=0.5203 nll=1.3469
+  [ 8/8] {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'rbf', 'C': 10.0} | top1=0.6371 ndcg@3=0.9518 ktau=0.4974 nll=1.3725
+
+============================================================
+Best ranksvm candidate (idx 6, balanced=2.2579):
+    class_weight: balanced
+    fit_intercept: False
+    max_iter: 10000
+    kernel: rbf
+    C: 1.0
+  CV-mean metrics:
+    top1_accuracy    0.6532
+    pairwise_accuracy 0.7601
+    ndcg@3           0.9543
+    kendall_tau      0.5203
+    nll              1.3469
+    brier_score      0.4665
+    temperature      2.0000
+  -> saved to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning_anthropic\ranksvm_best_params.json

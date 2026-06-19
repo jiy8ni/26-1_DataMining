@@ -1,0 +1,27 @@
+Loaded semantic config from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning_anthropic\semantic_best_config.json: use_semantic=True text_pca_dim=8 image_pca_dim=0
+EBM brand-CV x 8 candidates x 5 folds
+  [ 1/8] {'max_bins': 256, 'outer_bags': 8, 'interactions': 0, 'learning_rate': 0.01, 'min_samples_leaf': 5} | top1=0.6605 ndcg@3=0.9549 ktau=0.5196 nll=1.3364
+  [ 2/8] {'max_bins': 256, 'outer_bags': 8, 'interactions': 0, 'learning_rate': 0.01, 'min_samples_leaf': 10} | top1=0.6604 ndcg@3=0.9550 ktau=0.5199 nll=1.3366
+  [ 3/8] {'max_bins': 256, 'outer_bags': 8, 'interactions': 0, 'learning_rate': 0.05, 'min_samples_leaf': 5} | top1=0.6646 ndcg@3=0.9554 ktau=0.5235 nll=1.3342
+  [ 4/8] {'max_bins': 256, 'outer_bags': 8, 'interactions': 0, 'learning_rate': 0.05, 'min_samples_leaf': 10} | top1=0.6645 ndcg@3=0.9554 ktau=0.5238 nll=1.3342
+  [ 5/8] {'max_bins': 256, 'outer_bags': 8, 'interactions': 5, 'learning_rate': 0.01, 'min_samples_leaf': 5} | top1=0.6603 ndcg@3=0.9547 ktau=0.5190 nll=1.3384
+  [ 6/8] {'max_bins': 256, 'outer_bags': 8, 'interactions': 5, 'learning_rate': 0.01, 'min_samples_leaf': 10} | top1=0.6605 ndcg@3=0.9547 ktau=0.5204 nll=1.3376
+  [ 7/8] {'max_bins': 256, 'outer_bags': 8, 'interactions': 5, 'learning_rate': 0.05, 'min_samples_leaf': 5} | top1=0.6605 ndcg@3=0.9549 ktau=0.5217 nll=1.3365
+  [ 8/8] {'max_bins': 256, 'outer_bags': 8, 'interactions': 5, 'learning_rate': 0.05, 'min_samples_leaf': 10} | top1=0.6619 ndcg@3=0.9550 ktau=0.5234 nll=1.3339
+
+============================================================
+Best ebm candidate (idx 3, balanced=4.0687):
+    max_bins: 256
+    outer_bags: 8
+    interactions: 0
+    learning_rate: 0.05
+    min_samples_leaf: 10
+  CV-mean metrics:
+    top1_accuracy    0.6645
+    pairwise_accuracy 0.7619
+    ndcg@3           0.9554
+    kendall_tau      0.5238
+    nll              1.3342
+    brier_score      0.4564
+    temperature      0.6200
+  -> saved to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning_anthropic\ebm_best_params.json

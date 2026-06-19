@@ -1,0 +1,568 @@
+########## mlp/train.py ##########
+No saved semantic config found; using Config defaults.
+No tuned params found - using Config defaults.
+Device: cpu  |  Protocol: step2qt  |  Version: v3  |  Engine: anthropic  |  Features: 54  |  seeds: 5
+Trials - train: 1925  val: 339  test: 736
+Parameters: 5,825
+[seed 0] Epoch   1 | train=2.0749  val=1.5406  lr=1.00e-03
+[seed 0] Epoch   2 | train=1.6769  val=1.4441  lr=1.00e-03
+[seed 0] Epoch   3 | train=1.5625  val=1.4165  lr=1.00e-03
+[seed 0] Epoch   4 | train=1.5580  val=1.3885  lr=1.00e-03
+[seed 0] Epoch   5 | train=1.5307  val=1.3652  lr=1.00e-03
+[seed 0] Epoch   6 | train=1.5065  val=1.3455  lr=1.00e-03
+[seed 0] Epoch   7 | train=1.4564  val=1.3243  lr=1.00e-03
+[seed 0] Epoch   8 | train=1.4373  val=1.3107  lr=1.00e-03
+[seed 0] Epoch   9 | train=1.4196  val=1.2910  lr=1.00e-03
+[seed 0] Epoch  10 | train=1.4092  val=1.2731  lr=1.00e-03
+[seed 0] Epoch  11 | train=1.3882  val=1.2638  lr=1.00e-03
+[seed 0] Epoch  12 | train=1.3904  val=1.2502  lr=1.00e-03
+[seed 0] Epoch  13 | train=1.3968  val=1.2360  lr=1.00e-03
+[seed 0] Epoch  14 | train=1.3783  val=1.2371  lr=1.00e-03
+[seed 0] Epoch  15 | train=1.3594  val=1.2286  lr=1.00e-03
+[seed 0] Epoch  16 | train=1.3467  val=1.2275  lr=1.00e-03
+[seed 0] Epoch  17 | train=1.3469  val=1.2131  lr=1.00e-03
+[seed 0] Epoch  18 | train=1.3610  val=1.2191  lr=1.00e-03
+[seed 0] Epoch  19 | train=1.3744  val=1.2052  lr=1.00e-03
+[seed 0] Epoch  20 | train=1.3390  val=1.2041  lr=1.00e-03
+[seed 0] Epoch  21 | train=1.3363  val=1.1974  lr=1.00e-03
+[seed 0] Epoch  22 | train=1.3517  val=1.1972  lr=1.00e-03
+[seed 0] Epoch  23 | train=1.3405  val=1.2032  lr=1.00e-03
+[seed 0] Epoch  24 | train=1.3291  val=1.1963  lr=1.00e-03
+[seed 0] Epoch  25 | train=1.3500  val=1.1878  lr=1.00e-03
+[seed 0] Epoch  26 | train=1.3385  val=1.1993  lr=1.00e-03
+[seed 0] Epoch  27 | train=1.3273  val=1.1876  lr=1.00e-03
+[seed 0] Epoch  28 | train=1.3300  val=1.1912  lr=1.00e-03
+[seed 0] Epoch  29 | train=1.3326  val=1.1829  lr=1.00e-03
+[seed 0] Epoch  30 | train=1.3545  val=1.1700  lr=1.00e-03
+[seed 0] Epoch  31 | train=1.3376  val=1.1875  lr=1.00e-03
+[seed 0] Epoch  32 | train=1.3201  val=1.1865  lr=1.00e-03
+[seed 0] Epoch  33 | train=1.3318  val=1.1916  lr=1.00e-03
+[seed 0] Epoch  34 | train=1.3404  val=1.1791  lr=1.00e-03
+[seed 0] Epoch  35 | train=1.3198  val=1.1817  lr=1.00e-03
+[seed 0] Epoch  36 | train=1.3269  val=1.1834  lr=5.00e-04
+[seed 0] Epoch  37 | train=1.3390  val=1.1703  lr=5.00e-04
+[seed 0] Epoch  38 | train=1.3048  val=1.1859  lr=5.00e-04
+[seed 0] Epoch  39 | train=1.3084  val=1.1658  lr=5.00e-04
+[seed 0] Epoch  40 | train=1.3038  val=1.1763  lr=5.00e-04
+[seed 0] Epoch  41 | train=1.3072  val=1.1726  lr=5.00e-04
+[seed 0] Epoch  42 | train=1.2973  val=1.1666  lr=5.00e-04
+[seed 0] Epoch  43 | train=1.2981  val=1.1636  lr=5.00e-04
+[seed 0] Epoch  44 | train=1.2972  val=1.1623  lr=5.00e-04
+[seed 0] Epoch  45 | train=1.2941  val=1.1642  lr=5.00e-04
+[seed 0] Epoch  46 | train=1.3000  val=1.1739  lr=5.00e-04
+[seed 0] Epoch  47 | train=1.2893  val=1.1721  lr=5.00e-04
+[seed 0] Epoch  48 | train=1.2947  val=1.1735  lr=5.00e-04
+[seed 0] Epoch  49 | train=1.3081  val=1.1669  lr=5.00e-04
+[seed 0] Epoch  50 | train=1.3056  val=1.1652  lr=2.50e-04
+[seed 0] Epoch  51 | train=1.2993  val=1.1622  lr=2.50e-04
+[seed 0] Epoch  52 | train=1.2899  val=1.1726  lr=2.50e-04
+[seed 0] Epoch  53 | train=1.2909  val=1.1710  lr=2.50e-04
+[seed 0] Epoch  54 | train=1.3114  val=1.1644  lr=2.50e-04
+[seed 0] Epoch  55 | train=1.3010  val=1.1691  lr=2.50e-04
+[seed 0] Epoch  56 | train=1.3022  val=1.1625  lr=1.25e-04
+[seed 0] Epoch  57 | train=1.3071  val=1.1635  lr=1.25e-04
+[seed 0] Epoch  58 | train=1.3282  val=1.1658  lr=1.25e-04
+[seed 0] Epoch  59 | train=1.3314  val=1.1570  lr=1.25e-04
+[seed 0] Epoch  60 | train=1.3102  val=1.1616  lr=1.25e-04
+[seed 0] Epoch  61 | train=1.2910  val=1.1664  lr=1.25e-04
+[seed 0] Epoch  62 | train=1.2954  val=1.1619  lr=1.25e-04
+[seed 0] Epoch  63 | train=1.2983  val=1.1657  lr=1.25e-04
+[seed 0] Epoch  64 | train=1.2971  val=1.1612  lr=1.25e-04
+[seed 0] Epoch  65 | train=1.2903  val=1.1678  lr=6.25e-05
+[seed 0] Epoch  66 | train=1.3087  val=1.1659  lr=6.25e-05
+[seed 0] Epoch  67 | train=1.2912  val=1.1662  lr=6.25e-05
+[seed 0] Epoch  68 | train=1.2959  val=1.1669  lr=6.25e-05
+[seed 0] Epoch  69 | train=1.3014  val=1.1543  lr=6.25e-05
+[seed 0] Epoch  70 | train=1.2850  val=1.1637  lr=6.25e-05
+[seed 0] Epoch  71 | train=1.3093  val=1.1639  lr=6.25e-05
+[seed 0] Epoch  72 | train=1.3113  val=1.1558  lr=6.25e-05
+[seed 0] Epoch  73 | train=1.2872  val=1.1628  lr=6.25e-05
+[seed 0] Epoch  74 | train=1.2910  val=1.1618  lr=6.25e-05
+[seed 0] Epoch  75 | train=1.3050  val=1.1651  lr=3.13e-05
+[seed 0] Epoch  76 | train=1.2807  val=1.1588  lr=3.13e-05
+[seed 0] Epoch  77 | train=1.2783  val=1.1596  lr=3.13e-05
+[seed 0] Epoch  78 | train=1.2970  val=1.1586  lr=3.13e-05
+[seed 0] Epoch  79 | train=1.2852  val=1.1601  lr=3.13e-05
+[seed 0] Epoch  80 | train=1.3028  val=1.1646  lr=3.13e-05
+[seed 0] Epoch  81 | train=1.3002  val=1.1545  lr=1.56e-05
+[seed 0] Epoch  82 | train=1.2857  val=1.1609  lr=1.56e-05
+[seed 0] Epoch  83 | train=1.2917  val=1.1571  lr=1.56e-05
+[seed 0] Epoch  84 | train=1.2894  val=1.1641  lr=1.56e-05
+[seed 0] Early stopping at epoch 84.
+[seed 0] Best val loss: 1.1543
+Temperature calibration: T* = 0.5
+[seed 1] Epoch   1 | train=2.0525  val=1.4970  lr=1.00e-03
+[seed 1] Epoch   2 | train=1.7182  val=1.4384  lr=1.00e-03
+[seed 1] Epoch   3 | train=1.6153  val=1.4090  lr=1.00e-03
+[seed 1] Epoch   4 | train=1.5759  val=1.3910  lr=1.00e-03
+[seed 1] Epoch   5 | train=1.5173  val=1.3740  lr=1.00e-03
+[seed 1] Epoch   6 | train=1.4948  val=1.3545  lr=1.00e-03
+[seed 1] Epoch   7 | train=1.4817  val=1.3368  lr=1.00e-03
+[seed 1] Epoch   8 | train=1.4814  val=1.3169  lr=1.00e-03
+[seed 1] Epoch   9 | train=1.4451  val=1.3040  lr=1.00e-03
+[seed 1] Epoch  10 | train=1.4484  val=1.2886  lr=1.00e-03
+[seed 1] Epoch  11 | train=1.4034  val=1.2780  lr=1.00e-03
+[seed 1] Epoch  12 | train=1.4152  val=1.2617  lr=1.00e-03
+[seed 1] Epoch  13 | train=1.3972  val=1.2511  lr=1.00e-03
+[seed 1] Epoch  14 | train=1.3719  val=1.2469  lr=1.00e-03
+[seed 1] Epoch  15 | train=1.3715  val=1.2399  lr=1.00e-03
+[seed 1] Epoch  16 | train=1.3819  val=1.2307  lr=1.00e-03
+[seed 1] Epoch  17 | train=1.3599  val=1.2218  lr=1.00e-03
+[seed 1] Epoch  18 | train=1.3764  val=1.2224  lr=1.00e-03
+[seed 1] Epoch  19 | train=1.3581  val=1.2065  lr=1.00e-03
+[seed 1] Epoch  20 | train=1.3503  val=1.2139  lr=1.00e-03
+[seed 1] Epoch  21 | train=1.3459  val=1.2021  lr=1.00e-03
+[seed 1] Epoch  22 | train=1.3374  val=1.2046  lr=1.00e-03
+[seed 1] Epoch  23 | train=1.3514  val=1.1976  lr=1.00e-03
+[seed 1] Epoch  24 | train=1.3495  val=1.1957  lr=1.00e-03
+[seed 1] Epoch  25 | train=1.3574  val=1.1965  lr=1.00e-03
+[seed 1] Epoch  26 | train=1.3268  val=1.1957  lr=1.00e-03
+[seed 1] Epoch  27 | train=1.3455  val=1.1956  lr=1.00e-03
+[seed 1] Epoch  28 | train=1.3376  val=1.1868  lr=1.00e-03
+[seed 1] Epoch  29 | train=1.3276  val=1.1917  lr=1.00e-03
+[seed 1] Epoch  30 | train=1.3237  val=1.1862  lr=1.00e-03
+[seed 1] Epoch  31 | train=1.3124  val=1.1899  lr=1.00e-03
+[seed 1] Epoch  32 | train=1.3272  val=1.1788  lr=1.00e-03
+[seed 1] Epoch  33 | train=1.3187  val=1.1780  lr=1.00e-03
+[seed 1] Epoch  34 | train=1.3419  val=1.1813  lr=1.00e-03
+[seed 1] Epoch  35 | train=1.2999  val=1.1741  lr=1.00e-03
+[seed 1] Epoch  36 | train=1.3254  val=1.1790  lr=1.00e-03
+[seed 1] Epoch  37 | train=1.2933  val=1.1610  lr=1.00e-03
+[seed 1] Epoch  38 | train=1.3187  val=1.1824  lr=1.00e-03
+[seed 1] Epoch  39 | train=1.3027  val=1.1782  lr=1.00e-03
+[seed 1] Epoch  40 | train=1.3077  val=1.1768  lr=1.00e-03
+[seed 1] Epoch  41 | train=1.2972  val=1.1656  lr=1.00e-03
+[seed 1] Epoch  42 | train=1.3327  val=1.1594  lr=1.00e-03
+[seed 1] Epoch  43 | train=1.3038  val=1.1768  lr=1.00e-03
+[seed 1] Epoch  44 | train=1.3003  val=1.1729  lr=1.00e-03
+[seed 1] Epoch  45 | train=1.3016  val=1.1653  lr=1.00e-03
+[seed 1] Epoch  46 | train=1.2947  val=1.1660  lr=1.00e-03
+[seed 1] Epoch  47 | train=1.2875  val=1.1690  lr=1.00e-03
+[seed 1] Epoch  48 | train=1.2894  val=1.1591  lr=1.00e-03
+[seed 1] Epoch  49 | train=1.2906  val=1.1668  lr=1.00e-03
+[seed 1] Epoch  50 | train=1.2935  val=1.1625  lr=1.00e-03
+[seed 1] Epoch  51 | train=1.3011  val=1.1592  lr=1.00e-03
+[seed 1] Epoch  52 | train=1.2951  val=1.1742  lr=1.00e-03
+[seed 1] Epoch  53 | train=1.2863  val=1.1592  lr=1.00e-03
+[seed 1] Epoch  54 | train=1.3055  val=1.1554  lr=1.00e-03
+[seed 1] Epoch  55 | train=1.2903  val=1.1540  lr=1.00e-03
+[seed 1] Epoch  56 | train=1.3221  val=1.1666  lr=1.00e-03
+[seed 1] Epoch  57 | train=1.2845  val=1.1599  lr=1.00e-03
+[seed 1] Epoch  58 | train=1.2940  val=1.1591  lr=1.00e-03
+[seed 1] Epoch  59 | train=1.2939  val=1.1587  lr=1.00e-03
+[seed 1] Epoch  60 | train=1.2743  val=1.1609  lr=1.00e-03
+[seed 1] Epoch  61 | train=1.3019  val=1.1645  lr=5.00e-04
+[seed 1] Epoch  62 | train=1.2953  val=1.1732  lr=5.00e-04
+[seed 1] Epoch  63 | train=1.2863  val=1.1507  lr=5.00e-04
+[seed 1] Epoch  64 | train=1.2753  val=1.1586  lr=5.00e-04
+[seed 1] Epoch  65 | train=1.2824  val=1.1559  lr=5.00e-04
+[seed 1] Epoch  66 | train=1.2799  val=1.1521  lr=5.00e-04
+[seed 1] Epoch  67 | train=1.2831  val=1.1574  lr=5.00e-04
+[seed 1] Epoch  68 | train=1.2905  val=1.1531  lr=5.00e-04
+[seed 1] Epoch  69 | train=1.2760  val=1.1491  lr=5.00e-04
+[seed 1] Epoch  70 | train=1.2742  val=1.1479  lr=5.00e-04
+[seed 1] Epoch  71 | train=1.2741  val=1.1463  lr=5.00e-04
+[seed 1] Epoch  72 | train=1.2814  val=1.1446  lr=5.00e-04
+[seed 1] Epoch  73 | train=1.2751  val=1.1446  lr=5.00e-04
+[seed 1] Epoch  74 | train=1.2693  val=1.1505  lr=5.00e-04
+[seed 1] Epoch  75 | train=1.2945  val=1.1442  lr=5.00e-04
+[seed 1] Epoch  76 | train=1.2803  val=1.1508  lr=5.00e-04
+[seed 1] Epoch  77 | train=1.2641  val=1.1451  lr=5.00e-04
+[seed 1] Epoch  78 | train=1.2784  val=1.1374  lr=5.00e-04
+[seed 1] Epoch  79 | train=1.2609  val=1.1536  lr=5.00e-04
+[seed 1] Epoch  80 | train=1.2796  val=1.1405  lr=5.00e-04
+[seed 1] Epoch  81 | train=1.2774  val=1.1521  lr=5.00e-04
+[seed 1] Epoch  82 | train=1.2783  val=1.1473  lr=5.00e-04
+[seed 1] Epoch  83 | train=1.2709  val=1.1431  lr=5.00e-04
+[seed 1] Epoch  84 | train=1.3120  val=1.1494  lr=2.50e-04
+[seed 1] Epoch  85 | train=1.2896  val=1.1404  lr=2.50e-04
+[seed 1] Epoch  86 | train=1.2947  val=1.1446  lr=2.50e-04
+[seed 1] Epoch  87 | train=1.2706  val=1.1517  lr=2.50e-04
+[seed 1] Epoch  88 | train=1.2687  val=1.1445  lr=2.50e-04
+[seed 1] Epoch  89 | train=1.2704  val=1.1371  lr=2.50e-04
+[seed 1] Epoch  90 | train=1.2678  val=1.1366  lr=2.50e-04
+[seed 1] Epoch  91 | train=1.2685  val=1.1496  lr=2.50e-04
+[seed 1] Epoch  92 | train=1.2646  val=1.1490  lr=2.50e-04
+[seed 1] Epoch  93 | train=1.2688  val=1.1423  lr=2.50e-04
+[seed 1] Epoch  94 | train=1.2701  val=1.1332  lr=2.50e-04
+[seed 1] Epoch  95 | train=1.2662  val=1.1407  lr=2.50e-04
+[seed 1] Epoch  96 | train=1.2786  val=1.1470  lr=2.50e-04
+[seed 1] Epoch  97 | train=1.2643  val=1.1498  lr=2.50e-04
+[seed 1] Epoch  98 | train=1.2600  val=1.1482  lr=2.50e-04
+[seed 1] Epoch  99 | train=1.2732  val=1.1431  lr=2.50e-04
+[seed 1] Epoch 100 | train=1.2657  val=1.1477  lr=1.25e-04
+[seed 1] Best val loss: 1.1332
+Temperature calibration: T* = 0.5
+[seed 2] Epoch   1 | train=1.8742  val=1.4884  lr=1.00e-03
+[seed 2] Epoch   2 | train=1.6108  val=1.4437  lr=1.00e-03
+[seed 2] Epoch   3 | train=1.5756  val=1.4091  lr=1.00e-03
+[seed 2] Epoch   4 | train=1.5362  val=1.3934  lr=1.00e-03
+[seed 2] Epoch   5 | train=1.5318  val=1.3789  lr=1.00e-03
+[seed 2] Epoch   6 | train=1.4776  val=1.3606  lr=1.00e-03
+[seed 2] Epoch   7 | train=1.4537  val=1.3353  lr=1.00e-03
+[seed 2] Epoch   8 | train=1.4444  val=1.3162  lr=1.00e-03
+[seed 2] Epoch   9 | train=1.4286  val=1.3002  lr=1.00e-03
+[seed 2] Epoch  10 | train=1.4207  val=1.2871  lr=1.00e-03
+[seed 2] Epoch  11 | train=1.4185  val=1.2735  lr=1.00e-03
+[seed 2] Epoch  12 | train=1.3851  val=1.2589  lr=1.00e-03
+[seed 2] Epoch  13 | train=1.3952  val=1.2447  lr=1.00e-03
+[seed 2] Epoch  14 | train=1.3807  val=1.2438  lr=1.00e-03
+[seed 2] Epoch  15 | train=1.3743  val=1.2292  lr=1.00e-03
+[seed 2] Epoch  16 | train=1.3573  val=1.2235  lr=1.00e-03
+[seed 2] Epoch  17 | train=1.3521  val=1.2228  lr=1.00e-03
+[seed 2] Epoch  18 | train=1.3482  val=1.2197  lr=1.00e-03
+[seed 2] Epoch  19 | train=1.3531  val=1.2155  lr=1.00e-03
+[seed 2] Epoch  20 | train=1.3306  val=1.2016  lr=1.00e-03
+[seed 2] Epoch  21 | train=1.3561  val=1.2063  lr=1.00e-03
+[seed 2] Epoch  22 | train=1.3409  val=1.2078  lr=1.00e-03
+[seed 2] Epoch  23 | train=1.3328  val=1.2048  lr=1.00e-03
+[seed 2] Epoch  24 | train=1.3249  val=1.1894  lr=1.00e-03
+[seed 2] Epoch  25 | train=1.3377  val=1.1983  lr=1.00e-03
+[seed 2] Epoch  26 | train=1.3313  val=1.1842  lr=1.00e-03
+[seed 2] Epoch  27 | train=1.3386  val=1.1946  lr=1.00e-03
+[seed 2] Epoch  28 | train=1.3173  val=1.1901  lr=1.00e-03
+[seed 2] Epoch  29 | train=1.3174  val=1.1797  lr=1.00e-03
+[seed 2] Epoch  30 | train=1.3079  val=1.1863  lr=1.00e-03
+[seed 2] Epoch  31 | train=1.3166  val=1.1850  lr=1.00e-03
+[seed 2] Epoch  32 | train=1.3108  val=1.1776  lr=1.00e-03
+[seed 2] Epoch  33 | train=1.3142  val=1.1766  lr=1.00e-03
+[seed 2] Epoch  34 | train=1.3146  val=1.1726  lr=1.00e-03
+[seed 2] Epoch  35 | train=1.3197  val=1.1767  lr=1.00e-03
+[seed 2] Epoch  36 | train=1.3470  val=1.1825  lr=1.00e-03
+[seed 2] Epoch  37 | train=1.3366  val=1.1752  lr=1.00e-03
+[seed 2] Epoch  38 | train=1.3082  val=1.1819  lr=1.00e-03
+[seed 2] Epoch  39 | train=1.2945  val=1.1737  lr=1.00e-03
+[seed 2] Epoch  40 | train=1.2927  val=1.1800  lr=5.00e-04
+[seed 2] Epoch  41 | train=1.3037  val=1.1703  lr=5.00e-04
+[seed 2] Epoch  42 | train=1.2896  val=1.1698  lr=5.00e-04
+[seed 2] Epoch  43 | train=1.2832  val=1.1627  lr=5.00e-04
+[seed 2] Epoch  44 | train=1.2883  val=1.1721  lr=5.00e-04
+[seed 2] Epoch  45 | train=1.2921  val=1.1616  lr=5.00e-04
+[seed 2] Epoch  46 | train=1.2937  val=1.1717  lr=5.00e-04
+[seed 2] Epoch  47 | train=1.3005  val=1.1656  lr=5.00e-04
+[seed 2] Epoch  48 | train=1.3052  val=1.1604  lr=5.00e-04
+[seed 2] Epoch  49 | train=1.3071  val=1.1735  lr=5.00e-04
+[seed 2] Epoch  50 | train=1.3011  val=1.1709  lr=5.00e-04
+[seed 2] Epoch  51 | train=1.3176  val=1.1635  lr=5.00e-04
+[seed 2] Epoch  52 | train=1.2937  val=1.1681  lr=5.00e-04
+[seed 2] Epoch  53 | train=1.2949  val=1.1670  lr=5.00e-04
+[seed 2] Epoch  54 | train=1.2955  val=1.1621  lr=2.50e-04
+[seed 2] Epoch  55 | train=1.2854  val=1.1624  lr=2.50e-04
+[seed 2] Epoch  56 | train=1.2878  val=1.1542  lr=2.50e-04
+[seed 2] Epoch  57 | train=1.2969  val=1.1623  lr=2.50e-04
+[seed 2] Epoch  58 | train=1.2976  val=1.1613  lr=2.50e-04
+[seed 2] Epoch  59 | train=1.2943  val=1.1669  lr=2.50e-04
+[seed 2] Epoch  60 | train=1.2971  val=1.1667  lr=2.50e-04
+[seed 2] Epoch  61 | train=1.3051  val=1.1576  lr=2.50e-04
+[seed 2] Epoch  62 | train=1.2950  val=1.1634  lr=1.25e-04
+[seed 2] Epoch  63 | train=1.2918  val=1.1577  lr=1.25e-04
+[seed 2] Epoch  64 | train=1.2784  val=1.1598  lr=1.25e-04
+[seed 2] Epoch  65 | train=1.2838  val=1.1648  lr=1.25e-04
+[seed 2] Epoch  66 | train=1.2790  val=1.1564  lr=1.25e-04
+[seed 2] Epoch  67 | train=1.2694  val=1.1587  lr=1.25e-04
+[seed 2] Epoch  68 | train=1.2716  val=1.1678  lr=6.25e-05
+[seed 2] Epoch  69 | train=1.2900  val=1.1581  lr=6.25e-05
+[seed 2] Epoch  70 | train=1.2975  val=1.1584  lr=6.25e-05
+[seed 2] Epoch  71 | train=1.2763  val=1.1585  lr=6.25e-05
+[seed 2] Early stopping at epoch 71.
+[seed 2] Best val loss: 1.1542
+Temperature calibration: T* = 0.5
+[seed 3] Epoch   1 | train=1.9296  val=1.5233  lr=1.00e-03
+[seed 3] Epoch   2 | train=1.6608  val=1.4566  lr=1.00e-03
+[seed 3] Epoch   3 | train=1.6100  val=1.4278  lr=1.00e-03
+[seed 3] Epoch   4 | train=1.5436  val=1.3973  lr=1.00e-03
+[seed 3] Epoch   5 | train=1.5103  val=1.3878  lr=1.00e-03
+[seed 3] Epoch   6 | train=1.4916  val=1.3651  lr=1.00e-03
+[seed 3] Epoch   7 | train=1.4782  val=1.3473  lr=1.00e-03
+[seed 3] Epoch   8 | train=1.4617  val=1.3307  lr=1.00e-03
+[seed 3] Epoch   9 | train=1.4450  val=1.3048  lr=1.00e-03
+[seed 3] Epoch  10 | train=1.4429  val=1.2912  lr=1.00e-03
+[seed 3] Epoch  11 | train=1.4177  val=1.2758  lr=1.00e-03
+[seed 3] Epoch  12 | train=1.4032  val=1.2547  lr=1.00e-03
+[seed 3] Epoch  13 | train=1.3896  val=1.2544  lr=1.00e-03
+[seed 3] Epoch  14 | train=1.4054  val=1.2383  lr=1.00e-03
+[seed 3] Epoch  15 | train=1.3898  val=1.2296  lr=1.00e-03
+[seed 3] Epoch  16 | train=1.3776  val=1.2269  lr=1.00e-03
+[seed 3] Epoch  17 | train=1.3545  val=1.2299  lr=1.00e-03
+[seed 3] Epoch  18 | train=1.3909  val=1.2158  lr=1.00e-03
+[seed 3] Epoch  19 | train=1.3528  val=1.2038  lr=1.00e-03
+[seed 3] Epoch  20 | train=1.3692  val=1.2027  lr=1.00e-03
+[seed 3] Epoch  21 | train=1.3505  val=1.2080  lr=1.00e-03
+[seed 3] Epoch  22 | train=1.3298  val=1.1988  lr=1.00e-03
+[seed 3] Epoch  23 | train=1.3296  val=1.1934  lr=1.00e-03
+[seed 3] Epoch  24 | train=1.3306  val=1.1871  lr=1.00e-03
+[seed 3] Epoch  25 | train=1.3407  val=1.1905  lr=1.00e-03
+[seed 3] Epoch  26 | train=1.3623  val=1.1863  lr=1.00e-03
+[seed 3] Epoch  27 | train=1.3421  val=1.1916  lr=1.00e-03
+[seed 3] Epoch  28 | train=1.3537  val=1.1965  lr=1.00e-03
+[seed 3] Epoch  29 | train=1.3237  val=1.1818  lr=1.00e-03
+[seed 3] Epoch  30 | train=1.3385  val=1.1997  lr=1.00e-03
+[seed 3] Epoch  31 | train=1.3262  val=1.1838  lr=1.00e-03
+[seed 3] Epoch  32 | train=1.3294  val=1.1801  lr=1.00e-03
+[seed 3] Epoch  33 | train=1.3243  val=1.1707  lr=1.00e-03
+[seed 3] Epoch  34 | train=1.3067  val=1.1810  lr=1.00e-03
+[seed 3] Epoch  35 | train=1.3348  val=1.1808  lr=1.00e-03
+[seed 3] Epoch  36 | train=1.3257  val=1.1850  lr=1.00e-03
+[seed 3] Epoch  37 | train=1.3253  val=1.1839  lr=1.00e-03
+[seed 3] Epoch  38 | train=1.3044  val=1.1808  lr=1.00e-03
+[seed 3] Epoch  39 | train=1.3234  val=1.1769  lr=5.00e-04
+[seed 3] Epoch  40 | train=1.3113  val=1.1810  lr=5.00e-04
+[seed 3] Epoch  41 | train=1.3049  val=1.1742  lr=5.00e-04
+[seed 3] Epoch  42 | train=1.3118  val=1.1708  lr=5.00e-04
+[seed 3] Epoch  43 | train=1.2897  val=1.1721  lr=5.00e-04
+[seed 3] Epoch  44 | train=1.2986  val=1.1725  lr=5.00e-04
+[seed 3] Epoch  45 | train=1.2979  val=1.1664  lr=5.00e-04
+[seed 3] Epoch  46 | train=1.2900  val=1.1684  lr=5.00e-04
+[seed 3] Epoch  47 | train=1.2894  val=1.1687  lr=5.00e-04
+[seed 3] Epoch  48 | train=1.2854  val=1.1667  lr=5.00e-04
+[seed 3] Epoch  49 | train=1.3104  val=1.1676  lr=5.00e-04
+[seed 3] Epoch  50 | train=1.2942  val=1.1694  lr=5.00e-04
+[seed 3] Epoch  51 | train=1.2899  val=1.1597  lr=5.00e-04
+[seed 3] Epoch  52 | train=1.2984  val=1.1655  lr=5.00e-04
+[seed 3] Epoch  53 | train=1.2802  val=1.1591  lr=5.00e-04
+[seed 3] Epoch  54 | train=1.3042  val=1.1608  lr=5.00e-04
+[seed 3] Epoch  55 | train=1.2858  val=1.1680  lr=5.00e-04
+[seed 3] Epoch  56 | train=1.3021  val=1.1558  lr=5.00e-04
+[seed 3] Epoch  57 | train=1.3155  val=1.1558  lr=5.00e-04
+[seed 3] Epoch  58 | train=1.3052  val=1.1588  lr=5.00e-04
+[seed 3] Epoch  59 | train=1.3056  val=1.1635  lr=5.00e-04
+[seed 3] Epoch  60 | train=1.3102  val=1.1570  lr=5.00e-04
+[seed 3] Epoch  61 | train=1.2861  val=1.1673  lr=5.00e-04
+[seed 3] Epoch  62 | train=1.2926  val=1.1578  lr=2.50e-04
+[seed 3] Epoch  63 | train=1.2749  val=1.1653  lr=2.50e-04
+[seed 3] Epoch  64 | train=1.2888  val=1.1544  lr=2.50e-04
+[seed 3] Epoch  65 | train=1.2801  val=1.1623  lr=2.50e-04
+[seed 3] Epoch  66 | train=1.2828  val=1.1604  lr=2.50e-04
+[seed 3] Epoch  67 | train=1.2941  val=1.1554  lr=2.50e-04
+[seed 3] Epoch  68 | train=1.2876  val=1.1580  lr=2.50e-04
+[seed 3] Epoch  69 | train=1.2850  val=1.1556  lr=2.50e-04
+[seed 3] Epoch  70 | train=1.2685  val=1.1538  lr=2.50e-04
+[seed 3] Epoch  71 | train=1.3013  val=1.1496  lr=2.50e-04
+[seed 3] Epoch  72 | train=1.2760  val=1.1560  lr=2.50e-04
+[seed 3] Epoch  73 | train=1.2744  val=1.1585  lr=2.50e-04
+[seed 3] Epoch  74 | train=1.2776  val=1.1459  lr=2.50e-04
+[seed 3] Epoch  75 | train=1.2843  val=1.1516  lr=2.50e-04
+[seed 3] Epoch  76 | train=1.2815  val=1.1458  lr=2.50e-04
+[seed 3] Epoch  77 | train=1.2929  val=1.1536  lr=2.50e-04
+[seed 3] Epoch  78 | train=1.2758  val=1.1541  lr=2.50e-04
+[seed 3] Epoch  79 | train=1.3038  val=1.1507  lr=2.50e-04
+[seed 3] Epoch  80 | train=1.2934  val=1.1559  lr=1.25e-04
+[seed 3] Epoch  81 | train=1.2716  val=1.1538  lr=1.25e-04
+[seed 3] Epoch  82 | train=1.2623  val=1.1533  lr=1.25e-04
+[seed 3] Epoch  83 | train=1.2829  val=1.1516  lr=1.25e-04
+[seed 3] Epoch  84 | train=1.3054  val=1.1497  lr=1.25e-04
+[seed 3] Epoch  85 | train=1.2779  val=1.1546  lr=1.25e-04
+[seed 3] Epoch  86 | train=1.2803  val=1.1588  lr=6.25e-05
+[seed 3] Epoch  87 | train=1.2829  val=1.1568  lr=6.25e-05
+[seed 3] Epoch  88 | train=1.2761  val=1.1505  lr=6.25e-05
+[seed 3] Epoch  89 | train=1.2906  val=1.1492  lr=6.25e-05
+[seed 3] Epoch  90 | train=1.2762  val=1.1531  lr=6.25e-05
+[seed 3] Epoch  91 | train=1.2796  val=1.1500  lr=6.25e-05
+[seed 3] Early stopping at epoch 91.
+[seed 3] Best val loss: 1.1458
+Temperature calibration: T* = 0.5
+[seed 4] Epoch   1 | train=1.9638  val=1.5051  lr=1.00e-03
+[seed 4] Epoch   2 | train=1.6693  val=1.4556  lr=1.00e-03
+[seed 4] Epoch   3 | train=1.5732  val=1.4285  lr=1.00e-03
+[seed 4] Epoch   4 | train=1.5606  val=1.4109  lr=1.00e-03
+[seed 4] Epoch   5 | train=1.5106  val=1.3945  lr=1.00e-03
+[seed 4] Epoch   6 | train=1.5183  val=1.3784  lr=1.00e-03
+[seed 4] Epoch   7 | train=1.5041  val=1.3665  lr=1.00e-03
+[seed 4] Epoch   8 | train=1.4762  val=1.3440  lr=1.00e-03
+[seed 4] Epoch   9 | train=1.4571  val=1.3261  lr=1.00e-03
+[seed 4] Epoch  10 | train=1.4261  val=1.3060  lr=1.00e-03
+[seed 4] Epoch  11 | train=1.4233  val=1.2938  lr=1.00e-03
+[seed 4] Epoch  12 | train=1.4198  val=1.2702  lr=1.00e-03
+[seed 4] Epoch  13 | train=1.4046  val=1.2723  lr=1.00e-03
+[seed 4] Epoch  14 | train=1.3919  val=1.2579  lr=1.00e-03
+[seed 4] Epoch  15 | train=1.3814  val=1.2602  lr=1.00e-03
+[seed 4] Epoch  16 | train=1.3657  val=1.2383  lr=1.00e-03
+[seed 4] Epoch  17 | train=1.3632  val=1.2260  lr=1.00e-03
+[seed 4] Epoch  18 | train=1.3617  val=1.2197  lr=1.00e-03
+[seed 4] Epoch  19 | train=1.3512  val=1.2278  lr=1.00e-03
+[seed 4] Epoch  20 | train=1.3567  val=1.2164  lr=1.00e-03
+[seed 4] Epoch  21 | train=1.3651  val=1.2192  lr=1.00e-03
+[seed 4] Epoch  22 | train=1.3477  val=1.2011  lr=1.00e-03
+[seed 4] Epoch  23 | train=1.3338  val=1.2039  lr=1.00e-03
+[seed 4] Epoch  24 | train=1.3434  val=1.2044  lr=1.00e-03
+[seed 4] Epoch  25 | train=1.3552  val=1.2023  lr=1.00e-03
+[seed 4] Epoch  26 | train=1.3429  val=1.2050  lr=1.00e-03
+[seed 4] Epoch  27 | train=1.3458  val=1.1853  lr=1.00e-03
+[seed 4] Epoch  28 | train=1.3316  val=1.1933  lr=1.00e-03
+[seed 4] Epoch  29 | train=1.3441  val=1.1930  lr=1.00e-03
+[seed 4] Epoch  30 | train=1.3269  val=1.1840  lr=1.00e-03
+[seed 4] Epoch  31 | train=1.3362  val=1.1896  lr=1.00e-03
+[seed 4] Epoch  32 | train=1.3124  val=1.1850  lr=1.00e-03
+[seed 4] Epoch  33 | train=1.3213  val=1.1678  lr=1.00e-03
+[seed 4] Epoch  34 | train=1.3185  val=1.1785  lr=1.00e-03
+[seed 4] Epoch  35 | train=1.3018  val=1.1768  lr=1.00e-03
+[seed 4] Epoch  36 | train=1.3141  val=1.1840  lr=1.00e-03
+[seed 4] Epoch  37 | train=1.3386  val=1.1810  lr=1.00e-03
+[seed 4] Epoch  38 | train=1.3183  val=1.1791  lr=1.00e-03
+[seed 4] Epoch  39 | train=1.3219  val=1.1782  lr=5.00e-04
+[seed 4] Epoch  40 | train=1.2976  val=1.1774  lr=5.00e-04
+[seed 4] Epoch  41 | train=1.3084  val=1.1672  lr=5.00e-04
+[seed 4] Epoch  42 | train=1.3019  val=1.1809  lr=5.00e-04
+[seed 4] Epoch  43 | train=1.3147  val=1.1778  lr=5.00e-04
+[seed 4] Epoch  44 | train=1.3211  val=1.1677  lr=5.00e-04
+[seed 4] Epoch  45 | train=1.3086  val=1.1731  lr=5.00e-04
+[seed 4] Epoch  46 | train=1.3032  val=1.1695  lr=5.00e-04
+[seed 4] Epoch  47 | train=1.2933  val=1.1671  lr=5.00e-04
+[seed 4] Epoch  48 | train=1.3025  val=1.1676  lr=5.00e-04
+[seed 4] Epoch  49 | train=1.2932  val=1.1717  lr=5.00e-04
+[seed 4] Epoch  50 | train=1.3082  val=1.1665  lr=5.00e-04
+[seed 4] Epoch  51 | train=1.3001  val=1.1625  lr=5.00e-04
+[seed 4] Epoch  52 | train=1.3202  val=1.1675  lr=5.00e-04
+[seed 4] Epoch  53 | train=1.2874  val=1.1648  lr=5.00e-04
+[seed 4] Epoch  54 | train=1.3010  val=1.1618  lr=5.00e-04
+[seed 4] Epoch  55 | train=1.2989  val=1.1697  lr=5.00e-04
+[seed 4] Epoch  56 | train=1.2854  val=1.1641  lr=5.00e-04
+[seed 4] Epoch  57 | train=1.2876  val=1.1574  lr=5.00e-04
+[seed 4] Epoch  58 | train=1.2963  val=1.1558  lr=5.00e-04
+[seed 4] Epoch  59 | train=1.2905  val=1.1623  lr=5.00e-04
+[seed 4] Epoch  60 | train=1.2918  val=1.1646  lr=5.00e-04
+[seed 4] Epoch  61 | train=1.2948  val=1.1553  lr=5.00e-04
+[seed 4] Epoch  62 | train=1.2917  val=1.1563  lr=5.00e-04
+[seed 4] Epoch  63 | train=1.2911  val=1.1636  lr=5.00e-04
+[seed 4] Epoch  64 | train=1.2918  val=1.1601  lr=5.00e-04
+[seed 4] Epoch  65 | train=1.2841  val=1.1608  lr=5.00e-04
+[seed 4] Epoch  66 | train=1.2878  val=1.1560  lr=5.00e-04
+[seed 4] Epoch  67 | train=1.2756  val=1.1518  lr=5.00e-04
+[seed 4] Epoch  68 | train=1.2880  val=1.1587  lr=5.00e-04
+[seed 4] Epoch  69 | train=1.2808  val=1.1467  lr=5.00e-04
+[seed 4] Epoch  70 | train=1.2947  val=1.1529  lr=5.00e-04
+[seed 4] Epoch  71 | train=1.3047  val=1.1508  lr=5.00e-04
+[seed 4] Epoch  72 | train=1.2889  val=1.1658  lr=5.00e-04
+[seed 4] Epoch  73 | train=1.2910  val=1.1502  lr=5.00e-04
+[seed 4] Epoch  74 | train=1.2656  val=1.1571  lr=5.00e-04
+[seed 4] Epoch  75 | train=1.2769  val=1.1619  lr=2.50e-04
+[seed 4] Epoch  76 | train=1.2834  val=1.1534  lr=2.50e-04
+[seed 4] Epoch  77 | train=1.2848  val=1.1529  lr=2.50e-04
+[seed 4] Epoch  78 | train=1.2891  val=1.1523  lr=2.50e-04
+[seed 4] Epoch  79 | train=1.2864  val=1.1541  lr=2.50e-04
+[seed 4] Epoch  80 | train=1.2714  val=1.1588  lr=2.50e-04
+[seed 4] Epoch  81 | train=1.2740  val=1.1512  lr=1.25e-04
+[seed 4] Epoch  82 | train=1.2851  val=1.1395  lr=1.25e-04
+[seed 4] Epoch  83 | train=1.2802  val=1.1458  lr=1.25e-04
+[seed 4] Epoch  84 | train=1.2819  val=1.1529  lr=1.25e-04
+[seed 4] Epoch  85 | train=1.2924  val=1.1501  lr=1.25e-04
+[seed 4] Epoch  86 | train=1.2768  val=1.1492  lr=1.25e-04
+[seed 4] Epoch  87 | train=1.2880  val=1.1492  lr=1.25e-04
+[seed 4] Epoch  88 | train=1.2754  val=1.1546  lr=6.25e-05
+[seed 4] Epoch  89 | train=1.2668  val=1.1549  lr=6.25e-05
+[seed 4] Epoch  90 | train=1.2816  val=1.1480  lr=6.25e-05
+[seed 4] Epoch  91 | train=1.2637  val=1.1575  lr=6.25e-05
+[seed 4] Epoch  92 | train=1.2695  val=1.1502  lr=6.25e-05
+[seed 4] Epoch  93 | train=1.2650  val=1.1512  lr=6.25e-05
+[seed 4] Epoch  94 | train=1.2692  val=1.1481  lr=3.13e-05
+[seed 4] Epoch  95 | train=1.2880  val=1.1450  lr=3.13e-05
+[seed 4] Epoch  96 | train=1.2748  val=1.1491  lr=3.13e-05
+[seed 4] Epoch  97 | train=1.2720  val=1.1424  lr=3.13e-05
+[seed 4] Early stopping at epoch 97.
+[seed 4] Best val loss: 1.1395
+Temperature calibration: T* = 0.5
+
+=== Test Set Results ===
+  top1_accuracy          0.6372
+  pairwise_accuracy      0.7391
+  ndcg@3                 0.9515
+  kendall_tau            0.4783
+  nll                    1.4921
+  brier_score            0.4992
+########## lightgbm/lgbm_train.py ##########
+No saved semantic config found; using Config defaults.
+No tuned LightGBM params found; using fallback defaults.
+Trials - train: 1925  val: 339  test: 736
+Features: 54  |  seeds: 5
+  seed 0: best_iter=121  T*=0.5
+  seed 1: best_iter=93  T*=0.5
+  seed 2: best_iter=106  T*=0.5
+  seed 3: best_iter=66  T*=0.5
+  seed 4: best_iter=60  T*=0.5
+
+=== Test Set Results ===
+  top1_accuracy          0.6698
+  pairwise_accuracy      0.7536
+  ndcg@3                 0.9556
+  kendall_tau            0.5072
+  nll                    1.4066
+  brier_score            0.4377
+########## xgboost/xgb_train.py ##########
+No saved semantic config found; using Config defaults.
+No tuned XGBoost params found; using fallback defaults.
+Trials - train: 1925  val: 339  test: 736
+Features: 54  |  seeds: 5
+  seed 0: best_iter=139  T*=0.5
+  seed 1: best_iter=195  T*=0.5
+  seed 2: best_iter=2  T*=0.2
+  seed 3: best_iter=161  T*=0.5
+  seed 4: best_iter=144  T*=0.5
+
+=== Test Set Results ===
+  top1_accuracy          0.6427
+  pairwise_accuracy      0.7341
+  ndcg@3                 0.9518
+  kendall_tau            0.4683
+  nll                    1.4988
+  brier_score            0.4934
+########## lightgbm/lgbm_train_pl.py ##########
+No saved semantic config found; using Config defaults.
+No tuned LightGBM-PL params found; using fallback defaults.
+Trials - train: 1925  val: 339  test: 736
+Features: 54  |  seeds: 5
+  seed 0: best_iter=24  T*=1.0
+  seed 1: best_iter=42  T*=5.0
+  seed 2: best_iter=23  T*=1.0
+  seed 3: best_iter=19  T*=1.0
+  seed 4: best_iter=15  T*=0.7
+
+=== Test Set Results ===
+  top1_accuracy          0.5530
+  pairwise_accuracy      0.6807
+  ndcg@3                 0.9387
+  kendall_tau            0.3614
+  nll                    1.7720
+  brier_score            0.5720
+########## xgboost/xgb_train_pl.py ##########
+No saved semantic config found; using Config defaults.
+No tuned XGBoost-PL params found; using fallback defaults.
+Trials - train: 1925  val: 339  test: 736
+Features: 54  |  seeds: 5
+  seed 0: best_iter=26  T*=5.0
+  seed 1: best_iter=14  T*=5.0
+  seed 2: best_iter=12  T*=3.0
+  seed 3: best_iter=14  T*=5.0
+  seed 4: best_iter=26  T*=5.0
+
+=== Test Set Results ===
+  top1_accuracy          0.5557
+  pairwise_accuracy      0.7006
+  ndcg@3                 0.9420
+  kendall_tau            0.4013
+  nll                    1.6738
+  brier_score            0.5919
+########## blend.py ##########
+Loaded ['mlp', 'lgbm', 'xgb'] — val trials: 339  test trials: 736
+
+Best weights — mlp=0.0  lgbm=1.0  xgb=0.0  (T*=0.5)
+  Val balanced metrics:
+    top1_accuracy    0.8053
+    pairwise_accuracy 0.8417
+    ndcg@3           0.9730
+    kendall_tau      0.6834
+    nll              0.9920
+    brier_score      0.2946
+
+=== Blended Test Results ===
+  top1_accuracy          0.6698
+  pairwise_accuracy      0.7536
+  ndcg@3                 0.9556
+  kendall_tau            0.5072
+  nll                    1.4476
+  brier_score            0.4364
+
+=== Single-model test (for comparison) ===
+  mlp   top1=0.6372  kτ=0.4783  nll=1.4922
+  lgbm  top1=0.6698  kτ=0.5072  nll=1.4476
+  xgb   top1=0.6427  kτ=0.4683  nll=1.5118
+BASELINE_DONE

@@ -1,0 +1,18 @@
+Loaded semantic config from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning_anthropic\semantic_best_config.json: use_semantic=True text_pca_dim=8 image_pca_dim=0
+Loaded tuned RankSVM params from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning_anthropic\ranksvm_best_params.json
+Features: 29  params: {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'rbf', 'C': 1.0}
+Pairwise train rows: 9306  features: 29  trials val/test: 275/800  seeds: 5
+  seed 0: T*=2.0
+  seed 1: T*=2.0
+  seed 2: T*=2.0
+  seed 3: T*=2.0
+  seed 4: T*=2.0
+
+=== ranksvm Test Results (avg T=2.000) ===
+  top1_accuracy          0.5288
+  pairwise_accuracy      0.6829
+  ndcg@3                 0.9350
+  kendall_tau            0.3658
+  nll                    1.9788
+  brier_score            0.6760
+  -> saved ranksvm_val.npz / ranksvm_test.npz to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\preds_anthropic

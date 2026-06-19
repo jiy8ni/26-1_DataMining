@@ -1,0 +1,174 @@
+{
+  "model": "ranksvm",
+  "params": {
+    "class_weight": "balanced",
+    "fit_intercept": false,
+    "max_iter": 10000,
+    "kernel": "rbf",
+    "C": 1.0
+  },
+  "cv_balanced": 2.257923594992701,
+  "per_metric": {
+    "top1_accuracy": 0.6532126542176568,
+    "pairwise_accuracy": 0.7601262190289482,
+    "ndcg@3": 0.9542623269374519,
+    "kendall_tau": 0.5202524380578963,
+    "nll": 1.3468607425689698,
+    "brier_score": 0.46649165305960827,
+    "temperature": 2.0
+  },
+  "all_candidates": [
+    {
+      "params": {
+        "class_weight": "balanced",
+        "fit_intercept": false,
+        "max_iter": 10000,
+        "kernel": "linear",
+        "C": 0.01
+      },
+      "balanced": 1.5070378973205854,
+      "metrics": {
+        "top1_accuracy": 0.650462377596046,
+        "pairwise_accuracy": 0.7548312616630373,
+        "ndcg@3": 0.9533976245886763,
+        "kendall_tau": 0.5096625233260746,
+        "nll": 1.3459329843521117,
+        "brier_score": 0.46533692489569445,
+        "temperature": 1.4
+      }
+    },
+    {
+      "params": {
+        "class_weight": "balanced",
+        "fit_intercept": false,
+        "max_iter": 10000,
+        "kernel": "linear",
+        "C": 0.1
+      },
+      "balanced": 1.7558207655904063,
+      "metrics": {
+        "top1_accuracy": 0.6534553546720874,
+        "pairwise_accuracy": 0.7554353194465675,
+        "ndcg@3": 0.9536525336223292,
+        "kendall_tau": 0.5108706388931351,
+        "nll": 1.3483832597732544,
+        "brier_score": 0.4659089220775884,
+        "temperature": 1.4
+      }
+    },
+    {
+      "params": {
+        "class_weight": "balanced",
+        "fit_intercept": false,
+        "max_iter": 10000,
+        "kernel": "linear",
+        "C": 1.0
+      },
+      "balanced": 1.6947507944572262,
+      "metrics": {
+        "top1_accuracy": 0.6529327893004411,
+        "pairwise_accuracy": 0.7553478053957516,
+        "ndcg@3": 0.9535972714473713,
+        "kendall_tau": 0.5106956107915034,
+        "nll": 1.348720669746399,
+        "brier_score": 0.46598971155734825,
+        "temperature": 1.4
+      }
+    },
+    {
+      "params": {
+        "class_weight": "balanced",
+        "fit_intercept": false,
+        "max_iter": 10000,
+        "kernel": "linear",
+        "C": 10.0
+      },
+      "balanced": 1.667960925956148,
+      "metrics": {
+        "top1_accuracy": 0.6527125249832604,
+        "pairwise_accuracy": 0.7552743839566914,
+        "ndcg@3": 0.9535631280604449,
+        "kendall_tau": 0.5105487679133829,
+        "nll": 1.3487561702728272,
+        "brier_score": 0.4659983175964184,
+        "temperature": 1.4
+      }
+    },
+    {
+      "params": {
+        "class_weight": "balanced",
+        "fit_intercept": false,
+        "max_iter": 10000,
+        "kernel": "rbf",
+        "C": 0.01
+      },
+      "balanced": -7.293914769070563,
+      "metrics": {
+        "top1_accuracy": 0.6172211991997145,
+        "pairwise_accuracy": 0.7266514551861453,
+        "ndcg@3": 0.9474693968351355,
+        "kendall_tau": 0.4533029103722903,
+        "nll": 1.4689353704452515,
+        "brier_score": 0.5087128371653179,
+        "temperature": 1.4
+      }
+    },
+    {
+      "params": {
+        "class_weight": "balanced",
+        "fit_intercept": false,
+        "max_iter": 10000,
+        "kernel": "rbf",
+        "C": 0.1
+      },
+      "balanced": -0.6755725502699643,
+      "metrics": {
+        "top1_accuracy": 0.6392944781140579,
+        "pairwise_accuracy": 0.7505296183788195,
+        "ndcg@3": 0.9521265374142504,
+        "kendall_tau": 0.5010592367576392,
+        "nll": 1.3777634143829345,
+        "brier_score": 0.47555245681673675,
+        "temperature": 2.0
+      }
+    },
+    {
+      "params": {
+        "class_weight": "balanced",
+        "fit_intercept": false,
+        "max_iter": 10000,
+        "kernel": "rbf",
+        "C": 1.0
+      },
+      "balanced": 2.257923594992701,
+      "metrics": {
+        "top1_accuracy": 0.6532126542176568,
+        "pairwise_accuracy": 0.7601262190289482,
+        "ndcg@3": 0.9542623269374519,
+        "kendall_tau": 0.5202524380578963,
+        "nll": 1.3468607425689698,
+        "brier_score": 0.46649165305960827,
+        "temperature": 2.0
+      }
+    },
+    {
+      "params": {
+        "class_weight": "balanced",
+        "fit_intercept": false,
+        "max_iter": 10000,
+        "kernel": "rbf",
+        "C": 10.0
+      },
+      "balanced": -0.9140066589765989,
+      "metrics": {
+        "top1_accuracy": 0.6370650170437518,
+        "pairwise_accuracy": 0.7487147512023635,
+        "ndcg@3": 0.9518023886766496,
+        "kendall_tau": 0.49742950240472694,
+        "nll": 1.3724987745285033,
+        "brier_score": 0.47897677081099826,
+        "temperature": 2.6
+      }
+    }
+  ]
+}

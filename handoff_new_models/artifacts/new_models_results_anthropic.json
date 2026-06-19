@@ -1,0 +1,139 @@
+[
+  {
+    "model": "ranksvm",
+    "label": "RankSVM",
+    "engine": "anthropic",
+    "params": {
+      "class_weight": "balanced",
+      "fit_intercept": false,
+      "max_iter": 10000,
+      "kernel": "rbf",
+      "C": 1.0
+    },
+    "params_str": "kernel=rbf, C=1.0",
+    "n_candidates": 8,
+    "cv_balanced": 2.257923594992701,
+    "cv": {
+      "top1_accuracy": 0.6532126542176568,
+      "pairwise_accuracy": 0.7601262190289482,
+      "ndcg@3": 0.9542623269374519,
+      "kendall_tau": 0.5202524380578963,
+      "nll": 1.3468607425689698,
+      "brier_score": 0.46649165305960827,
+      "temperature": 2.0
+    },
+    "test": {
+      "top1_accuracy": 0.5288,
+      "pairwise_accuracy": 0.6829,
+      "ndcg@3": 0.935,
+      "kendall_tau": 0.3658,
+      "nll": 1.9788,
+      "brier_score": 0.676,
+      "avg_temp": 2.0
+    },
+    "npz_check": "OK"
+  },
+  {
+    "model": "rf",
+    "label": "RandomForest",
+    "engine": "anthropic",
+    "params": {
+      "class_weight": "balanced",
+      "n_jobs": -1,
+      "n_estimators": 500,
+      "max_depth": null,
+      "min_samples_leaf": 5,
+      "max_features": "sqrt"
+    },
+    "params_str": "n_estimators=500, max_depth=None, min_samples_leaf=5, max_features=sqrt",
+    "n_candidates": 16,
+    "cv_balanced": 5.09907507471536,
+    "cv": {
+      "top1_accuracy": 0.659291106454506,
+      "pairwise_accuracy": 0.760614541837881,
+      "ndcg@3": 0.9549065280042097,
+      "kendall_tau": 0.5212290836757623,
+      "nll": 1.3383897066116333,
+      "brier_score": 0.45612765310596715,
+      "temperature": 0.5
+    },
+    "test": {
+      "top1_accuracy": 0.5487,
+      "pairwise_accuracy": 0.6929,
+      "ndcg@3": 0.9377,
+      "kendall_tau": 0.3858,
+      "nll": 1.5967,
+      "brier_score": 0.5747,
+      "avg_temp": 0.5
+    },
+    "npz_check": "OK"
+  },
+  {
+    "model": "logreg",
+    "label": "LogisticRegression",
+    "engine": "anthropic",
+    "params": {
+      "fit_intercept": false,
+      "class_weight": "balanced",
+      "solver": "lbfgs",
+      "max_iter": 5000,
+      "C": 0.01
+    },
+    "params_str": "C=0.01",
+    "n_candidates": 4,
+    "cv_balanced": 4.836876403216544,
+    "cv": {
+      "top1_accuracy": 0.6552473407848549,
+      "pairwise_accuracy": 0.7574477275150736,
+      "ndcg@3": 0.9537719950144921,
+      "kendall_tau": 0.5148954550301471,
+      "nll": 1.3501333475112915,
+      "brier_score": 0.46323718854107093,
+      "temperature": 0.54
+    },
+    "test": {
+      "top1_accuracy": 0.5012,
+      "pairwise_accuracy": 0.6725,
+      "ndcg@3": 0.9318,
+      "kendall_tau": 0.345,
+      "nll": 1.8769,
+      "brier_score": 0.6815,
+      "avg_temp": 0.5
+    },
+    "npz_check": "OK"
+  },
+  {
+    "model": "ebm",
+    "label": "EBM",
+    "engine": "anthropic",
+    "params": {
+      "max_bins": 256,
+      "outer_bags": 8,
+      "interactions": 0,
+      "learning_rate": 0.05,
+      "min_samples_leaf": 10
+    },
+    "params_str": "interactions=0, learning_rate=0.05, min_samples_leaf=10",
+    "n_candidates": 8,
+    "cv_balanced": 4.068748509743005,
+    "cv": {
+      "top1_accuracy": 0.6645314931304509,
+      "pairwise_accuracy": 0.7618971639812055,
+      "ndcg@3": 0.9553750622411193,
+      "kendall_tau": 0.523794327962411,
+      "nll": 1.334193801879883,
+      "brier_score": 0.45639525977811246,
+      "temperature": 0.6199999999999999
+    },
+    "test": {
+      "top1_accuracy": 0.5188,
+      "pairwise_accuracy": 0.6821,
+      "ndcg@3": 0.934,
+      "kendall_tau": 0.3642,
+      "nll": 1.7357,
+      "brier_score": 0.6343,
+      "avg_temp": 0.62
+    },
+    "npz_check": "OK"
+  }
+]

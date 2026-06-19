@@ -1,0 +1,18 @@
+Loaded semantic config from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=8
+Loaded tuned RankSVM params from C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\tuning\ranksvm_best_params.json
+Features: 45  params: {'class_weight': 'balanced', 'fit_intercept': False, 'max_iter': 10000, 'kernel': 'rbf', 'C': 1.0}
+Pairwise train rows: 9618  features: 45  trials val/test: 279/818  seeds: 5
+  seed 0: T*=1.5
+  seed 1: T*=1.5
+  seed 2: T*=1.5
+  seed 3: T*=1.5
+  seed 4: T*=1.5
+
+=== ranksvm Test Results (avg T=1.500) ===
+  top1_accuracy          0.4756
+  pairwise_accuracy      0.6451
+  ndcg@3                 0.9256
+  kendall_tau            0.2901
+  nll                    2.1264
+  brier_score            0.7006
+  -> saved ranksvm_val.npz / ranksvm_test.npz to C:\Users\user\OneDrive\문서\DataMining\handoff_new_models\artifacts\preds

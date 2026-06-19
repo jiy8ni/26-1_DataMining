@@ -1,0 +1,155 @@
+{
+  "semantic_config": {
+    "use_semantic_features": true,
+    "text_pca_dim": 16,
+    "image_pca_dim": 0
+  },
+  "cv_balanced": 5.704289590246743,
+  "per_metric": {
+    "top1_accuracy": 0.6745758030677897,
+    "pairwise_accuracy": 0.7570563113256841,
+    "ndcg@3": 0.9553819168334906,
+    "kendall_tau": 0.514112622651368,
+    "nll": 1.3604412317276,
+    "brier_score": 0.45140752879364116,
+    "temperature": 0.6199999999999999
+  },
+  "all_candidates": [
+    {
+      "semantic_config": {
+        "use_semantic_features": false,
+        "text_pca_dim": 0,
+        "image_pca_dim": 0
+      },
+      "balanced": -1.681882688731153,
+      "metrics": {
+        "top1_accuracy": 0.6628844503693653,
+        "pairwise_accuracy": 0.7462600444394979,
+        "ndcg@3": 0.9532440694098865,
+        "kendall_tau": 0.49252008887899573,
+        "nll": 1.3996469736099244,
+        "brier_score": 0.4663307871574952,
+        "temperature": 0.6199999999999999
+      }
+    },
+    {
+      "semantic_config": {
+        "use_semantic_features": true,
+        "text_pca_dim": 8,
+        "image_pca_dim": 0
+      },
+      "balanced": 2.3768507141004735,
+      "metrics": {
+        "top1_accuracy": 0.665587306622436,
+        "pairwise_accuracy": 0.7520356515054656,
+        "ndcg@3": 0.9543756480168406,
+        "kendall_tau": 0.5040713030109313,
+        "nll": 1.3690382957458496,
+        "brier_score": 0.45474270830071334,
+        "temperature": 0.58
+      }
+    },
+    {
+      "semantic_config": {
+        "use_semantic_features": true,
+        "text_pca_dim": 16,
+        "image_pca_dim": 0
+      },
+      "balanced": 5.704289590246743,
+      "metrics": {
+        "top1_accuracy": 0.6745758030677897,
+        "pairwise_accuracy": 0.7570563113256841,
+        "ndcg@3": 0.9553819168334906,
+        "kendall_tau": 0.514112622651368,
+        "nll": 1.3604412317276,
+        "brier_score": 0.45140752879364116,
+        "temperature": 0.6199999999999999
+      }
+    },
+    {
+      "semantic_config": {
+        "use_semantic_features": true,
+        "text_pca_dim": 0,
+        "image_pca_dim": 4
+      },
+      "balanced": -0.008686911328506075,
+      "metrics": {
+        "top1_accuracy": 0.665890662797425,
+        "pairwise_accuracy": 0.7488726297923275,
+        "ndcg@3": 0.9535087612846918,
+        "kendall_tau": 0.49774525958465504,
+        "nll": 1.392191743850708,
+        "brier_score": 0.4639207338744128,
+        "temperature": 0.6199999999999999
+      }
+    },
+    {
+      "semantic_config": {
+        "use_semantic_features": true,
+        "text_pca_dim": 0,
+        "image_pca_dim": 8
+      },
+      "balanced": -1.466195113622104,
+      "metrics": {
+        "top1_accuracy": 0.6594466453707362,
+        "pairwise_accuracy": 0.7477458633584104,
+        "ndcg@3": 0.953314053610196,
+        "kendall_tau": 0.49549172671682074,
+        "nll": 1.3941561222076415,
+        "brier_score": 0.4637360557732874,
+        "temperature": 0.58
+      }
+    },
+    {
+      "semantic_config": {
+        "use_semantic_features": true,
+        "text_pca_dim": 8,
+        "image_pca_dim": 4
+      },
+      "balanced": 1.241924305494554,
+      "metrics": {
+        "top1_accuracy": 0.6665118823980796,
+        "pairwise_accuracy": 0.7506754266301752,
+        "ndcg@3": 0.9536789526129125,
+        "kendall_tau": 0.5013508532603504,
+        "nll": 1.382362174987793,
+        "brier_score": 0.452859423113596,
+        "temperature": 0.54
+      }
+    },
+    {
+      "semantic_config": {
+        "use_semantic_features": true,
+        "text_pca_dim": 16,
+        "image_pca_dim": 8
+      },
+      "balanced": -4.01439696506164,
+      "metrics": {
+        "top1_accuracy": 0.6526606926478236,
+        "pairwise_accuracy": 0.742983299716901,
+        "ndcg@3": 0.9521176389886336,
+        "kendall_tau": 0.48596659943380216,
+        "nll": 1.3976096153259276,
+        "brier_score": 0.47046056042791173,
+        "temperature": 0.72
+      }
+    },
+    {
+      "semantic_config": {
+        "use_semantic_features": true,
+        "text_pca_dim": 24,
+        "image_pca_dim": 8
+      },
+      "balanced": -2.151902931098367,
+      "metrics": {
+        "top1_accuracy": 0.6573718556679677,
+        "pairwise_accuracy": 0.7485295400745124,
+        "ndcg@3": 0.9527452020952456,
+        "kendall_tau": 0.497059080149025,
+        "nll": 1.402063775062561,
+        "brier_score": 0.46785964217147413,
+        "temperature": 0.58
+      }
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "model": "logreg",
+  "params": {
+    "fit_intercept": false,
+    "class_weight": "balanced",
+    "solver": "lbfgs",
+    "max_iter": 5000,
+    "C": 0.01
+  },
+  "cv_balanced": 4.836876403216544,
+  "per_metric": {
+    "top1_accuracy": 0.6552473407848549,
+    "pairwise_accuracy": 0.7574477275150736,
+    "ndcg@3": 0.9537719950144921,
+    "kendall_tau": 0.5148954550301471,
+    "nll": 1.3501333475112915,
+    "brier_score": 0.46323718854107093,
+    "temperature": 0.54
+  },
+  "all_candidates": [
+    {
+      "params": {
+        "fit_intercept": false,
+        "class_weight": "balanced",
+        "solver": "lbfgs",
+        "max_iter": 5000,
+        "C": 0.01
+      },
+      "balanced": 4.836876403216544,
+      "metrics": {
+        "top1_accuracy": 0.6552473407848549,
+        "pairwise_accuracy": 0.7574477275150736,
+        "ndcg@3": 0.9537719950144921,
+        "kendall_tau": 0.5148954550301471,
+        "nll": 1.3501333475112915,
+        "brier_score": 0.46323718854107093,
+        "temperature": 0.54
+      }
+    },
+    {
+      "params": {
+        "fit_intercept": false,
+        "class_weight": "balanced",
+        "solver": "lbfgs",
+        "max_iter": 5000,
+        "C": 0.1
+      },
+      "balanced": 0.019518164645893912,
+      "metrics": {
+        "top1_accuracy": 0.6532765285457575,
+        "pairwise_accuracy": 0.756131016435109,
+        "ndcg@3": 0.953766450602458,
+        "kendall_tau": 0.5122620328702181,
+        "nll": 1.3554355382919312,
+        "brier_score": 0.4660737388099795,
+        "temperature": 0.6599999999999999
+      }
+    },
+    {
+      "params": {
+        "fit_intercept": false,
+        "class_weight": "balanced",
+        "solver": "lbfgs",
+        "max_iter": 5000,
+        "C": 1.0
+      },
+      "balanced": -2.0317229007565407,
+      "metrics": {
+        "top1_accuracy": 0.6518297527612169,
+        "pairwise_accuracy": 0.7559458769002122,
+        "ndcg@3": 0.9536304557229338,
+        "kendall_tau": 0.5118917538004244,
+        "nll": 1.3581556320190429,
+        "brier_score": 0.4668894498540156,
+        "temperature": 0.6599999999999999
+      }
+    },
+    {
+      "params": {
+        "fit_intercept": false,
+        "class_weight": "balanced",
+        "solver": "lbfgs",
+        "max_iter": 5000,
+        "C": 10.0
+      },
+      "balanced": -2.824671667105891,
+      "metrics": {
+        "top1_accuracy": 0.6514548699121072,
+        "pairwise_accuracy": 0.7556498791408407,
+        "ndcg@3": 0.9535805158745763,
+        "kendall_tau": 0.5112997582816812,
+        "nll": 1.3585282564163208,
+        "brier_score": 0.467001417091965,
+        "temperature": 0.6599999999999999
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "seed": 42,
+  "holdout_frac": 0.1,
+  "val_frac": 0.15,
+  "holdout_brands": [
+    "닥터오라클",
+    "빌리프",
+    "스킨1004",
+    "언리시아"
+  ],
+  "set_id_counts": {
+    "step2qt_train": 1925,
+    "step2qt_val": 339,
+    "step2qt_test": 736
+  },
+  "onehot_cols": [
+    "qt_USE",
+    "qt_CAT",
+    "qt_SYM",
+    "qt_DEC",
+    "qt_PRC",
+    "persona_PRIMARY",
+    "persona_SECONDARY",
+    "persona_TERTIARY1",
+    "persona_TERTIARY2"
+  ],
+  "description": "Query-type-aware dataset from anthropic_various_query_type.csv. step2 brand-level holdout (10% brands -> test; remaining 85/15 -> train/val). query_type + persona one-hot encoded as 0/1 feature columns."
+}
