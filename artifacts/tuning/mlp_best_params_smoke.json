@@ -1,0 +1,91 @@
+{
+  "model": "mlp",
+  "params": {
+    "lambda_mse": 0.5,
+    "hidden_dims": [
+      64,
+      32
+    ],
+    "dropout": 0.1,
+    "weight_decay": 0.0001,
+    "lr": 0.001
+  },
+  "cv_balanced": 4.242499471388676,
+  "per_metric": {
+    "top1_accuracy": 0.5607346622907607,
+    "pairwise_accuracy": 0.6916495296286501,
+    "ndcg@3": 0.9393606991825928,
+    "kendall_tau": 0.3832990592573003,
+    "nll": 1.5441829562187195,
+    "brier_score": 0.5525763780089044,
+    "temperature": 0.5
+  },
+  "all_candidates": [
+    {
+      "params": {
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          64,
+          32
+        ],
+        "dropout": 0.1,
+        "weight_decay": 0.0001,
+        "lr": 0.0005
+      },
+      "balanced": -2.1363411219656765,
+      "metrics": {
+        "top1_accuracy": 0.5234140953883906,
+        "pairwise_accuracy": 0.6575823505127624,
+        "ndcg@3": 0.9323285620236352,
+        "kendall_tau": 0.3151647010255247,
+        "nll": 1.6025299429893494,
+        "brier_score": 0.5753269237025012,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          64,
+          32
+        ],
+        "dropout": 0.1,
+        "weight_decay": 0.0001,
+        "lr": 0.001
+      },
+      "balanced": 4.242499471388676,
+      "metrics": {
+        "top1_accuracy": 0.5607346622907607,
+        "pairwise_accuracy": 0.6916495296286501,
+        "ndcg@3": 0.9393606991825928,
+        "kendall_tau": 0.3832990592573003,
+        "nll": 1.5441829562187195,
+        "brier_score": 0.5525763780089044,
+        "temperature": 0.5
+      }
+    },
+    {
+      "params": {
+        "lambda_mse": 0.5,
+        "hidden_dims": [
+          64,
+          32
+        ],
+        "dropout": 0.1,
+        "weight_decay": 0.001,
+        "lr": 0.0005
+      },
+      "balanced": -2.106158349423005,
+      "metrics": {
+        "top1_accuracy": 0.5240158185819926,
+        "pairwise_accuracy": 0.65755435078445,
+        "ndcg@3": 0.9323620332602324,
+        "kendall_tau": 0.3151087015689001,
+        "nll": 1.6026001572608948,
+        "brier_score": 0.5753775247978666,
+        "temperature": 0.5
+      }
+    }
+  ]
+}

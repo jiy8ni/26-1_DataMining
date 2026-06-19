@@ -1,0 +1,700 @@
+===== TUNERS =====
+
+########## src/tune/tune_semantic.py ##########
+Semantic brand-CV tuning x 8 candidates x 5 folds
+  [ 1/8] use_sem=False txt= 0 img= 0 | top1=0.6293 k?=0.4602 nll=1.4275
+  [ 2/8] use_sem=True txt= 8 img= 0 | top1=0.6649 k?=0.5040 nll=1.3799
+  [ 3/8] use_sem=True txt=16 img= 0 | top1=0.6673 k?=0.5024 nll=1.3467
+  [ 4/8] use_sem=True txt= 0 img= 4 | top1=0.6739 k?=0.5157 nll=1.3618
+  [ 5/8] use_sem=True txt= 0 img= 8 | top1=0.6712 k?=0.5138 nll=1.3554
+  [ 6/8] use_sem=True txt= 8 img= 4 | top1=0.6701 k?=0.5130 nll=1.3408
+  [ 7/8] use_sem=True txt=16 img= 8 | top1=0.6955 k?=0.5434 nll=1.3085
+  [ 8/8] use_sem=True txt=24 img= 8 | top1=0.6874 k?=0.5330 nll=1.3107
+
+============================================================
+Best semantic config (idx 6, balanced=4.0841):
+    use_semantic_features: True
+    text_pca_dim: 16
+    image_pca_dim: 8
+  CV-mean metrics:
+    top1_accuracy    0.6955
+    pairwise_accuracy 0.7717
+    ndcg@3           0.9582
+    kendall_tau      0.5434
+    nll              1.3085
+    brier_score      0.4284
+    temperature      0.3200
+  -> saved to artifacts/tuning\semantic_best_config.json
+########## DONE (exit=0): src/tune/tune_semantic.py ##########
+
+########## src/tune/tune_mlp.py ##########
+Loaded semantic config from artifacts/tuning\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=8
+MLP brand-CV tuning x 36 candidates x 5 folds  (device=cpu)
+  [ 1/36] dims=[64, 32] do=0.1 wd=1e-04 lr=5e-04 | top1=0.6691 k?=0.5313 nll=1.3175
+  [ 2/36] dims=[64, 32] do=0.1 wd=1e-04 lr=1e-03 | top1=0.6673 k?=0.5288 nll=1.3107
+  [ 3/36] dims=[64, 32] do=0.1 wd=1e-03 lr=5e-04 | top1=0.6687 k?=0.5309 nll=1.3177
+  [ 4/36] dims=[64, 32] do=0.1 wd=1e-03 lr=1e-03 | top1=0.6727 k?=0.5383 nll=1.3036
+  [ 5/36] dims=[64, 32] do=0.3 wd=1e-04 lr=5e-04 | top1=0.6670 k?=0.5255 nll=1.3328
+  [ 6/36] dims=[64, 32] do=0.3 wd=1e-04 lr=1e-03 | top1=0.6755 k?=0.5382 nll=1.3174
+  [ 7/36] dims=[64, 32] do=0.3 wd=1e-03 lr=5e-04 | top1=0.6694 k?=0.5288 nll=1.3293
+  [ 8/36] dims=[64, 32] do=0.3 wd=1e-03 lr=1e-03 | top1=0.6739 k?=0.5390 nll=1.3160
+  [ 9/36] dims=[64, 32] do=0.5 wd=1e-04 lr=5e-04 | top1=0.6561 k?=0.5099 nll=1.3745
+  [10/36] dims=[64, 32] do=0.5 wd=1e-04 lr=1e-03 | top1=0.6675 k?=0.5251 nll=1.3450
+  [11/36] dims=[64, 32] do=0.5 wd=1e-03 lr=5e-04 | top1=0.6568 k?=0.5114 nll=1.3723
+  [12/36] dims=[64, 32] do=0.5 wd=1e-03 lr=1e-03 | top1=0.6699 k?=0.5264 nll=1.3392
+  [13/36] dims=[96, 48, 24] do=0.1 wd=1e-04 lr=5e-04 | top1=0.6683 k?=0.5298 nll=1.3143
+  [14/36] dims=[96, 48, 24] do=0.1 wd=1e-04 lr=1e-03 | top1=0.6743 k?=0.5423 nll=1.3074
+  [15/36] dims=[96, 48, 24] do=0.1 wd=1e-03 lr=5e-04 | top1=0.6701 k?=0.5341 nll=1.3118
+  [16/36] dims=[96, 48, 24] do=0.1 wd=1e-03 lr=1e-03 | top1=0.6761 k?=0.5439 nll=1.3023
+  [17/36] dims=[96, 48, 24] do=0.3 wd=1e-04 lr=5e-04 | top1=0.6749 k?=0.5425 nll=1.3118
+  [18/36] dims=[96, 48, 24] do=0.3 wd=1e-04 lr=1e-03 | top1=0.6755 k?=0.5421 nll=1.3089
+  [19/36] dims=[96, 48, 24] do=0.3 wd=1e-03 lr=5e-04 | top1=0.6773 k?=0.5447 nll=1.3070
+  [20/36] dims=[96, 48, 24] do=0.3 wd=1e-03 lr=1e-03 | top1=0.6717 k?=0.5378 nll=1.3126
+  [21/36] dims=[96, 48, 24] do=0.5 wd=1e-04 lr=5e-04 | top1=0.6613 k?=0.5256 nll=1.3497
+  [22/36] dims=[96, 48, 24] do=0.5 wd=1e-04 lr=1e-03 | top1=0.6696 k?=0.5337 nll=1.3322
+  [23/36] dims=[96, 48, 24] do=0.5 wd=1e-03 lr=5e-04 | top1=0.6640 k?=0.5277 nll=1.3486
+  [24/36] dims=[96, 48, 24] do=0.5 wd=1e-03 lr=1e-03 | top1=0.6672 k?=0.5323 nll=1.3328
+  [25/36] dims=[128, 64, 32] do=0.1 wd=1e-04 lr=5e-04 | top1=0.6815 k?=0.5442 nll=1.2984
+  [26/36] dims=[128, 64, 32] do=0.1 wd=1e-04 lr=1e-03 | top1=0.6745 k?=0.5396 nll=1.2947
+  [27/36] dims=[128, 64, 32] do=0.1 wd=1e-03 lr=5e-04 | top1=0.6770 k?=0.5444 nll=1.2994
+  [28/36] dims=[128, 64, 32] do=0.1 wd=1e-03 lr=1e-03 | top1=0.6752 k?=0.5409 nll=1.2962
+  [29/36] dims=[128, 64, 32] do=0.3 wd=1e-04 lr=5e-04 | top1=0.6716 k?=0.5401 nll=1.3153
+  [30/36] dims=[128, 64, 32] do=0.3 wd=1e-04 lr=1e-03 | top1=0.6735 k?=0.5417 nll=1.3064
+  [31/36] dims=[128, 64, 32] do=0.3 wd=1e-03 lr=5e-04 | top1=0.6713 k?=0.5399 nll=1.3153
+  [32/36] dims=[128, 64, 32] do=0.3 wd=1e-03 lr=1e-03 | top1=0.6749 k?=0.5389 nll=1.3112
+  [33/36] dims=[128, 64, 32] do=0.5 wd=1e-04 lr=5e-04 | top1=0.6650 k?=0.5298 nll=1.3558
+  [34/36] dims=[128, 64, 32] do=0.5 wd=1e-04 lr=1e-03 | top1=0.6659 k?=0.5341 nll=1.3411
+  [35/36] dims=[128, 64, 32] do=0.5 wd=1e-03 lr=5e-04 | top1=0.6654 k?=0.5311 nll=1.3477
+  [36/36] dims=[128, 64, 32] do=0.5 wd=1e-03 lr=1e-03 | top1=0.6677 k?=0.5380 nll=1.3291
+
+============================================================
+Best mlp candidate (idx 24, balanced=4.4735):
+    lambda_mse: 0.5
+    hidden_dims: [128, 64, 32]
+    dropout: 0.1
+    weight_decay: 0.0001
+    lr: 0.0005
+  CV-mean metrics:
+    top1_accuracy    0.6815
+    pairwise_accuracy 0.7721
+    ndcg@3           0.9579
+    kendall_tau      0.5442
+    nll              1.2984
+    brier_score      0.4397
+    temperature      0.5000
+  -> saved to artifacts/tuning\mlp_best_params.json
+########## DONE (exit=0): src/tune/tune_mlp.py ##########
+
+########## src/tune/tune_lgbm.py ##########
+Loaded semantic config from artifacts/tuning\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=8
+LightGBM brand-CV tuning x 36 candidates x 5 folds
+  [ 1/36] lr=0.03 leaves=15 mcs=20 l2=0.1 | top1=0.6720 k?=0.5123 nll=1.3469
+  [ 2/36] lr=0.03 leaves=15 mcs=20 l2=0.5 | top1=0.6824 k?=0.5409 nll=1.3174
+  [ 3/36] lr=0.03 leaves=15 mcs=20 l2=1.0 | top1=0.6818 k?=0.5291 nll=1.3320
+  [ 4/36] lr=0.03 leaves=15 mcs=50 l2=0.1 | top1=0.6801 k?=0.5284 nll=1.3396
+  [ 5/36] lr=0.03 leaves=15 mcs=50 l2=0.5 | top1=0.6825 k?=0.5296 nll=1.3420
+  [ 6/36] lr=0.03 leaves=15 mcs=50 l2=1.0 | top1=0.6679 k?=0.5152 nll=1.3638
+  [ 7/36] lr=0.03 leaves=31 mcs=20 l2=0.1 | top1=0.6784 k?=0.5219 nll=1.3350
+  [ 8/36] lr=0.03 leaves=31 mcs=20 l2=0.5 | top1=0.6844 k?=0.5285 nll=1.3299
+  [ 9/36] lr=0.03 leaves=31 mcs=20 l2=1.0 | top1=0.6846 k?=0.5327 nll=1.3341
+  [10/36] lr=0.03 leaves=31 mcs=50 l2=0.1 | top1=0.6807 k?=0.5314 nll=1.3306
+  [11/36] lr=0.03 leaves=31 mcs=50 l2=0.5 | top1=0.6780 k?=0.5285 nll=1.3187
+  [12/36] lr=0.03 leaves=31 mcs=50 l2=1.0 | top1=0.6818 k?=0.5285 nll=1.3291
+  [13/36] lr=0.03 leaves=63 mcs=20 l2=0.1 | top1=0.6798 k?=0.5241 nll=1.3343
+  [14/36] lr=0.03 leaves=63 mcs=20 l2=0.5 | top1=0.6813 k?=0.5231 nll=1.3488
+  [15/36] lr=0.03 leaves=63 mcs=20 l2=1.0 | top1=0.6783 k?=0.5206 nll=1.3315
+  [16/36] lr=0.03 leaves=63 mcs=50 l2=0.1 | top1=0.6741 k?=0.5172 nll=1.3466
+  [17/36] lr=0.03 leaves=63 mcs=50 l2=0.5 | top1=0.6828 k?=0.5316 nll=1.3256
+  [18/36] lr=0.03 leaves=63 mcs=50 l2=1.0 | top1=0.6825 k?=0.5272 nll=1.3217
+  [19/36] lr=0.05 leaves=15 mcs=20 l2=0.1 | top1=0.6686 k?=0.5164 nll=1.3464
+  [20/36] lr=0.05 leaves=15 mcs=20 l2=0.5 | top1=0.6832 k?=0.5429 nll=1.3118
+  [21/36] lr=0.05 leaves=15 mcs=20 l2=1.0 | top1=0.6760 k?=0.5215 nll=1.3395
+  [22/36] lr=0.05 leaves=15 mcs=50 l2=0.1 | top1=0.6724 k?=0.5183 nll=1.3727
+  [23/36] lr=0.05 leaves=15 mcs=50 l2=0.5 | top1=0.6784 k?=0.5234 nll=1.3338
+  [24/36] lr=0.05 leaves=15 mcs=50 l2=1.0 | top1=0.6695 k?=0.5174 nll=1.3412
+  [25/36] lr=0.05 leaves=31 mcs=20 l2=0.1 | top1=0.6801 k?=0.5267 nll=1.3249
+  [26/36] lr=0.05 leaves=31 mcs=20 l2=0.5 | top1=0.6903 k?=0.5381 nll=1.2972
+  [27/36] lr=0.05 leaves=31 mcs=20 l2=1.0 | top1=0.6902 k?=0.5398 nll=1.2985
+  [28/36] lr=0.05 leaves=31 mcs=50 l2=0.1 | top1=0.6806 k?=0.5304 nll=1.3210
+  [29/36] lr=0.05 leaves=31 mcs=50 l2=0.5 | top1=0.6955 k?=0.5434 nll=1.3085
+  [30/36] lr=0.05 leaves=31 mcs=50 l2=1.0 | top1=0.6778 k?=0.5289 nll=1.3386
+  [31/36] lr=0.05 leaves=63 mcs=20 l2=0.1 | top1=0.6833 k?=0.5258 nll=1.3192
+  [32/36] lr=0.05 leaves=63 mcs=20 l2=0.5 | top1=0.6689 k?=0.5079 nll=1.3672
+  [33/36] lr=0.05 leaves=63 mcs=20 l2=1.0 | top1=0.6805 k?=0.5298 nll=1.3236
+  [34/36] lr=0.05 leaves=63 mcs=50 l2=0.1 | top1=0.6833 k?=0.5256 nll=1.3281
+  [35/36] lr=0.05 leaves=63 mcs=50 l2=0.5 | top1=0.6881 k?=0.5333 nll=1.3339
+  [36/36] lr=0.05 leaves=63 mcs=50 l2=1.0 | top1=0.6788 k?=0.5244 nll=1.3299
+
+============================================================
+Best lgbm candidate (idx 28, balanced=6.0689):
+    objective: lambdarank
+    metric: ndcg
+    ndcg_eval_at: [1, 3]
+    reg_alpha: 0.1
+    feature_fraction: 0.7
+    bagging_fraction: 0.8
+    bagging_freq: 1
+    verbose: -1
+    learning_rate: 0.05
+    num_leaves: 31
+    min_child_samples: 50
+    reg_lambda: 0.5
+  CV-mean metrics:
+    top1_accuracy    0.6955
+    pairwise_accuracy 0.7717
+    ndcg@3           0.9582
+    kendall_tau      0.5434
+    nll              1.3085
+    brier_score      0.4284
+    temperature      0.3200
+  -> saved to artifacts/tuning\lgbm_best_params.json
+########## DONE (exit=0): src/tune/tune_lgbm.py ##########
+
+########## src/tune/tune_xgb.py ##########
+Loaded semantic config from artifacts/tuning\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=8
+XGBoost brand-CV tuning x 72 candidates x 5 folds
+  [ 1/72] eta=0.03 depth=3 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6525 k?=0.4927 nll=1.4106
+  [ 2/72] eta=0.03 depth=3 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6508 k?=0.4896 nll=1.4108
+  [ 3/72] eta=0.03 depth=3 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6491 k?=0.4940 nll=1.4224
+  [ 4/72] eta=0.03 depth=3 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6529 k?=0.4906 nll=1.3980
+  [ 5/72] eta=0.03 depth=3 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6428 k?=0.4833 nll=1.4199
+  [ 6/72] eta=0.03 depth=3 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6414 k?=0.4747 nll=1.4384
+  [ 7/72] eta=0.03 depth=3 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6477 k?=0.4938 nll=1.3898
+  [ 8/72] eta=0.03 depth=3 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6415 k?=0.4830 nll=1.4186
+  [ 9/72] eta=0.03 depth=3 mcw=10 gamma=0.0 l2=0.5 | top1=0.6424 k?=0.4809 nll=1.4188
+  [10/72] eta=0.03 depth=3 mcw=10 gamma=0.0 l2=1.0 | top1=0.6378 k?=0.4696 nll=1.4415
+  [11/72] eta=0.03 depth=3 mcw=10 gamma=0.5 l2=0.5 | top1=0.6420 k?=0.4845 nll=1.4321
+  [12/72] eta=0.03 depth=3 mcw=10 gamma=0.5 l2=1.0 | top1=0.6424 k?=0.4756 nll=1.4278
+  [13/72] eta=0.03 depth=4 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6622 k?=0.5088 nll=1.3724
+  [14/72] eta=0.03 depth=4 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6621 k?=0.5056 nll=1.3869
+  [15/72] eta=0.03 depth=4 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6624 k?=0.5082 nll=1.3821
+  [16/72] eta=0.03 depth=4 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6570 k?=0.5027 nll=1.3924
+  [17/72] eta=0.03 depth=4 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6520 k?=0.4950 nll=1.3993
+  [18/72] eta=0.03 depth=4 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6617 k?=0.5067 nll=1.3888
+  [19/72] eta=0.03 depth=4 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6651 k?=0.5150 nll=1.3778
+  [20/72] eta=0.03 depth=4 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6617 k?=0.5074 nll=1.3785
+  [21/72] eta=0.03 depth=4 mcw=10 gamma=0.0 l2=0.5 | top1=0.6635 k?=0.5096 nll=1.3665
+  [22/72] eta=0.03 depth=4 mcw=10 gamma=0.0 l2=1.0 | top1=0.6620 k?=0.5119 nll=1.3805
+  [23/72] eta=0.03 depth=4 mcw=10 gamma=0.5 l2=0.5 | top1=0.6717 k?=0.5204 nll=1.3529
+  [24/72] eta=0.03 depth=4 mcw=10 gamma=0.5 l2=1.0 | top1=0.6605 k?=0.5032 nll=1.3853
+  [25/72] eta=0.03 depth=5 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6596 k?=0.5053 nll=1.3730
+  [26/72] eta=0.03 depth=5 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6717 k?=0.5193 nll=1.3562
+  [27/72] eta=0.03 depth=5 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6678 k?=0.5154 nll=1.3653
+  [28/72] eta=0.03 depth=5 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6666 k?=0.5113 nll=1.3653
+  [29/72] eta=0.03 depth=5 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6744 k?=0.5216 nll=1.3485
+  [30/72] eta=0.03 depth=5 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6623 k?=0.5081 nll=1.3711
+  [31/72] eta=0.03 depth=5 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6690 k?=0.5148 nll=1.3455
+  [32/72] eta=0.03 depth=5 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6709 k?=0.5159 nll=1.3591
+  [33/72] eta=0.03 depth=5 mcw=10 gamma=0.0 l2=0.5 | top1=0.6623 k?=0.5114 nll=1.3692
+  [34/72] eta=0.03 depth=5 mcw=10 gamma=0.0 l2=1.0 | top1=0.6671 k?=0.5170 nll=1.3585
+  [35/72] eta=0.03 depth=5 mcw=10 gamma=0.5 l2=0.5 | top1=0.6662 k?=0.5112 nll=1.3680
+  [36/72] eta=0.03 depth=5 mcw=10 gamma=0.5 l2=1.0 | top1=0.6627 k?=0.5084 nll=1.3674
+  [37/72] eta=0.05 depth=3 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6486 k?=0.4931 nll=1.3986
+  [38/72] eta=0.05 depth=3 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6464 k?=0.4871 nll=1.4024
+  [39/72] eta=0.05 depth=3 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6580 k?=0.4960 nll=1.3826
+  [40/72] eta=0.05 depth=3 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6442 k?=0.4861 nll=1.4216
+  [41/72] eta=0.05 depth=3 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6479 k?=0.4907 nll=1.4082
+  [42/72] eta=0.05 depth=3 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6467 k?=0.4948 nll=1.4012
+  [43/72] eta=0.05 depth=3 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6592 k?=0.5124 nll=1.3709
+  [44/72] eta=0.05 depth=3 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6500 k?=0.4934 nll=1.3962
+  [45/72] eta=0.05 depth=3 mcw=10 gamma=0.0 l2=0.5 | top1=0.6490 k?=0.4906 nll=1.4057
+  [46/72] eta=0.05 depth=3 mcw=10 gamma=0.0 l2=1.0 | top1=0.6467 k?=0.4831 nll=1.4066
+  [47/72] eta=0.05 depth=3 mcw=10 gamma=0.5 l2=0.5 | top1=0.6549 k?=0.4969 nll=1.3842
+  [48/72] eta=0.05 depth=3 mcw=10 gamma=0.5 l2=1.0 | top1=0.6558 k?=0.5012 nll=1.3752
+  [49/72] eta=0.05 depth=4 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6644 k?=0.5056 nll=1.3773
+  [50/72] eta=0.05 depth=4 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6732 k?=0.5172 nll=1.3687
+  [51/72] eta=0.05 depth=4 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6561 k?=0.5042 nll=1.3692
+  [52/72] eta=0.05 depth=4 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6616 k?=0.5092 nll=1.3717
+  [53/72] eta=0.05 depth=4 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6593 k?=0.5081 nll=1.3619
+  [54/72] eta=0.05 depth=4 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6681 k?=0.5167 nll=1.3519
+  [55/72] eta=0.05 depth=4 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6522 k?=0.5006 nll=1.3981
+  [56/72] eta=0.05 depth=4 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6621 k?=0.5134 nll=1.3442
+  [57/72] eta=0.05 depth=4 mcw=10 gamma=0.0 l2=0.5 | top1=0.6572 k?=0.5063 nll=1.3665
+  [58/72] eta=0.05 depth=4 mcw=10 gamma=0.0 l2=1.0 | top1=0.6624 k?=0.5093 nll=1.3564
+  [59/72] eta=0.05 depth=4 mcw=10 gamma=0.5 l2=0.5 | top1=0.6587 k?=0.4988 nll=1.3837
+  [60/72] eta=0.05 depth=4 mcw=10 gamma=0.5 l2=1.0 | top1=0.6618 k?=0.5048 nll=1.3653
+  [61/72] eta=0.05 depth=5 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6649 k?=0.5106 nll=1.3633
+  [62/72] eta=0.05 depth=5 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6688 k?=0.5159 nll=1.3481
+  [63/72] eta=0.05 depth=5 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6699 k?=0.5153 nll=1.3376
+  [64/72] eta=0.05 depth=5 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6705 k?=0.5150 nll=1.3308
+  [65/72] eta=0.05 depth=5 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6742 k?=0.5232 nll=1.3443
+  [66/72] eta=0.05 depth=5 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6693 k?=0.5179 nll=1.3566
+  [67/72] eta=0.05 depth=5 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6760 k?=0.5247 nll=1.3238
+  [68/72] eta=0.05 depth=5 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6694 k?=0.5178 nll=1.3497
+  [69/72] eta=0.05 depth=5 mcw=10 gamma=0.0 l2=0.5 | top1=0.6640 k?=0.5164 nll=1.3576
+  [70/72] eta=0.05 depth=5 mcw=10 gamma=0.0 l2=1.0 | top1=0.6722 k?=0.5171 nll=1.3514
+  [71/72] eta=0.05 depth=5 mcw=10 gamma=0.5 l2=0.5 | top1=0.6647 k?=0.5056 nll=1.3713
+  [72/72] eta=0.05 depth=5 mcw=10 gamma=0.5 l2=1.0 | top1=0.6698 k?=0.5204 nll=1.3377
+
+============================================================
+Best xgb candidate (idx 66, balanced=5.3997):
+    objective: rank:ndcg
+    eval_metric: ndcg@1
+    subsample: 0.8
+    colsample_bytree: 0.7
+    reg_alpha: 0.0
+    verbosity: 0
+    seed: 42
+    eta: 0.05
+    max_depth: 5
+    min_child_weight: 5
+    gamma: 0.5
+    reg_lambda: 0.5
+  CV-mean metrics:
+    top1_accuracy    0.6760
+    pairwise_accuracy 0.7623
+    ndcg@3           0.9558
+    kendall_tau      0.5247
+    nll              1.3238
+    brier_score      0.4372
+    temperature      0.5400
+  -> saved to artifacts/tuning\xgb_best_params.json
+########## DONE (exit=0): src/tune/tune_xgb.py ##########
+
+########## src/tune/tune_lgbm_pl.py ##########
+C:\Users\user\OneDrive\문서\DataMining\src\pl_objective.py:83: RuntimeWarning: overflow encountered in multiply
+  inv_Z2     = inv_Z * inv_Z
+Loaded semantic config from artifacts/tuning\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=8
+LightGBM-PL brand-CV tuning x 24 candidates x 5 folds
+  [ 1/24] lr=0.03 leaves=15 mcs=10 l2=0.1 | top1=0.6451 k?=0.4858 nll=1.4389
+  [ 2/24] lr=0.03 leaves=15 mcs=10 l2=0.5 | top1=0.6442 k?=0.4903 nll=1.4482
+  [ 3/24] lr=0.03 leaves=15 mcs=30 l2=0.1 | top1=0.6472 k?=0.4975 nll=1.4878
+  [ 4/24] lr=0.03 leaves=15 mcs=30 l2=0.5 | top1=0.6423 k?=0.4903 nll=1.3976
+  [ 5/24] lr=0.03 leaves=15 mcs=50 l2=0.1 | top1=0.6495 k?=0.4979 nll=1.4127
+  [ 6/24] lr=0.03 leaves=15 mcs=50 l2=0.5 | top1=0.6530 k?=0.4970 nll=1.4122
+  [ 7/24] lr=0.03 leaves=31 mcs=10 l2=0.1 | top1=0.6514 k?=0.5000 nll=1.4365
+  [ 8/24] lr=0.03 leaves=31 mcs=10 l2=0.5 | top1=0.6609 k?=0.5114 nll=1.3936
+  [ 9/24] lr=0.03 leaves=31 mcs=30 l2=0.1 | top1=0.6532 k?=0.5028 nll=1.3750
+  [10/24] lr=0.03 leaves=31 mcs=30 l2=0.5 | top1=0.6549 k?=0.5126 nll=1.3739
+  [11/24] lr=0.03 leaves=31 mcs=50 l2=0.1 | top1=0.6689 k?=0.5233 nll=1.3532
+  [12/24] lr=0.03 leaves=31 mcs=50 l2=0.5 | top1=0.6675 k?=0.5243 nll=1.3678
+  [13/24] lr=0.05 leaves=15 mcs=10 l2=0.1 | top1=0.6478 k?=0.4873 nll=1.4733
+  [14/24] lr=0.05 leaves=15 mcs=10 l2=0.5 | top1=0.6507 k?=0.4974 nll=1.4585
+  [15/24] lr=0.05 leaves=15 mcs=30 l2=0.1 | top1=0.6485 k?=0.4967 nll=1.4241
+  [16/24] lr=0.05 leaves=15 mcs=30 l2=0.5 | top1=0.6526 k?=0.5000 nll=1.4574
+  [17/24] lr=0.05 leaves=15 mcs=50 l2=0.1 | top1=0.6516 k?=0.5019 nll=1.4522
+  [18/24] lr=0.05 leaves=15 mcs=50 l2=0.5 | top1=0.6583 k?=0.5083 nll=1.4470
+  [19/24] lr=0.05 leaves=31 mcs=10 l2=0.1 | top1=0.6567 k?=0.5052 nll=1.4416
+  [20/24] lr=0.05 leaves=31 mcs=10 l2=0.5 | top1=0.6577 k?=0.5087 nll=1.4560
+  [21/24] lr=0.05 leaves=31 mcs=30 l2=0.1 | top1=0.6655 k?=0.5181 nll=1.5370
+  [22/24] lr=0.05 leaves=31 mcs=30 l2=0.5 | top1=0.6646 k?=0.5220 nll=1.4093
+  [23/24] lr=0.05 leaves=31 mcs=50 l2=0.1 | top1=0.6651 k?=0.5099 nll=1.3735
+  [24/24] lr=0.05 leaves=31 mcs=50 l2=0.5 | top1=0.6622 k?=0.5099 nll=1.3718
+
+============================================================
+Best lgbm_pl candidate (idx 10, balanced=5.2587):
+    metric: ndcg
+    ndcg_eval_at: [1, 3]
+    feature_fraction: 0.7
+    bagging_fraction: 0.8
+    bagging_freq: 1
+    reg_alpha: 0.1
+    verbose: -1
+    learning_rate: 0.03
+    num_leaves: 31
+    min_child_samples: 50
+    reg_lambda: 0.1
+  CV-mean metrics:
+    top1_accuracy    0.6689
+    pairwise_accuracy 0.7616
+    ndcg@3           0.9557
+    kendall_tau      0.5233
+    nll              1.3532
+    brier_score      0.4560
+    temperature      1.3200
+  -> saved to artifacts/tuning\lgbm_pl_best_params.json
+########## DONE (exit=0): src/tune/tune_lgbm_pl.py ##########
+
+########## src/tune/tune_xgb_pl.py ##########
+C:\Users\user\OneDrive\문서\DataMining\src\pl_objective.py:83: RuntimeWarning: overflow encountered in multiply
+  inv_Z2     = inv_Z * inv_Z
+C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\numpy\_core\fromnumeric.py:54: RuntimeWarning: overflow encountered in accumulate
+  return bound(*args, **kwds)
+Loaded semantic config from artifacts/tuning\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=8
+XGBoost-PL brand-CV tuning x 48 candidates x 5 folds
+  [ 1/48] eta=0.03 depth=3 mcw= 3 gamma=0.0 l2=0.5 | top1=0.5999 k?=0.4152 nll=1.6544
+  [ 2/48] eta=0.03 depth=3 mcw= 3 gamma=0.0 l2=1.0 | top1=0.5998 k?=0.4213 nll=1.4963
+  [ 3/48] eta=0.03 depth=3 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6002 k?=0.4156 nll=1.6523
+  [ 4/48] eta=0.03 depth=3 mcw= 3 gamma=0.5 l2=1.0 | top1=0.5957 k?=0.4114 nll=1.5183
+  [ 5/48] eta=0.03 depth=3 mcw= 5 gamma=0.0 l2=0.5 | top1=0.5953 k?=0.4128 nll=1.5221
+  [ 6/48] eta=0.03 depth=3 mcw= 5 gamma=0.0 l2=1.0 | top1=0.5949 k?=0.4138 nll=1.4927
+  [ 7/48] eta=0.03 depth=3 mcw= 5 gamma=0.5 l2=0.5 | top1=0.5955 k?=0.4129 nll=1.5221
+  [ 8/48] eta=0.03 depth=3 mcw= 5 gamma=0.5 l2=1.0 | top1=0.5947 k?=0.4137 nll=1.4927
+  [ 9/48] eta=0.03 depth=4 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6106 k?=0.4340 nll=1.5023
+  [10/48] eta=0.03 depth=4 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6176 k?=0.4351 nll=1.5200
+  [11/48] eta=0.03 depth=4 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6127 k?=0.4386 nll=1.5031
+  [12/48] eta=0.03 depth=4 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6167 k?=0.4339 nll=1.5219
+  [13/48] eta=0.03 depth=4 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6197 k?=0.4475 nll=1.4811
+  [14/48] eta=0.03 depth=4 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6081 k?=0.4351 nll=1.4917
+  [15/48] eta=0.03 depth=4 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6203 k?=0.4483 nll=1.4908
+  [16/48] eta=0.03 depth=4 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6100 k?=0.4371 nll=1.4907
+  [17/48] eta=0.03 depth=5 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6310 k?=0.4646 nll=1.4682
+  [18/48] eta=0.03 depth=5 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6336 k?=0.4664 nll=1.4735
+  [19/48] eta=0.03 depth=5 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6321 k?=0.4647 nll=1.5235
+  [20/48] eta=0.03 depth=5 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6321 k?=0.4656 nll=1.5137
+  [21/48] eta=0.03 depth=5 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6388 k?=0.4720 nll=1.4636
+  [22/48] eta=0.03 depth=5 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6384 k?=0.4716 nll=1.4731
+  [23/48] eta=0.03 depth=5 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6386 k?=0.4693 nll=1.4658
+  [24/48] eta=0.03 depth=5 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6336 k?=0.4670 nll=1.4927
+  [25/48] eta=0.05 depth=3 mcw= 3 gamma=0.0 l2=0.5 | top1=0.5966 k?=0.4108 nll=1.6996
+  [26/48] eta=0.05 depth=3 mcw= 3 gamma=0.0 l2=1.0 | top1=0.5956 k?=0.4073 nll=1.5976
+  [27/48] eta=0.05 depth=3 mcw= 3 gamma=0.5 l2=0.5 | top1=0.5966 k?=0.4108 nll=1.6996
+  [28/48] eta=0.05 depth=3 mcw= 3 gamma=0.5 l2=1.0 | top1=0.5956 k?=0.4073 nll=1.5976
+  [29/48] eta=0.05 depth=3 mcw= 5 gamma=0.0 l2=0.5 | top1=0.5968 k?=0.4135 nll=1.5726
+  [30/48] eta=0.05 depth=3 mcw= 5 gamma=0.0 l2=1.0 | top1=0.5999 k?=0.4103 nll=1.5803
+  [31/48] eta=0.05 depth=3 mcw= 5 gamma=0.5 l2=0.5 | top1=0.5982 k?=0.4146 nll=1.5719
+  [32/48] eta=0.05 depth=3 mcw= 5 gamma=0.5 l2=1.0 | top1=0.5999 k?=0.4103 nll=1.5803
+  [33/48] eta=0.05 depth=4 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6087 k?=0.4302 nll=1.5330
+  [34/48] eta=0.05 depth=4 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6094 k?=0.4363 nll=1.5377
+  [35/48] eta=0.05 depth=4 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6087 k?=0.4281 nll=1.5676
+  [36/48] eta=0.05 depth=4 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6078 k?=0.4332 nll=1.5300
+  [37/48] eta=0.05 depth=4 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6173 k?=0.4403 nll=1.5419
+  [38/48] eta=0.05 depth=4 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6169 k?=0.4433 nll=1.5796
+  [39/48] eta=0.05 depth=4 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6200 k?=0.4423 nll=1.5400
+  [40/48] eta=0.05 depth=4 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6174 k?=0.4400 nll=1.5859
+  [41/48] eta=0.05 depth=5 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6296 k?=0.4595 nll=1.6294
+  [42/48] eta=0.05 depth=5 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6305 k?=0.4644 nll=1.6347
+  [43/48] eta=0.05 depth=5 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6317 k?=0.4625 nll=1.5781
+  [44/48] eta=0.05 depth=5 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6347 k?=0.4703 nll=1.6136
+  [45/48] eta=0.05 depth=5 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6326 k?=0.4627 nll=1.5384
+  [46/48] eta=0.05 depth=5 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6279 k?=0.4623 nll=1.5009
+  [47/48] eta=0.05 depth=5 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6293 k?=0.4611 nll=1.5954
+  [48/48] eta=0.05 depth=5 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6304 k?=0.4633 nll=1.4864
+
+============================================================
+Best xgb_pl candidate (idx 20, balanced=4.4769):
+    eval_metric: ndcg@1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    reg_alpha: 0.1
+    verbosity: 0
+    seed: 42
+    eta: 0.03
+    max_depth: 5
+    min_child_weight: 5
+    gamma: 0.0
+    reg_lambda: 0.5
+  CV-mean metrics:
+    top1_accuracy    0.6388
+    pairwise_accuracy 0.7360
+    ndcg@3           0.9500
+    kendall_tau      0.4720
+    nll              1.4636
+    brier_score      0.5025
+    temperature      1.9800
+  -> saved to artifacts/tuning\xgb_pl_best_params.json
+########## DONE (exit=0): src/tune/tune_xgb_pl.py ##########
+===== TRAINERS =====
+
+########## src/mlp/train.py ##########
+Loaded semantic config from artifacts/tuning\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=8
+Loaded tuned MLP params from artifacts/tuning\mlp_best_params.json: dims=[128, 64, 32] dropout=0.1 wd=0.0001 lr=0.0005 lambda_mse=0.5
+Device: cpu  |  Protocol: step2  |  Version: v3  |  Engine: openai  |  Features: 45  |  seeds: 5
+Trials - train: 1603  val: 279  test: 818
+Parameters: 16,705
+[seed 0] Epoch   1 | train=2.7474  val=1.4950  lr=5.00e-04
+[seed 0] Epoch   2 | train=2.0379  val=1.3020  lr=5.00e-04
+[seed 0] Epoch   3 | train=1.7855  val=1.1997  lr=5.00e-04
+[seed 0] Epoch   4 | train=1.5687  val=1.1345  lr=5.00e-04
+[seed 0] Epoch   5 | train=1.4140  val=1.0932  lr=5.00e-04
+[seed 0] Epoch   6 | train=1.3722  val=1.0544  lr=5.00e-04
+[seed 0] Epoch   7 | train=1.2774  val=1.0259  lr=5.00e-04
+[seed 0] Epoch   8 | train=1.2461  val=0.9982  lr=5.00e-04
+[seed 0] Epoch   9 | train=1.2598  val=0.9774  lr=5.00e-04
+[seed 0] Epoch  10 | train=1.2272  val=0.9818  lr=5.00e-04
+[seed 0] Epoch  11 | train=1.1918  val=0.9688  lr=5.00e-04
+[seed 0] Epoch  12 | train=1.1962  val=0.9644  lr=5.00e-04
+[seed 0] Epoch  13 | train=1.1971  val=0.9532  lr=5.00e-04
+[seed 0] Epoch  14 | train=1.2177  val=0.9593  lr=5.00e-04
+[seed 0] Epoch  15 | train=1.1242  val=0.9614  lr=5.00e-04
+[seed 0] Epoch  16 | train=1.0977  val=0.9440  lr=5.00e-04
+[seed 0] Epoch  17 | train=1.0967  val=0.9370  lr=5.00e-04
+[seed 0] Epoch  18 | train=1.1226  val=0.9353  lr=5.00e-04
+[seed 0] Epoch  19 | train=1.1288  val=0.9289  lr=5.00e-04
+[seed 0] Epoch  20 | train=1.0593  val=0.9292  lr=5.00e-04
+[seed 0] Epoch  21 | train=1.0868  val=0.9273  lr=5.00e-04
+[seed 0] Epoch  22 | train=1.0682  val=0.9307  lr=5.00e-04
+[seed 0] Epoch  23 | train=1.0564  val=0.9256  lr=5.00e-04
+[seed 0] Epoch  24 | train=1.0439  val=0.9261  lr=5.00e-04
+[seed 0] Epoch  25 | train=1.0317  val=0.9207  lr=5.00e-04
+[seed 0] Epoch  26 | train=1.0344  val=0.9180  lr=5.00e-04
+[seed 0] Epoch  27 | train=1.0282  val=0.9171  lr=5.00e-04
+[seed 0] Epoch  28 | train=1.0523  val=0.9122  lr=5.00e-04
+[seed 0] Epoch  29 | train=1.0236  val=0.9147  lr=5.00e-04
+[seed 0] Epoch  30 | train=1.0436  val=0.9082  lr=5.00e-04
+[seed 0] Epoch  31 | train=1.0127  val=0.9128  lr=5.00e-04
+[seed 0] Epoch  32 | train=1.0283  val=0.9169  lr=5.00e-04
+[seed 0] Epoch  33 | train=1.0229  val=0.9211  lr=5.00e-04
+[seed 0] Epoch  34 | train=1.0073  val=0.9168  lr=5.00e-04
+[seed 0] Epoch  35 | train=1.0229  val=0.9171  lr=5.00e-04
+[seed 0] Epoch  36 | train=1.0447  val=0.9071  lr=5.00e-04
+[seed 0] Epoch  37 | train=1.0370  val=0.9114  lr=5.00e-04
+[seed 0] Epoch  38 | train=1.0153  val=0.9158  lr=5.00e-04
+[seed 0] Epoch  39 | train=0.9952  val=0.9153  lr=5.00e-04
+[seed 0] Epoch  40 | train=1.0086  val=0.9026  lr=5.00e-04
+[seed 0] Epoch  41 | train=1.0267  val=0.9018  lr=5.00e-04
+[seed 0] Epoch  42 | train=1.0029  val=0.9120  lr=5.00e-04
+[seed 0] Epoch  43 | train=1.0136  val=0.9096  lr=5.00e-04
+[seed 0] Epoch  44 | train=1.0125  val=0.9059  lr=5.00e-04
+[seed 0] Epoch  45 | train=0.9857  val=0.9066  lr=5.00e-04
+[seed 0] Epoch  46 | train=1.0028  val=0.9109  lr=5.00e-04
+[seed 0] Epoch  47 | train=0.9840  val=0.9067  lr=2.50e-04
+[seed 0] Epoch  48 | train=0.9879  val=0.8956  lr=2.50e-04
+[seed 0] Epoch  49 | train=1.1045  val=0.9004  lr=2.50e-04
+[seed 0] Epoch  50 | train=0.9877  val=0.9066  lr=2.50e-04
+[seed 0] Epoch  51 | train=0.9713  val=0.9065  lr=2.50e-04
+[seed 0] Epoch  52 | train=1.0006  val=0.9070  lr=2.50e-04
+[seed 0] Epoch  53 | train=0.9984  val=0.8994  lr=2.50e-04
+[seed 0] Epoch  54 | train=0.9783  val=0.9045  lr=1.25e-04
+[seed 0] Epoch  55 | train=0.9614  val=0.8998  lr=1.25e-04
+[seed 0] Epoch  56 | train=0.9700  val=0.9020  lr=1.25e-04
+[seed 0] Epoch  57 | train=0.9670  val=0.9051  lr=1.25e-04
+[seed 0] Epoch  58 | train=0.9879  val=0.9052  lr=1.25e-04
+[seed 0] Epoch  59 | train=0.9881  val=0.8958  lr=1.25e-04
+[seed 0] Epoch  60 | train=0.9892  val=0.8975  lr=6.25e-05
+[seed 0] Epoch  61 | train=0.9906  val=0.9091  lr=6.25e-05
+[seed 0] Epoch  62 | train=0.9726  val=0.9044  lr=6.25e-05
+[seed 0] Epoch  63 | train=0.9447  val=0.9017  lr=6.25e-05
+[seed 0] Early stopping at epoch 63.
+[seed 0] Best val loss: 0.8956
+Temperature calibration: T* = 0.7
+[seed 1] Epoch   1 | train=2.6744  val=1.4721  lr=5.00e-04
+[seed 1] Epoch   2 | train=2.0134  val=1.2802  lr=5.00e-04
+[seed 1] Epoch   3 | train=1.7258  val=1.1706  lr=5.00e-04
+[seed 1] Epoch   4 | train=1.5469  val=1.1174  lr=5.00e-04
+[seed 1] Epoch   5 | train=1.4219  val=1.0734  lr=5.00e-04
+[seed 1] Epoch   6 | train=1.3300  val=1.0529  lr=5.00e-04
+[seed 1] Epoch   7 | train=1.3305  val=1.0002  lr=5.00e-04
+[seed 1] Epoch   8 | train=1.2630  val=0.9923  lr=5.00e-04
+[seed 1] Epoch   9 | train=1.1926  val=0.9760  lr=5.00e-04
+[seed 1] Epoch  10 | train=1.1977  val=0.9642  lr=5.00e-04
+[seed 1] Epoch  11 | train=1.2198  val=0.9547  lr=5.00e-04
+[seed 1] Epoch  12 | train=1.2185  val=0.9620  lr=5.00e-04
+[seed 1] Epoch  13 | train=1.1678  val=0.9612  lr=5.00e-04
+[seed 1] Epoch  14 | train=1.1669  val=0.9443  lr=5.00e-04
+[seed 1] Epoch  15 | train=1.1293  val=0.9487  lr=5.00e-04
+[seed 1] Epoch  16 | train=1.1159  val=0.9301  lr=5.00e-04
+[seed 1] Epoch  17 | train=1.1152  val=0.9392  lr=5.00e-04
+[seed 1] Epoch  18 | train=1.1218  val=0.9349  lr=5.00e-04
+[seed 1] Epoch  19 | train=1.1063  val=0.9199  lr=5.00e-04
+[seed 1] Epoch  20 | train=1.0906  val=0.9244  lr=5.00e-04
+[seed 1] Epoch  21 | train=1.0989  val=0.9217  lr=5.00e-04
+[seed 1] Epoch  22 | train=1.0745  val=0.9314  lr=5.00e-04
+[seed 1] Epoch  23 | train=1.0656  val=0.9238  lr=5.00e-04
+[seed 1] Epoch  24 | train=1.0755  val=0.9209  lr=5.00e-04
+[seed 1] Epoch  25 | train=1.0581  val=0.9140  lr=5.00e-04
+[seed 1] Epoch  26 | train=1.0899  val=0.9144  lr=5.00e-04
+[seed 1] Epoch  27 | train=1.0521  val=0.9079  lr=5.00e-04
+[seed 1] Epoch  28 | train=1.1181  val=0.9277  lr=5.00e-04
+[seed 1] Epoch  29 | train=1.0782  val=0.9181  lr=5.00e-04
+[seed 1] Epoch  30 | train=1.0281  val=0.9214  lr=5.00e-04
+[seed 1] Epoch  31 | train=1.0673  val=0.9114  lr=5.00e-04
+[seed 1] Epoch  32 | train=1.0464  val=0.9203  lr=5.00e-04
+[seed 1] Epoch  33 | train=1.0299  val=0.9155  lr=2.50e-04
+[seed 1] Epoch  34 | train=1.0225  val=0.9137  lr=2.50e-04
+[seed 1] Epoch  35 | train=1.0072  val=0.9053  lr=2.50e-04
+[seed 1] Epoch  36 | train=1.0143  val=0.9099  lr=2.50e-04
+[seed 1] Epoch  37 | train=1.0325  val=0.9050  lr=2.50e-04
+[seed 1] Epoch  38 | train=1.0031  val=0.9118  lr=2.50e-04
+[seed 1] Epoch  39 | train=1.0036  val=0.9102  lr=2.50e-04
+[seed 1] Epoch  40 | train=1.0299  val=0.9083  lr=2.50e-04
+[seed 1] Epoch  41 | train=0.9930  val=0.9161  lr=2.50e-04
+[seed 1] Epoch  42 | train=0.9904  val=0.9096  lr=2.50e-04
+[seed 1] Epoch  43 | train=1.0113  val=0.9078  lr=1.25e-04
+[seed 1] Epoch  44 | train=1.0343  val=0.9052  lr=1.25e-04
+[seed 1] Epoch  45 | train=1.0241  val=0.9040  lr=1.25e-04
+[seed 1] Epoch  46 | train=1.0222  val=0.9100  lr=1.25e-04
+[seed 1] Epoch  47 | train=0.9750  val=0.9023  lr=1.25e-04
+[seed 1] Epoch  48 | train=1.0269  val=0.9062  lr=1.25e-04
+[seed 1] Epoch  49 | train=1.0059  val=0.9048  lr=1.25e-04
+[seed 1] Epoch  50 | train=1.0076  val=0.9019  lr=1.25e-04
+[seed 1] Epoch  51 | train=0.9884  val=0.8971  lr=1.25e-04
+[seed 1] Epoch  52 | train=1.0105  val=0.9028  lr=1.25e-04
+[seed 1] Epoch  53 | train=1.0113  val=0.9012  lr=1.25e-04
+[seed 1] Epoch  54 | train=0.9890  val=0.9012  lr=1.25e-04
+[seed 1] Epoch  55 | train=0.9799  val=0.9002  lr=1.25e-04
+[seed 1] Epoch  56 | train=0.9892  val=0.8983  lr=1.25e-04
+[seed 1] Epoch  57 | train=0.9748  val=0.9056  lr=6.25e-05
+[seed 1] Epoch  58 | train=0.9702  val=0.8998  lr=6.25e-05
+[seed 1] Epoch  59 | train=1.0063  val=0.9019  lr=6.25e-05
+[seed 1] Epoch  60 | train=0.9878  val=0.9032  lr=6.25e-05
+[seed 1] Epoch  61 | train=1.0303  val=0.9055  lr=6.25e-05
+[seed 1] Epoch  62 | train=0.9867  val=0.9039  lr=6.25e-05
+[seed 1] Epoch  63 | train=0.9753  val=0.9028  lr=3.13e-05
+[seed 1] Epoch  64 | train=1.0081  val=0.8992  lr=3.13e-05
+[seed 1] Epoch  65 | train=1.0262  val=0.9001  lr=3.13e-05
+[seed 1] Epoch  66 | train=0.9763  val=0.8952  lr=3.13e-05
+[seed 1] Epoch  67 | train=0.9793  val=0.9024  lr=3.13e-05
+[seed 1] Epoch  68 | train=0.9942  val=0.9028  lr=3.13e-05
+[seed 1] Epoch  69 | train=0.9952  val=0.8955  lr=3.13e-05
+[seed 1] Epoch  70 | train=0.9854  val=0.9009  lr=3.13e-05
+[seed 1] Epoch  71 | train=0.9656  val=0.8984  lr=3.13e-05
+[seed 1] Epoch  72 | train=0.9845  val=0.9014  lr=1.56e-05
+[seed 1] Epoch  73 | train=0.9996  val=0.9019  lr=1.56e-05
+[seed 1] Epoch  74 | train=0.9951  val=0.8986  lr=1.56e-05
+[seed 1] Epoch  75 | train=1.0133  val=0.8989  lr=1.56e-05
+[seed 1] Epoch  76 | train=0.9777  val=0.9064  lr=1.56e-05
+[seed 1] Epoch  77 | train=0.9884  val=0.8988  lr=1.56e-05
+[seed 1] Epoch  78 | train=1.0255  val=0.8989  lr=7.81e-06
+[seed 1] Epoch  79 | train=1.0389  val=0.9017  lr=7.81e-06
+[seed 1] Epoch  80 | train=0.9793  val=0.9003  lr=7.81e-06
+[seed 1] Epoch  81 | train=0.9953  val=0.9027  lr=7.81e-06
+[seed 1] Early stopping at epoch 81.
+[seed 1] Best val loss: 0.8952
+Temperature calibration: T* = 0.7
+[seed 2] Epoch   1 | train=2.6194  val=1.4941  lr=5.00e-04
+[seed 2] Epoch   2 | train=2.0572  val=1.2981  lr=5.00e-04
+[seed 2] Epoch   3 | train=1.7564  val=1.2148  lr=5.00e-04
+[seed 2] Epoch   4 | train=1.6144  val=1.1362  lr=5.00e-04
+[seed 2] Epoch   5 | train=1.4968  val=1.0958  lr=5.00e-04
+[seed 2] Epoch   6 | train=1.3755  val=1.0620  lr=5.00e-04
+[seed 2] Epoch   7 | train=1.3442  val=1.0197  lr=5.00e-04
+[seed 2] Epoch   8 | train=1.2884  val=1.0156  lr=5.00e-04
+[seed 2] Epoch   9 | train=1.2525  val=0.9875  lr=5.00e-04
+[seed 2] Epoch  10 | train=1.2464  val=0.9741  lr=5.00e-04
+[seed 2] Epoch  11 | train=1.1906  val=0.9668  lr=5.00e-04
+[seed 2] Epoch  12 | train=1.1473  val=0.9590  lr=5.00e-04
+[seed 2] Epoch  13 | train=1.1640  val=0.9434  lr=5.00e-04
+[seed 2] Epoch  14 | train=1.1891  val=0.9496  lr=5.00e-04
+[seed 2] Epoch  15 | train=1.1335  val=0.9479  lr=5.00e-04
+[seed 2] Epoch  16 | train=1.1699  val=0.9385  lr=5.00e-04
+[seed 2] Epoch  17 | train=1.1379  val=0.9537  lr=5.00e-04
+[seed 2] Epoch  18 | train=1.1309  val=0.9379  lr=5.00e-04
+[seed 2] Epoch  19 | train=1.0961  val=0.9416  lr=5.00e-04
+[seed 2] Epoch  20 | train=1.0860  val=0.9268  lr=5.00e-04
+[seed 2] Epoch  21 | train=1.0694  val=0.9179  lr=5.00e-04
+[seed 2] Epoch  22 | train=1.0854  val=0.9113  lr=5.00e-04
+[seed 2] Epoch  23 | train=1.0974  val=0.9260  lr=5.00e-04
+[seed 2] Epoch  24 | train=1.1163  val=0.9162  lr=5.00e-04
+[seed 2] Epoch  25 | train=1.0438  val=0.9253  lr=5.00e-04
+[seed 2] Epoch  26 | train=1.0503  val=0.9139  lr=5.00e-04
+[seed 2] Epoch  27 | train=1.0579  val=0.9124  lr=5.00e-04
+[seed 2] Epoch  28 | train=1.0803  val=0.9270  lr=2.50e-04
+[seed 2] Epoch  29 | train=1.0529  val=0.9202  lr=2.50e-04
+[seed 2] Epoch  30 | train=1.1325  val=0.9135  lr=2.50e-04
+[seed 2] Epoch  31 | train=1.0728  val=0.9100  lr=2.50e-04
+Traceback (most recent call last):
+  File "C:\Users\user\OneDrive\문서\DataMining\src\mlp\train.py", line 261, in <module>
+    main()
+  File "C:\Users\user\OneDrive\문서\DataMining\src\mlp\train.py", line 228, in main
+    trainer.fit(train_loader, val_loader, seed_idx=i)
+  File "C:\Users\user\OneDrive\문서\DataMining\src\mlp\train.py", line 127, in fit
+    torch.save(self.model.state_dict(), ckpt_path)
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\serialization.py", line 1003, in save
+    with _open_zipfile_writer(f) as opened_zipfile:
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\serialization.py", line 865, in _open_zipfile_writer
+    return container(name_or_buffer)  # type: ignore[arg-type]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\serialization.py", line 829, in __init__
+    torch._C.PyTorchFileWriter(
+RuntimeError: [enforce fail at inline_container.cc:745] . open file failed with error code: 32
+########## DONE (exit=1): src/mlp/train.py ##########
+
+########## src/lightgbm/lgbm_train.py ##########
+Loaded semantic config from artifacts/tuning\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=8
+Loaded tuned LightGBM params from artifacts/tuning\lgbm_best_params.json
+Trials - train: 1603  val: 279  test: 818
+Features: 45  |  seeds: 5
+  seed 0: best_iter=23  T*=0.2
+  seed 1: best_iter=22  T*=0.2
+  seed 2: best_iter=24  T*=0.2
+  seed 3: best_iter=23  T*=0.2
+  seed 4: best_iter=19  T*=0.2
+
+=== Test Set Results ===
+  top1_accuracy          0.7286
+  pairwise_accuracy      0.7832
+  ndcg@3                 0.9607
+  kendall_tau            0.5664
+  nll                    1.4093
+  brier_score            0.3972
+########## DONE (exit=0): src/lightgbm/lgbm_train.py ##########
+
+########## src/xgboost/xgb_train.py ##########
+Loaded semantic config from artifacts/tuning\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=8
+Loaded tuned XGBoost params from artifacts/tuning\xgb_best_params.json
+Trials - train: 1603  val: 279  test: 818
+Features: 45  |  seeds: 5
+  seed 0: best_iter=86  T*=0.5
+  seed 1: best_iter=40  T*=0.2
+  seed 2: best_iter=60  T*=0.5
+  seed 3: best_iter=16  T*=0.2
+  seed 4: best_iter=37  T*=0.2
+
+=== Test Set Results ===
+  top1_accuracy          0.7139
+  pairwise_accuracy      0.7755
+  ndcg@3                 0.9589
+  kendall_tau            0.5509
+  nll                    1.2796
+  brier_score            0.3948
+########## DONE (exit=0): src/xgboost/xgb_train.py ##########
+
+########## src/lightgbm/lgbm_train_pl.py ##########
+Loaded semantic config from artifacts/tuning\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=8
+Loaded tuned LightGBM-PL params from artifacts/tuning\lgbm_pl_best_params.json
+Trials - train: 1603  val: 279  test: 818
+Features: 45  |  seeds: 5
+  seed 0: best_iter=34  T*=0.7
+  seed 1: best_iter=19  T*=0.5
+  seed 2: best_iter=26  T*=0.5
+  seed 3: best_iter=77  T*=3.0
+  seed 4: best_iter=16  T*=0.5
+
+=== Test Set Results ===
+  top1_accuracy          0.6834
+  pairwise_accuracy      0.7677
+  ndcg@3                 0.9556
+  kendall_tau            0.5355
+  nll                    1.5156
+  brier_score            0.4431
+########## DONE (exit=0): src/lightgbm/lgbm_train_pl.py ##########
+
+########## src/xgboost/xgb_train_pl.py ##########
+Loaded semantic config from artifacts/tuning\semantic_best_config.json: use_semantic=True text_pca_dim=16 image_pca_dim=8
+Loaded tuned XGBoost-PL params from artifacts/tuning\xgb_pl_best_params.json
+Trials - train: 1603  val: 279  test: 818
+Features: 45  |  seeds: 5
+  seed 0: best_iter=1  T*=0.5
+  seed 1: best_iter=16  T*=0.5
+  seed 2: best_iter=103  T*=3.0
+  seed 3: best_iter=15  T*=0.5
+  seed 4: best_iter=8  T*=0.5
+
+=== Test Set Results ===
+  top1_accuracy          0.6614
+  pairwise_accuracy      0.7596
+  ndcg@3                 0.9534
+  kendall_tau            0.5192
+  nll                    1.4327
+  brier_score            0.4619
+########## DONE (exit=0): src/xgboost/xgb_train_pl.py ##########
+===== BLEND (post-hoc on saved preds) =====
+
+########## src/blend.py ##########
+Loaded ['mlp', 'lgbm', 'xgb'] — val trials: 279  test trials: 818
+
+Best weights — mlp=0.9  lgbm=0.1  xgb=0.0  (T*=0.5)
+  Val balanced metrics:
+    top1_accuracy    0.8029
+    pairwise_accuracy 0.8578
+    ndcg@3           0.9764
+    kendall_tau      0.7157
+    nll              0.8705
+    brier_score      0.2811
+
+=== Blended Test Results ===
+  top1_accuracy          0.6540
+  pairwise_accuracy      0.7551
+  ndcg@3                 0.9516
+  kendall_tau            0.5102
+  nll                    1.5026
+  brier_score            0.4601
+
+=== Single-model test (for comparison) ===
+  mlp   top1=0.6394  kτ=0.4980  nll=1.5469
+  lgbm  top1=0.7286  kτ=0.5664  nll=1.2694
+  xgb   top1=0.7139  kτ=0.5509  nll=1.2896
+########## DONE (exit=0): src/blend.py ##########
+===== PIPELINE COMPLETE =====

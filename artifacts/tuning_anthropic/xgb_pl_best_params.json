@@ -1,0 +1,1228 @@
+{
+  "model": "xgb_pl",
+  "params": {
+    "eval_metric": "ndcg@1",
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "reg_alpha": 0.1,
+    "verbosity": 0,
+    "seed": 42,
+    "eta": 0.03,
+    "max_depth": 5,
+    "min_child_weight": 3,
+    "gamma": 0.0,
+    "reg_lambda": 1.0
+  },
+  "cv_balanced": 4.325212438270803,
+  "per_metric": {
+    "top1_accuracy": 0.6939859114045248,
+    "pairwise_accuracy": 0.797419001036601,
+    "ndcg@3": 0.9620878612245605,
+    "kendall_tau": 0.5948380020732017,
+    "nll": 1.2117934942245483,
+    "brier_score": 0.4259071244039709,
+    "temperature": 1.1400000000000001
+  },
+  "all_candidates": [
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 3,
+        "min_child_weight": 3,
+        "gamma": 0.0,
+        "reg_lambda": 0.5
+      },
+      "balanced": -2.5176003842284103,
+      "metrics": {
+        "top1_accuracy": 0.6605287776266273,
+        "pairwise_accuracy": 0.7750207350459373,
+        "ndcg@3": 0.9571587830738524,
+        "kendall_tau": 0.5507330486786496,
+        "nll": 1.3398324489593505,
+        "brier_score": 0.47811133385331284,
+        "temperature": 1.5
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 3,
+        "min_child_weight": 3,
+        "gamma": 0.0,
+        "reg_lambda": 1.0
+      },
+      "balanced": -2.446456322457978,
+      "metrics": {
+        "top1_accuracy": 0.6554706215103668,
+        "pairwise_accuracy": 0.77360967399473,
+        "ndcg@3": 0.9566385397874445,
+        "kendall_tau": 0.5476698856316554,
+        "nll": 1.2922934770584107,
+        "brier_score": 0.4623146354931187,
+        "temperature": 0.9400000000000001
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 3,
+        "min_child_weight": 3,
+        "gamma": 0.5,
+        "reg_lambda": 0.5
+      },
+      "balanced": -2.412331413107233,
+      "metrics": {
+        "top1_accuracy": 0.6614046900353865,
+        "pairwise_accuracy": 0.775360510172683,
+        "ndcg@3": 0.9572386421915503,
+        "kendall_tau": 0.5514122751330713,
+        "nll": 1.3399468660354614,
+        "brier_score": 0.48324593632757795,
+        "temperature": 1.7
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 3,
+        "min_child_weight": 3,
+        "gamma": 0.5,
+        "reg_lambda": 1.0
+      },
+      "balanced": -2.449146565377971,
+      "metrics": {
+        "top1_accuracy": 0.6553160029784378,
+        "pairwise_accuracy": 0.7734331735343838,
+        "ndcg@3": 0.9565923467268593,
+        "kendall_tau": 0.547373215275638,
+        "nll": 1.290334129333496,
+        "brier_score": 0.4619045365768616,
+        "temperature": 0.9400000000000001
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 3,
+        "min_child_weight": 5,
+        "gamma": 0.0,
+        "reg_lambda": 0.5
+      },
+      "balanced": -1.8848235006503082,
+      "metrics": {
+        "top1_accuracy": 0.6644372731642907,
+        "pairwise_accuracy": 0.7771487861507633,
+        "ndcg@3": 0.9578119390843783,
+        "kendall_tau": 0.5546070568369902,
+        "nll": 1.3318108081817628,
+        "brier_score": 0.4692662805559055,
+        "temperature": 1.44
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 3,
+        "min_child_weight": 5,
+        "gamma": 0.0,
+        "reg_lambda": 1.0
+      },
+      "balanced": -1.9021339481152126,
+      "metrics": {
+        "top1_accuracy": 0.66076546856033,
+        "pairwise_accuracy": 0.7764517286641037,
+        "ndcg@3": 0.9573958674494278,
+        "kendall_tau": 0.5536907443983837,
+        "nll": 1.3080260515213014,
+        "brier_score": 0.4654477897341141,
+        "temperature": 1.1400000000000001
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 3,
+        "min_child_weight": 5,
+        "gamma": 0.5,
+        "reg_lambda": 0.5
+      },
+      "balanced": -1.651459711755083,
+      "metrics": {
+        "top1_accuracy": 0.6642567677491282,
+        "pairwise_accuracy": 0.7770284492073216,
+        "ndcg@3": 0.9577388234037836,
+        "kendall_tau": 0.5545408101153033,
+        "nll": 1.3131142616271974,
+        "brier_score": 0.46614309335946624,
+        "temperature": 1.24
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 3,
+        "min_child_weight": 5,
+        "gamma": 0.5,
+        "reg_lambda": 1.0
+      },
+      "balanced": -1.9871060761086723,
+      "metrics": {
+        "top1_accuracy": 0.6600157028621108,
+        "pairwise_accuracy": 0.7762642872395489,
+        "ndcg@3": 0.9573326026953796,
+        "kendall_tau": 0.5533158615492741,
+        "nll": 1.3084290027618408,
+        "brier_score": 0.4654923113229712,
+        "temperature": 1.1400000000000001
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 4,
+        "min_child_weight": 3,
+        "gamma": 0.0,
+        "reg_lambda": 0.5
+      },
+      "balanced": 1.8047956392121427,
+      "metrics": {
+        "top1_accuracy": 0.6839288331597073,
+        "pairwise_accuracy": 0.7892454585164241,
+        "ndcg@3": 0.9605349140011084,
+        "kendall_tau": 0.5784366077338514,
+        "nll": 1.2713425159454346,
+        "brier_score": 0.4456750659718537,
+        "temperature": 1.24
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 4,
+        "min_child_weight": 3,
+        "gamma": 0.0,
+        "reg_lambda": 1.0
+      },
+      "balanced": 2.5409059494700124,
+      "metrics": {
+        "top1_accuracy": 0.6885984224647778,
+        "pairwise_accuracy": 0.7906480734915011,
+        "ndcg@3": 0.961009081886837,
+        "kendall_tau": 0.5812418376840054,
+        "nll": 1.2554419040679932,
+        "brier_score": 0.44245499266481597,
+        "temperature": 1.1800000000000002
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 4,
+        "min_child_weight": 3,
+        "gamma": 0.5,
+        "reg_lambda": 0.5
+      },
+      "balanced": 1.7006004399997767,
+      "metrics": {
+        "top1_accuracy": 0.6830305452945351,
+        "pairwise_accuracy": 0.7887954731647319,
+        "ndcg@3": 0.9604337252337155,
+        "kendall_tau": 0.5775366370304666,
+        "nll": 1.2700751543045044,
+        "brier_score": 0.4442218239819405,
+        "temperature": 1.1400000000000001
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 4,
+        "min_child_weight": 3,
+        "gamma": 0.5,
+        "reg_lambda": 1.0
+      },
+      "balanced": 2.380916832152964,
+      "metrics": {
+        "top1_accuracy": 0.6887116028058562,
+        "pairwise_accuracy": 0.7905076068598289,
+        "ndcg@3": 0.9610002031398137,
+        "kendall_tau": 0.580960904420661,
+        "nll": 1.2668031930923462,
+        "brier_score": 0.44521452122021143,
+        "temperature": 1.48
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 4,
+        "min_child_weight": 5,
+        "gamma": 0.0,
+        "reg_lambda": 0.5
+      },
+      "balanced": 2.134738194597867,
+      "metrics": {
+        "top1_accuracy": 0.681433486534031,
+        "pairwise_accuracy": 0.7896905621343318,
+        "ndcg@3": 0.9605206736427754,
+        "kendall_tau": 0.5792203913468484,
+        "nll": 1.2357548236846925,
+        "brier_score": 0.4330017819537966,
+        "temperature": 0.82
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 4,
+        "min_child_weight": 5,
+        "gamma": 0.0,
+        "reg_lambda": 1.0
+      },
+      "balanced": 2.3466528532077713,
+      "metrics": {
+        "top1_accuracy": 0.6864026391062561,
+        "pairwise_accuracy": 0.7887267249069615,
+        "ndcg@3": 0.9606194554724901,
+        "kendall_tau": 0.577399140514926,
+        "nll": 1.2408181428909302,
+        "brier_score": 0.4360356991459087,
+        "temperature": 1.2200000000000002
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 4,
+        "min_child_weight": 5,
+        "gamma": 0.5,
+        "reg_lambda": 0.5
+      },
+      "balanced": 2.099757646972515,
+      "metrics": {
+        "top1_accuracy": 0.6815466668751095,
+        "pairwise_accuracy": 0.7895253418081674,
+        "ndcg@3": 0.9604987151777131,
+        "kendall_tau": 0.5788899506945197,
+        "nll": 1.2375978469848632,
+        "brier_score": 0.43328982463515403,
+        "temperature": 0.82
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 4,
+        "min_child_weight": 5,
+        "gamma": 0.5,
+        "reg_lambda": 1.0
+      },
+      "balanced": 1.8023318586576236,
+      "metrics": {
+        "top1_accuracy": 0.6831535416333319,
+        "pairwise_accuracy": 0.786921670755337,
+        "ndcg@3": 0.9602421887077128,
+        "kendall_tau": 0.5737890322116769,
+        "nll": 1.2471821784973145,
+        "brier_score": 0.4361511091565566,
+        "temperature": 1.2200000000000002
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 5,
+        "min_child_weight": 3,
+        "gamma": 0.0,
+        "reg_lambda": 0.5
+      },
+      "balanced": 3.628150210240884,
+      "metrics": {
+        "top1_accuracy": 0.6889854070225844,
+        "pairwise_accuracy": 0.7948540599088638,
+        "ndcg@3": 0.9615353471664143,
+        "kendall_tau": 0.5897081198177277,
+        "nll": 1.2129383563995362,
+        "brier_score": 0.4286324171325579,
+        "temperature": 1.1800000000000002
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 5,
+        "min_child_weight": 3,
+        "gamma": 0.0,
+        "reg_lambda": 1.0
+      },
+      "balanced": 4.325212438270803,
+      "metrics": {
+        "top1_accuracy": 0.6939859114045248,
+        "pairwise_accuracy": 0.797419001036601,
+        "ndcg@3": 0.9620878612245605,
+        "kendall_tau": 0.5948380020732017,
+        "nll": 1.2117934942245483,
+        "brier_score": 0.4259071244039709,
+        "temperature": 1.1400000000000001
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 5,
+        "min_child_weight": 3,
+        "gamma": 0.5,
+        "reg_lambda": 0.5
+      },
+      "balanced": 3.3995426500007113,
+      "metrics": {
+        "top1_accuracy": 0.6890235378155297,
+        "pairwise_accuracy": 0.7951170806476282,
+        "ndcg@3": 0.9614597220209659,
+        "kendall_tau": 0.5902341612952566,
+        "nll": 1.2324270248413085,
+        "brier_score": 0.4425283943047442,
+        "temperature": 2.44
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 5,
+        "min_child_weight": 3,
+        "gamma": 0.5,
+        "reg_lambda": 1.0
+      },
+      "balanced": 4.260166225219809,
+      "metrics": {
+        "top1_accuracy": 0.6936825875160691,
+        "pairwise_accuracy": 0.7966786055938189,
+        "ndcg@3": 0.9619973579178677,
+        "kendall_tau": 0.5933167919323354,
+        "nll": 1.2083824396133422,
+        "brier_score": 0.43055792185222386,
+        "temperature": 1.7399999999999998
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 5,
+        "min_child_weight": 5,
+        "gamma": 0.0,
+        "reg_lambda": 0.5
+      },
+      "balanced": 3.3134597503850545,
+      "metrics": {
+        "top1_accuracy": 0.6868266857673285,
+        "pairwise_accuracy": 0.7935860830772606,
+        "ndcg@3": 0.9612945399945486,
+        "kendall_tau": 0.5871721661545212,
+        "nll": 1.2130831003189086,
+        "brier_score": 0.43248526378032814,
+        "temperature": 1.3800000000000001
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 5,
+        "min_child_weight": 5,
+        "gamma": 0.0,
+        "reg_lambda": 1.0
+      },
+      "balanced": 3.427970828047373,
+      "metrics": {
+        "top1_accuracy": 0.6876480509578211,
+        "pairwise_accuracy": 0.794366846476565,
+        "ndcg@3": 0.9613446080562975,
+        "kendall_tau": 0.5887336929531298,
+        "nll": 1.2159686803817749,
+        "brier_score": 0.43364578612371407,
+        "temperature": 1.64
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 5,
+        "min_child_weight": 5,
+        "gamma": 0.5,
+        "reg_lambda": 0.5
+      },
+      "balanced": 3.285017082515631,
+      "metrics": {
+        "top1_accuracy": 0.6861280422478643,
+        "pairwise_accuracy": 0.7949503437294368,
+        "ndcg@3": 0.9613076920900611,
+        "kendall_tau": 0.5899006874588737,
+        "nll": 1.2228449583053589,
+        "brier_score": 0.4418181641286962,
+        "temperature": 2.18
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.03,
+        "max_depth": 5,
+        "min_child_weight": 5,
+        "gamma": 0.5,
+        "reg_lambda": 1.0
+      },
+      "balanced": 3.5715618572109316,
+      "metrics": {
+        "top1_accuracy": 0.6888373634449705,
+        "pairwise_accuracy": 0.7943837634540573,
+        "ndcg@3": 0.9615398418860497,
+        "kendall_tau": 0.5887675269081145,
+        "nll": 1.2122754812240601,
+        "brier_score": 0.4321046076639883,
+        "temperature": 1.78
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 3,
+        "min_child_weight": 3,
+        "gamma": 0.0,
+        "reg_lambda": 0.5
+      },
+      "balanced": -5.776618157250331,
+      "metrics": {
+        "top1_accuracy": 0.6519562035660648,
+        "pairwise_accuracy": 0.7682636196934315,
+        "ndcg@3": 0.955871527232255,
+        "kendall_tau": 0.5362382884673561,
+        "nll": 1.4710753440856934,
+        "brier_score": 0.5155800886052848,
+        "temperature": 3.8
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 3,
+        "min_child_weight": 3,
+        "gamma": 0.0,
+        "reg_lambda": 1.0
+      },
+      "balanced": -4.151951018577629,
+      "metrics": {
+        "top1_accuracy": 0.6576957216587642,
+        "pairwise_accuracy": 0.7723059364995188,
+        "ndcg@3": 0.9565538627227058,
+        "kendall_tau": 0.5449471079001753,
+        "nll": 1.4204372882843017,
+        "brier_score": 0.4993241855145675,
+        "temperature": 3.2
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 3,
+        "min_child_weight": 3,
+        "gamma": 0.5,
+        "reg_lambda": 0.5
+      },
+      "balanced": -5.706409072640755,
+      "metrics": {
+        "top1_accuracy": 0.6508548819801617,
+        "pairwise_accuracy": 0.7692915198402743,
+        "ndcg@3": 0.9559887908362622,
+        "kendall_tau": 0.5383749272716465,
+        "nll": 1.468641495704651,
+        "brier_score": 0.515289222499011,
+        "temperature": 3.8
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 3,
+        "min_child_weight": 3,
+        "gamma": 0.5,
+        "reg_lambda": 1.0
+      },
+      "balanced": -4.145274609331455,
+      "metrics": {
+        "top1_accuracy": 0.6576957216587642,
+        "pairwise_accuracy": 0.7723793579385789,
+        "ndcg@3": 0.956559919002343,
+        "kendall_tau": 0.5450939507782957,
+        "nll": 1.4205682754516602,
+        "brier_score": 0.4993253682503835,
+        "temperature": 3.2
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 3,
+        "min_child_weight": 5,
+        "gamma": 0.0,
+        "reg_lambda": 0.5
+      },
+      "balanced": -4.211541533330872,
+      "metrics": {
+        "top1_accuracy": 0.6593149272873576,
+        "pairwise_accuracy": 0.7714931913966538,
+        "ndcg@3": 0.9566191460710483,
+        "kendall_tau": 0.5434234265477957,
+        "nll": 1.4276858568191528,
+        "brier_score": 0.5093282845865984,
+        "temperature": 3.5
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 3,
+        "min_child_weight": 5,
+        "gamma": 0.0,
+        "reg_lambda": 1.0
+      },
+      "balanced": -3.6770546227232552,
+      "metrics": {
+        "top1_accuracy": 0.6615532223935402,
+        "pairwise_accuracy": 0.7713167741953941,
+        "ndcg@3": 0.9566436648230978,
+        "kendall_tau": 0.5429027469213896,
+        "nll": 1.398563551902771,
+        "brier_score": 0.49825672127223514,
+        "temperature": 3.1
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 3,
+        "min_child_weight": 5,
+        "gamma": 0.5,
+        "reg_lambda": 0.5
+      },
+      "balanced": -4.441713324282823,
+      "metrics": {
+        "top1_accuracy": 0.6560826690153876,
+        "pairwise_accuracy": 0.7706360362898443,
+        "ndcg@3": 0.9562647251815927,
+        "kendall_tau": 0.54200022850635,
+        "nll": 1.4201125144958495,
+        "brier_score": 0.5031375910581615,
+        "temperature": 3.2
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 3,
+        "min_child_weight": 5,
+        "gamma": 0.5,
+        "reg_lambda": 1.0
+      },
+      "balanced": -3.6742488931801334,
+      "metrics": {
+        "top1_accuracy": 0.6615532223935402,
+        "pairwise_accuracy": 0.7713167741953941,
+        "ndcg@3": 0.9566436648230978,
+        "kendall_tau": 0.5429027469213896,
+        "nll": 1.39835467338562,
+        "brier_score": 0.49424111801824033,
+        "temperature": 3.0
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 4,
+        "min_child_weight": 3,
+        "gamma": 0.0,
+        "reg_lambda": 0.5
+      },
+      "balanced": -1.2847688921658174,
+      "metrics": {
+        "top1_accuracy": 0.6773118864097724,
+        "pairwise_accuracy": 0.7831940177592743,
+        "ndcg@3": 0.9592557448241361,
+        "kendall_tau": 0.5662808802373387,
+        "nll": 1.4112408638000489,
+        "brier_score": 0.49669919818223185,
+        "temperature": 3.6
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 4,
+        "min_child_weight": 3,
+        "gamma": 0.0,
+        "reg_lambda": 1.0
+      },
+      "balanced": -1.2380655401064158,
+      "metrics": {
+        "top1_accuracy": 0.6753778162074224,
+        "pairwise_accuracy": 0.782314769273372,
+        "ndcg@3": 0.9589669745485899,
+        "kendall_tau": 0.5645223832655338,
+        "nll": 1.3891002416610718,
+        "brier_score": 0.49430047828109924,
+        "temperature": 3.8
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 4,
+        "min_child_weight": 3,
+        "gamma": 0.5,
+        "reg_lambda": 0.5
+      },
+      "balanced": -1.1317230042597461,
+      "metrics": {
+        "top1_accuracy": 0.6776728972400973,
+        "pairwise_accuracy": 0.7844371460957089,
+        "ndcg@3": 0.9593980742179677,
+        "kendall_tau": 0.5687671369102076,
+        "nll": 1.4125603199005128,
+        "brier_score": 0.49632355404733064,
+        "temperature": 3.6
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 4,
+        "min_child_weight": 3,
+        "gamma": 0.5,
+        "reg_lambda": 1.0
+      },
+      "balanced": -1.1261741704860022,
+      "metrics": {
+        "top1_accuracy": 0.6769439907498149,
+        "pairwise_accuracy": 0.7825584267869268,
+        "ndcg@3": 0.9590930753050246,
+        "kendall_tau": 0.5650096982926434,
+        "nll": 1.3918776988983155,
+        "brier_score": 0.48888866099667394,
+        "temperature": 3.4
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 4,
+        "min_child_weight": 5,
+        "gamma": 0.0,
+        "reg_lambda": 0.5
+      },
+      "balanced": -1.4315781400449596,
+      "metrics": {
+        "top1_accuracy": 0.6701963630285297,
+        "pairwise_accuracy": 0.7799858284300704,
+        "ndcg@3": 0.9584252321315543,
+        "kendall_tau": 0.5600055711402719,
+        "nll": 1.3543367862701416,
+        "brier_score": 0.49195120487538446,
+        "temperature": 3.6
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 4,
+        "min_child_weight": 5,
+        "gamma": 0.0,
+        "reg_lambda": 1.0
+      },
+      "balanced": -0.2756431399506497,
+      "metrics": {
+        "top1_accuracy": 0.6783261382590235,
+        "pairwise_accuracy": 0.7832781647413293,
+        "ndcg@3": 0.9592938098719349,
+        "kendall_tau": 0.5664491742014486,
+        "nll": 1.3426775693893434,
+        "brier_score": 0.4906135722800681,
+        "temperature": 3.8
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 4,
+        "min_child_weight": 5,
+        "gamma": 0.5,
+        "reg_lambda": 0.5
+      },
+      "balanced": -1.2093675325844986,
+      "metrics": {
+        "top1_accuracy": 0.6700789024882525,
+        "pairwise_accuracy": 0.7810235191401474,
+        "ndcg@3": 0.9584939086050251,
+        "kendall_tau": 0.5620809525604262,
+        "nll": 1.3459932327270507,
+        "brier_score": 0.48700172698949407,
+        "temperature": 3.4
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 4,
+        "min_child_weight": 5,
+        "gamma": 0.5,
+        "reg_lambda": 1.0
+      },
+      "balanced": 0.18161800693670896,
+      "metrics": {
+        "top1_accuracy": 0.6783261382590235,
+        "pairwise_accuracy": 0.7843550125142122,
+        "ndcg@3": 0.9594154454134344,
+        "kendall_tau": 0.5686028697472144,
+        "nll": 1.3178468465805053,
+        "brier_score": 0.4753732887173168,
+        "temperature": 3.1
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 5,
+        "min_child_weight": 3,
+        "gamma": 0.0,
+        "reg_lambda": 0.5
+      },
+      "balanced": -0.03765361220819996,
+      "metrics": {
+        "top1_accuracy": 0.6771856236616289,
+        "pairwise_accuracy": 0.7870095332319307,
+        "ndcg@3": 0.9595889307502248,
+        "kendall_tau": 0.5740190664638616,
+        "nll": 1.3507644176483153,
+        "brier_score": 0.4778531287684352,
+        "temperature": 3.6
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 5,
+        "min_child_weight": 3,
+        "gamma": 0.0,
+        "reg_lambda": 1.0
+      },
+      "balanced": 2.75772102707841,
+      "metrics": {
+        "top1_accuracy": 0.6893061345058626,
+        "pairwise_accuracy": 0.7948329256058356,
+        "ndcg@3": 0.9615697299101346,
+        "kendall_tau": 0.5896658512116711,
+        "nll": 1.2794063568115235,
+        "brier_score": 0.4518638562022378,
+        "temperature": 2.5
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 5,
+        "min_child_weight": 3,
+        "gamma": 0.5,
+        "reg_lambda": 0.5
+      },
+      "balanced": 0.48904229933770305,
+      "metrics": {
+        "top1_accuracy": 0.6804972517556109,
+        "pairwise_accuracy": 0.7878358482404316,
+        "ndcg@3": 0.9598890278497848,
+        "kendall_tau": 0.575671696480863,
+        "nll": 1.3377009153366088,
+        "brier_score": 0.4747954031137347,
+        "temperature": 3.4
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 5,
+        "min_child_weight": 3,
+        "gamma": 0.5,
+        "reg_lambda": 1.0
+      },
+      "balanced": 2.7905458404783503,
+      "metrics": {
+        "top1_accuracy": 0.6895896538574482,
+        "pairwise_accuracy": 0.7942057585556694,
+        "ndcg@3": 0.9615152835182135,
+        "kendall_tau": 0.588411517111339,
+        "nll": 1.2732314825057984,
+        "brier_score": 0.45449779663876033,
+        "temperature": 2.9
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 5,
+        "min_child_weight": 5,
+        "gamma": 0.0,
+        "reg_lambda": 0.5
+      },
+      "balanced": 2.11556051964467,
+      "metrics": {
+        "top1_accuracy": 0.6854936345685174,
+        "pairwise_accuracy": 0.7907955749007584,
+        "ndcg@3": 0.9606012912281757,
+        "kendall_tau": 0.581732219362858,
+        "nll": 1.271317195892334,
+        "brier_score": 0.4553567116158076,
+        "temperature": 2.5
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 5,
+        "min_child_weight": 5,
+        "gamma": 0.0,
+        "reg_lambda": 1.0
+      },
+      "balanced": 2.105867566914888,
+      "metrics": {
+        "top1_accuracy": 0.6856869125154271,
+        "pairwise_accuracy": 0.7908586352131866,
+        "ndcg@3": 0.9606850881946244,
+        "kendall_tau": 0.5818583399877146,
+        "nll": 1.273691749572754,
+        "brier_score": 0.4569754361932802,
+        "temperature": 2.7
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 5,
+        "min_child_weight": 5,
+        "gamma": 0.5,
+        "reg_lambda": 0.5
+      },
+      "balanced": 1.9902376841064229,
+      "metrics": {
+        "top1_accuracy": 0.68396484706304,
+        "pairwise_accuracy": 0.7911241968091074,
+        "ndcg@3": 0.9606114013384918,
+        "kendall_tau": 0.5823894631795563,
+        "nll": 1.2746501922607423,
+        "brier_score": 0.45826467440874274,
+        "temperature": 2.6
+      }
+    },
+    {
+      "params": {
+        "eval_metric": "ndcg@1",
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.1,
+        "verbosity": 0,
+        "seed": 42,
+        "eta": 0.05,
+        "max_depth": 5,
+        "min_child_weight": 5,
+        "gamma": 0.5,
+        "reg_lambda": 1.0
+      },
+      "balanced": 2.3184697842655067,
+      "metrics": {
+        "top1_accuracy": 0.6878739793632679,
+        "pairwise_accuracy": 0.7915631991203231,
+        "ndcg@3": 0.9609154242859956,
+        "kendall_tau": 0.5832674678019876,
+        "nll": 1.2764912128448487,
+        "brier_score": 0.4591889990900063,
+        "temperature": 3.0
+      }
+    }
+  ]
+}

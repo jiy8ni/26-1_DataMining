@@ -1,0 +1,155 @@
+{
+  "semantic_config": {
+    "use_semantic_features": true,
+    "text_pca_dim": 8,
+    "image_pca_dim": 0
+  },
+  "cv_balanced": 3.62647576979318,
+  "per_metric": {
+    "top1_accuracy": 0.7243039833524986,
+    "pairwise_accuracy": 0.8079415599715658,
+    "ndcg@3": 0.9649485767969525,
+    "kendall_tau": 0.6158831199431314,
+    "nll": 1.162998414039612,
+    "brier_score": 0.39245429274821536,
+    "temperature": 0.48
+  },
+  "all_candidates": [
+    {
+      "semantic_config": {
+        "use_semantic_features": false,
+        "text_pca_dim": 0,
+        "image_pca_dim": 0
+      },
+      "balanced": 0.8715881229713858,
+      "metrics": {
+        "top1_accuracy": 0.7222787058722521,
+        "pairwise_accuracy": 0.8013382158189891,
+        "ndcg@3": 0.9638807752342846,
+        "kendall_tau": 0.6026764316379782,
+        "nll": 1.1704187393188477,
+        "brier_score": 0.39479713266028416,
+        "temperature": 0.41999999999999993
+      }
+    },
+    {
+      "semantic_config": {
+        "use_semantic_features": true,
+        "text_pca_dim": 8,
+        "image_pca_dim": 0
+      },
+      "balanced": 3.62647576979318,
+      "metrics": {
+        "top1_accuracy": 0.7243039833524986,
+        "pairwise_accuracy": 0.8079415599715658,
+        "ndcg@3": 0.9649485767969525,
+        "kendall_tau": 0.6158831199431314,
+        "nll": 1.162998414039612,
+        "brier_score": 0.39245429274821536,
+        "temperature": 0.48
+      }
+    },
+    {
+      "semantic_config": {
+        "use_semantic_features": true,
+        "text_pca_dim": 16,
+        "image_pca_dim": 0
+      },
+      "balanced": 1.1553220460627682,
+      "metrics": {
+        "top1_accuracy": 0.7219786090085869,
+        "pairwise_accuracy": 0.8020843388063584,
+        "ndcg@3": 0.9640875177708924,
+        "kendall_tau": 0.6041686776127165,
+        "nll": 1.16862895488739,
+        "brier_score": 0.39003612867140264,
+        "temperature": 0.38
+      }
+    },
+    {
+      "semantic_config": {
+        "use_semantic_features": true,
+        "text_pca_dim": 0,
+        "image_pca_dim": 4
+      },
+      "balanced": 2.9494052527337646,
+      "metrics": {
+        "top1_accuracy": 0.7219150444484592,
+        "pairwise_accuracy": 0.8058354417868218,
+        "ndcg@3": 0.9642614326757659,
+        "kendall_tau": 0.6116708835736437,
+        "nll": 1.1583812952041626,
+        "brier_score": 0.3879263294980001,
+        "temperature": 0.5
+      }
+    },
+    {
+      "semantic_config": {
+        "use_semantic_features": true,
+        "text_pca_dim": 0,
+        "image_pca_dim": 8
+      },
+      "balanced": -4.340776211356736,
+      "metrics": {
+        "top1_accuracy": 0.7111101035154481,
+        "pairwise_accuracy": 0.7974569064501947,
+        "ndcg@3": 0.9627093873628297,
+        "kendall_tau": 0.5949138129003897,
+        "nll": 1.1972946405410767,
+        "brier_score": 0.40176262786350925,
+        "temperature": 0.36
+      }
+    },
+    {
+      "semantic_config": {
+        "use_semantic_features": true,
+        "text_pca_dim": 8,
+        "image_pca_dim": 4
+      },
+      "balanced": -2.0115802320149045,
+      "metrics": {
+        "top1_accuracy": 0.7113385811945621,
+        "pairwise_accuracy": 0.80016880432138,
+        "ndcg@3": 0.9633539063418972,
+        "kendall_tau": 0.600621404970275,
+        "nll": 1.1774916172027587,
+        "brier_score": 0.3991941872081129,
+        "temperature": 0.42000000000000004
+      }
+    },
+    {
+      "semantic_config": {
+        "use_semantic_features": true,
+        "text_pca_dim": 16,
+        "image_pca_dim": 8
+      },
+      "balanced": 1.5863285658901596,
+      "metrics": {
+        "top1_accuracy": 0.7183369295846207,
+        "pairwise_accuracy": 0.8031928161165272,
+        "ndcg@3": 0.9641057203791588,
+        "kendall_tau": 0.6063856322330544,
+        "nll": 1.1579061269760131,
+        "brier_score": 0.3886306454285069,
+        "temperature": 0.54
+      }
+    },
+    {
+      "semantic_config": {
+        "use_semantic_features": true,
+        "text_pca_dim": 24,
+        "image_pca_dim": 8
+      },
+      "balanced": -3.8367633140797173,
+      "metrics": {
+        "top1_accuracy": 0.7113868180609209,
+        "pairwise_accuracy": 0.7963895273963153,
+        "ndcg@3": 0.9627069272536218,
+        "kendall_tau": 0.5927790547926308,
+        "nll": 1.1874972343444825,
+        "brier_score": 0.39825056433007766,
+        "temperature": 0.44000000000000006
+      }
+    }
+  ]
+}

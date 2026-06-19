@@ -1,6 +1,12 @@
 # 튜닝 결과 보고서
 
-작성일: 2026-06-18
+작성일: 2026-06-19 (median-imputation 수정 후 재실행)
+
+> **재실행 노트**: 전처리의 결측치 median 대치를 split별 계산 → **train fold에서 계산해
+> val/test/pool에 재사용**하도록 수정한 뒤(`src/data.py`, `src/inference.py`) 전체
+> 파이프라인을 다시 실행했습니다. OpenAI 데이터의 V3 구조적 피처는 train fold에 결측이
+> 사실상 없어, **모든 튜닝/테스트 지표는 수정 전과 수치적으로 동일**했습니다(방법론적
+> 누수만 제거). 이번 실행부터는 사후 앙상블 `blend`도 표에 포함합니다.
 
 ## 범위
 
@@ -13,13 +19,15 @@
 - `python src/tune/tune_lgbm_pl.py`
 - `python src/tune/tune_xgb_pl.py`
 
-이후 자동 로드된 시맨틱 설정과 튜닝된 파라미터로 최종 트레이너를 실행했습니다:
+이후 자동 로드된 시맨틱 설정과 튜닝된 파라미터로 최종 트레이너를 실행하고, 마지막에
+사후 앙상블(blend)을 실행했습니다:
 
 - `python src/mlp/train.py`
 - `python src/lightgbm/lgbm_train.py`
 - `python src/xgboost/xgb_train.py`
 - `python src/lightgbm/lgbm_train_pl.py`
 - `python src/xgboost/xgb_train_pl.py`
+- `python src/blend.py` (mlp/lgbm/xgb 저장 예측의 가중평균; val에서 가중치 선택)
 
 ## 시맨틱 최종 선택
 
@@ -50,6 +58,7 @@ LightGBM 프록시로 선택된 공통 시맨틱 설정:
 ## 최종 테스트 결과
 
 모든 최종 트레이너는 `artifacts/tuning/semantic_best_config.json`과 각 모델별 튜닝 JSON을 자동 로드했습니다.
+`blend`는 mlp/lgbm/xgb의 저장된 예측을 표준화 후 단순 가중평균하며, 가중치·온도를 **검증셋에서** 선택해 테스트에 적용합니다.
 
 | model | avg temp | top1 | pairwise | ndcg@3 | tau | nll | brier |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -57,16 +66,24 @@ LightGBM 프록시로 선택된 공통 시맨틱 설정:
 | `xgb` | 0.32 | 0.7139 | 0.7755 | 0.9589 | 0.5509 | 1.2796 | 0.3948 |
 | `lgbm_pl` | 1.04 | 0.6834 | 0.7677 | 0.9556 | 0.5355 | 1.5156 | 0.4431 |
 | `xgb_pl` | 1.00 | 0.6614 | 0.7596 | 0.9534 | 0.5192 | 1.4327 | 0.4619 |
+| `blend` | 0.50 | 0.6540 | 0.7551 | 0.9516 | 0.5102 | 1.5026 | 0.4601 |
 | `mlp` | 0.70 | 0.6394 | 0.7490 | 0.9495 | 0.4980 | 1.6971 | 0.4916 |
+
+> `blend` 선택 가중치: `mlp=0.9, lgbm=0.1, xgb=0.0` (T*=0.5). 검증셋 balanced 지표는
+> 매우 높았으나(val top1=0.8029) 테스트에서는 0.6540으로, **단일 트리 모델(lgbm 0.7286,
+> xgb 0.7139)보다 낮았습니다.** 검증셋에서 선택된 가중치가 과적합되어(검증 가중치가 mlp에
+> 쏠림) 테스트 일반화에 실패한 것으로, 기존 보고서에서 blend를 제외했던 이유와 일치합니다.
 
 ## 핵심 요약
 
 - 공통 시맨틱 설정 `text_pca_dim=16, image_pca_dim=8`이 프록시 스윕에서 구조적 특징만 사용한 경우보다 확실히 우수했습니다.
+- median-imputation 수정 후에도 OpenAI 지표는 수치적으로 동일했습니다(V3 train fold 무결측 → 누수만 제거, 성능 변화 없음).
 - 이번 실행의 최종 테스트 지표에서는 바닐라 트리 모델 계열이 여전히 가장 강력했습니다.
 - `lgbm`이 `top1_accuracy`, `pairwise_accuracy`, `ndcg@3`, `kendall_tau`에서 최고 성능을 보였습니다.
 - `xgb`가 최종 `nll`과 `brier_score`에서 가장 좋았습니다.
 - 튜닝된 PL 변형들은 비교용으로 유지할 만큼 경쟁력이 있었지만, 주요 테스트 지표에서는 여전히 바닐라 트리 모델에 뒤처졌습니다.
 - `mlp`는 튜닝을 통해 개선되었으나, 최종 테스트 성능에서는 트리 기반 모델보다 뒤처진 상태로 남았습니다.
+- `blend`(mlp/lgbm/xgb 가중평균)는 검증셋 가중치 과적합으로 테스트에서 단일 트리 모델에 미치지 못해, 운영 후보로는 부적합했습니다.
 
 ## 실행 노트
 
@@ -77,6 +94,12 @@ LightGBM 프록시로 선택된 공통 시맨틱 설정:
   - `artifacts/tuning/xgb_best_params.json`
   - `artifacts/tuning/lgbm_pl_best_params.json`
   - `artifacts/tuning/xgb_pl_best_params.json`
+- 결측치 median 대치를 train-fit/transform 패턴으로 수정(`src/data.py`의 `RankingDataset`이
+  train fold median을 `self.medians`로 저장 → val/test/k-fold·`src/inference.py` pool 스코어링에서
+  재사용). OpenAI V3 피처는 무결측이라 수치 변화는 없었습니다.
+- `src/mlp/train.py`가 1차 실행 중 체크포인트 저장(`torch.save`)에서 Windows 파일 잠금
+  (`error code: 32`, SHARING_VIOLATION)으로 중단되었습니다. 리포지토리가 OneDrive 동기화 폴더
+  아래에 있어 `.pt` 파일이 동기화 중 잠긴 것으로 보입니다. 재실행 시 정상 완료되었고 결과는
+  기존과 동일했습니다. 반복되면 `cfg.ckpt_dir`을 OneDrive 외부 경로로 옮기는 것을 권장합니다.
 - PL 튜닝 중 `src/pl_objective.py:83`에서 수치 경고가 관찰되었습니다(`overflow encountered in multiply`; XGBoost-PL에서는 `overflow encountered in accumulate` 경고도 발생). 실행은 정상 완료되고 아티팩트도 저장되었지만, 더 큰 탐색을 진행하기 전에 목적함수 안정화를 다루는 것이 좋습니다.
-- `wandb`가 `%LOCALAPPDATA%\\wandb\\logs`에 대해 `Access is denied`를 보고했으나, 오프라인 실행은 정상 완료되었고 로컬 요약은 저장소의 `wandb/` 디렉터리에 저장되었습니다.
-- `src/mlp/train.py`에서 재실행 중 Windows 콘솔의 유니코드 대시(–) 출력 문제가 있었습니다. ASCII 전용 출력으로 변경한 뒤 정상적으로 재실행되었습니다.
+- `wandb`는 `WANDB_MODE=disabled`로 실행했습니다(오프라인 로그/네트워크 접근 없음).

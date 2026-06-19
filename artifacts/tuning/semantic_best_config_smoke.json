@@ -1,0 +1,70 @@
+{
+  "semantic_config": {
+    "use_semantic_features": true,
+    "text_pca_dim": 16,
+    "image_pca_dim": 0
+  },
+  "cv_balanced": 2.562503770587916,
+  "per_metric": {
+    "top1_accuracy": 0.5570620011532276,
+    "pairwise_accuracy": 0.6780201651032582,
+    "ndcg@3": 0.936846020237027,
+    "kendall_tau": 0.3560403302065164,
+    "nll": 1.6120907068252563,
+    "brier_score": 0.5743107816008024,
+    "temperature": 0.35
+  },
+  "all_candidates": [
+    {
+      "semantic_config": {
+        "use_semantic_features": false,
+        "text_pca_dim": 0,
+        "image_pca_dim": 0
+      },
+      "balanced": -4.173636662297438,
+      "metrics": {
+        "top1_accuracy": 0.4756888294451646,
+        "pairwise_accuracy": 0.6155712570806195,
+        "ndcg@3": 0.9224886334754306,
+        "kendall_tau": 0.23272394980020922,
+        "nll": 1.706655502319336,
+        "brier_score": 0.6183685313364371,
+        "temperature": 0.3
+      }
+    },
+    {
+      "semantic_config": {
+        "use_semantic_features": true,
+        "text_pca_dim": 8,
+        "image_pca_dim": 0
+      },
+      "balanced": 1.6111328917095213,
+      "metrics": {
+        "top1_accuracy": 0.5365896836717146,
+        "pairwise_accuracy": 0.6655268067592428,
+        "ndcg@3": 0.9341521966788751,
+        "kendall_tau": 0.33127817550245475,
+        "nll": 1.6072445511817932,
+        "brier_score": 0.5757815705043106,
+        "temperature": 0.35
+      }
+    },
+    {
+      "semantic_config": {
+        "use_semantic_features": true,
+        "text_pca_dim": 16,
+        "image_pca_dim": 0
+      },
+      "balanced": 2.562503770587916,
+      "metrics": {
+        "top1_accuracy": 0.5570620011532276,
+        "pairwise_accuracy": 0.6780201651032582,
+        "ndcg@3": 0.936846020237027,
+        "kendall_tau": 0.3560403302065164,
+        "nll": 1.6120907068252563,
+        "brier_score": 0.5743107816008024,
+        "temperature": 0.35
+      }
+    }
+  ]
+}
