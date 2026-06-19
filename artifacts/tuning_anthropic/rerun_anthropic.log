@@ -1,0 +1,861 @@
+===== TUNERS =====
+
+########## src/tune/tune_semantic.py ##########
+Semantic brand-CV tuning x 8 candidates x 5 folds
+  [ 1/8] use_sem=False txt= 0 img= 0 | top1=0.7223 k?=0.6027 nll=1.1704
+  [ 2/8] use_sem=True txt= 8 img= 0 | top1=0.7243 k?=0.6159 nll=1.1630
+  [ 3/8] use_sem=True txt=16 img= 0 | top1=0.7220 k?=0.6042 nll=1.1686
+  [ 4/8] use_sem=True txt= 0 img= 4 | top1=0.7219 k?=0.6117 nll=1.1584
+  [ 5/8] use_sem=True txt= 0 img= 8 | top1=0.7111 k?=0.5949 nll=1.1973
+  [ 6/8] use_sem=True txt= 8 img= 4 | top1=0.7113 k?=0.6006 nll=1.1775
+  [ 7/8] use_sem=True txt=16 img= 8 | top1=0.7183 k?=0.6064 nll=1.1579
+  [ 8/8] use_sem=True txt=24 img= 8 | top1=0.7114 k?=0.5928 nll=1.1875
+
+============================================================
+Best semantic config (idx 1, balanced=3.6265):
+    use_semantic_features: True
+    text_pca_dim: 8
+    image_pca_dim: 0
+  CV-mean metrics:
+    top1_accuracy    0.7243
+    pairwise_accuracy 0.8079
+    ndcg@3           0.9649
+    kendall_tau      0.6159
+    nll              1.1630
+    brier_score      0.3925
+    temperature      0.4800
+  -> saved to artifacts/tuning_anthropic\semantic_best_config.json
+########## DONE (exit=0): src/tune/tune_semantic.py ##########
+
+########## src/tune/tune_mlp.py ##########
+Loaded semantic config from artifacts/tuning_anthropic\semantic_best_config.json: use_semantic=True text_pca_dim=8 image_pca_dim=0
+MLP brand-CV tuning x 36 candidates x 5 folds  (device=cpu)
+  [ 1/36] dims=[64, 32] do=0.1 wd=1e-04 lr=5e-04 | top1=0.7025 k?=0.5969 nll=1.1813
+  [ 2/36] dims=[64, 32] do=0.1 wd=1e-04 lr=1e-03 | top1=0.7088 k?=0.6021 nll=1.1791
+  [ 3/36] dims=[64, 32] do=0.1 wd=1e-03 lr=5e-04 | top1=0.7057 k?=0.5970 nll=1.1819
+  [ 4/36] dims=[64, 32] do=0.1 wd=1e-03 lr=1e-03 | top1=0.7093 k?=0.6018 nll=1.1801
+  [ 5/36] dims=[64, 32] do=0.3 wd=1e-04 lr=5e-04 | top1=0.7034 k?=0.5920 nll=1.2105
+  [ 6/36] dims=[64, 32] do=0.3 wd=1e-04 lr=1e-03 | top1=0.7048 k?=0.6010 nll=1.1893
+  [ 7/36] dims=[64, 32] do=0.3 wd=1e-03 lr=5e-04 | top1=0.7048 k?=0.5948 nll=1.2077
+  [ 8/36] dims=[64, 32] do=0.3 wd=1e-03 lr=1e-03 | top1=0.7057 k?=0.5999 nll=1.1891
+  [ 9/36] dims=[64, 32] do=0.5 wd=1e-04 lr=5e-04 | top1=0.6939 k?=0.5859 nll=1.2492
+  [10/36] dims=[64, 32] do=0.5 wd=1e-04 lr=1e-03 | top1=0.6960 k?=0.5852 nll=1.2346
+  [11/36] dims=[64, 32] do=0.5 wd=1e-03 lr=5e-04 | top1=0.6954 k?=0.5855 nll=1.2466
+  [12/36] dims=[64, 32] do=0.5 wd=1e-03 lr=1e-03 | top1=0.6975 k?=0.5848 nll=1.2321
+  [13/36] dims=[96, 48, 24] do=0.1 wd=1e-04 lr=5e-04 | top1=0.7088 k?=0.5959 nll=1.1887
+  [14/36] dims=[96, 48, 24] do=0.1 wd=1e-04 lr=1e-03 | top1=0.7075 k?=0.5998 nll=1.1864
+  [15/36] dims=[96, 48, 24] do=0.1 wd=1e-03 lr=5e-04 | top1=0.7096 k?=0.5966 nll=1.1910
+  [16/36] dims=[96, 48, 24] do=0.1 wd=1e-03 lr=1e-03 | top1=0.7116 k?=0.5985 nll=1.1842
+  [17/36] dims=[96, 48, 24] do=0.3 wd=1e-04 lr=5e-04 | top1=0.7037 k?=0.5997 nll=1.2068
+  [18/36] dims=[96, 48, 24] do=0.3 wd=1e-04 lr=1e-03 | top1=0.7076 k?=0.5989 nll=1.2035
+  [19/36] dims=[96, 48, 24] do=0.3 wd=1e-03 lr=5e-04 | top1=0.7052 k?=0.6005 nll=1.2080
+  [20/36] dims=[96, 48, 24] do=0.3 wd=1e-03 lr=1e-03 | top1=0.7083 k?=0.5998 nll=1.2028
+  [21/36] dims=[96, 48, 24] do=0.5 wd=1e-04 lr=5e-04 | top1=0.6883 k?=0.5843 nll=1.2580
+  [22/36] dims=[96, 48, 24] do=0.5 wd=1e-04 lr=1e-03 | top1=0.7038 k?=0.5966 nll=1.2354
+  [23/36] dims=[96, 48, 24] do=0.5 wd=1e-03 lr=5e-04 | top1=0.6904 k?=0.5872 nll=1.2530
+  [24/36] dims=[96, 48, 24] do=0.5 wd=1e-03 lr=1e-03 | top1=0.7096 k?=0.6017 nll=1.2328
+  [25/36] dims=[128, 64, 32] do=0.1 wd=1e-04 lr=5e-04 | top1=0.7023 k?=0.5989 nll=1.1917
+  [26/36] dims=[128, 64, 32] do=0.1 wd=1e-04 lr=1e-03 | top1=0.6978 k?=0.5932 nll=1.1926
+  [27/36] dims=[128, 64, 32] do=0.1 wd=1e-03 lr=5e-04 | top1=0.6981 k?=0.5961 nll=1.1945
+  [28/36] dims=[128, 64, 32] do=0.1 wd=1e-03 lr=1e-03 | top1=0.7004 k?=0.5973 nll=1.1888
+  [29/36] dims=[128, 64, 32] do=0.3 wd=1e-04 lr=5e-04 | top1=0.7050 k?=0.6023 nll=1.1989
+  [30/36] dims=[128, 64, 32] do=0.3 wd=1e-04 lr=1e-03 | top1=0.7125 k?=0.6080 nll=1.1888
+  [31/36] dims=[128, 64, 32] do=0.3 wd=1e-03 lr=5e-04 | top1=0.7070 k?=0.6043 nll=1.1988
+  [32/36] dims=[128, 64, 32] do=0.3 wd=1e-03 lr=1e-03 | top1=0.7090 k?=0.6066 nll=1.1879
+  [33/36] dims=[128, 64, 32] do=0.5 wd=1e-04 lr=5e-04 | top1=0.7014 k?=0.5972 nll=1.2300
+  [34/36] dims=[128, 64, 32] do=0.5 wd=1e-04 lr=1e-03 | top1=0.7089 k?=0.6064 nll=1.2194
+  [35/36] dims=[128, 64, 32] do=0.5 wd=1e-03 lr=5e-04 | top1=0.7049 k?=0.5992 nll=1.2276
+  [36/36] dims=[128, 64, 32] do=0.5 wd=1e-03 lr=1e-03 | top1=0.7098 k?=0.6061 nll=1.2179
+
+============================================================
+Best mlp candidate (idx 29, balanced=3.9709):
+    lambda_mse: 0.5
+    hidden_dims: [128, 64, 32]
+    dropout: 0.3
+    weight_decay: 0.0001
+    lr: 0.001
+  CV-mean metrics:
+    top1_accuracy    0.7125
+    pairwise_accuracy 0.8040
+    ndcg@3           0.9637
+    kendall_tau      0.6080
+    nll              1.1888
+    brier_score      0.4117
+    temperature      0.5000
+  -> saved to artifacts/tuning_anthropic\mlp_best_params.json
+########## DONE (exit=0): src/tune/tune_mlp.py ##########
+
+########## src/tune/tune_lgbm.py ##########
+Loaded semantic config from artifacts/tuning_anthropic\semantic_best_config.json: use_semantic=True text_pca_dim=8 image_pca_dim=0
+LightGBM brand-CV tuning x 36 candidates x 5 folds
+  [ 1/36] lr=0.03 leaves=15 mcs=20 l2=0.1 | top1=0.7181 k?=0.5971 nll=1.1751
+  [ 2/36] lr=0.03 leaves=15 mcs=20 l2=0.5 | top1=0.7128 k?=0.5940 nll=1.1794
+  [ 3/36] lr=0.03 leaves=15 mcs=20 l2=1.0 | top1=0.7161 k?=0.6011 nll=1.1835
+  [ 4/36] lr=0.03 leaves=15 mcs=50 l2=0.1 | top1=0.7247 k?=0.6088 nll=1.1656
+  [ 5/36] lr=0.03 leaves=15 mcs=50 l2=0.5 | top1=0.7182 k?=0.6109 nll=1.1569
+  [ 6/36] lr=0.03 leaves=15 mcs=50 l2=1.0 | top1=0.7136 k?=0.5989 nll=1.1819
+  [ 7/36] lr=0.03 leaves=31 mcs=20 l2=0.1 | top1=0.7196 k?=0.6091 nll=1.1472
+  [ 8/36] lr=0.03 leaves=31 mcs=20 l2=0.5 | top1=0.7223 k?=0.6063 nll=1.1538
+  [ 9/36] lr=0.03 leaves=31 mcs=20 l2=1.0 | top1=0.7164 k?=0.6024 nll=1.1817
+  [10/36] lr=0.03 leaves=31 mcs=50 l2=0.1 | top1=0.7230 k?=0.6126 nll=1.1714
+  [11/36] lr=0.03 leaves=31 mcs=50 l2=0.5 | top1=0.7145 k?=0.5977 nll=1.1781
+  [12/36] lr=0.03 leaves=31 mcs=50 l2=1.0 | top1=0.7164 k?=0.6034 nll=1.1838
+  [13/36] lr=0.03 leaves=63 mcs=20 l2=0.1 | top1=0.7181 k?=0.6054 nll=1.1636
+  [14/36] lr=0.03 leaves=63 mcs=20 l2=0.5 | top1=0.7132 k?=0.6007 nll=1.1626
+  [15/36] lr=0.03 leaves=63 mcs=20 l2=1.0 | top1=0.7192 k?=0.6068 nll=1.1681
+  [16/36] lr=0.03 leaves=63 mcs=50 l2=0.1 | top1=0.7242 k?=0.6166 nll=1.1647
+  [17/36] lr=0.03 leaves=63 mcs=50 l2=0.5 | top1=0.7112 k?=0.6020 nll=1.1848
+  [18/36] lr=0.03 leaves=63 mcs=50 l2=1.0 | top1=0.7177 k?=0.6004 nll=1.1858
+  [19/36] lr=0.05 leaves=15 mcs=20 l2=0.1 | top1=0.7192 k?=0.6062 nll=1.1730
+  [20/36] lr=0.05 leaves=15 mcs=20 l2=0.5 | top1=0.7191 k?=0.6070 nll=1.1638
+  [21/36] lr=0.05 leaves=15 mcs=20 l2=1.0 | top1=0.7162 k?=0.5939 nll=1.1809
+  [22/36] lr=0.05 leaves=15 mcs=50 l2=0.1 | top1=0.7153 k?=0.6026 nll=1.1669
+  [23/36] lr=0.05 leaves=15 mcs=50 l2=0.5 | top1=0.7206 k?=0.6043 nll=1.1730
+  [24/36] lr=0.05 leaves=15 mcs=50 l2=1.0 | top1=0.7155 k?=0.5993 nll=1.1864
+  [25/36] lr=0.05 leaves=31 mcs=20 l2=0.1 | top1=0.7279 k?=0.6161 nll=1.1426
+  [26/36] lr=0.05 leaves=31 mcs=20 l2=0.5 | top1=0.7223 k?=0.6071 nll=1.1903
+  [27/36] lr=0.05 leaves=31 mcs=20 l2=1.0 | top1=0.7238 k?=0.6141 nll=1.1601
+  [28/36] lr=0.05 leaves=31 mcs=50 l2=0.1 | top1=0.7198 k?=0.6068 nll=1.1611
+  [29/36] lr=0.05 leaves=31 mcs=50 l2=0.5 | top1=0.7243 k?=0.6159 nll=1.1630
+  [30/36] lr=0.05 leaves=31 mcs=50 l2=1.0 | top1=0.7232 k?=0.6154 nll=1.1302
+  [31/36] lr=0.05 leaves=63 mcs=20 l2=0.1 | top1=0.7250 k?=0.6084 nll=1.1536
+  [32/36] lr=0.05 leaves=63 mcs=20 l2=0.5 | top1=0.7149 k?=0.5961 nll=1.1807
+  [33/36] lr=0.05 leaves=63 mcs=20 l2=1.0 | top1=0.7243 k?=0.6092 nll=1.1564
+  [34/36] lr=0.05 leaves=63 mcs=50 l2=0.1 | top1=0.7170 k?=0.6043 nll=1.1622
+  [35/36] lr=0.05 leaves=63 mcs=50 l2=0.5 | top1=0.7241 k?=0.6120 nll=1.1559
+  [36/36] lr=0.05 leaves=63 mcs=50 l2=1.0 | top1=0.7234 k?=0.6127 nll=1.1331
+
+============================================================
+Best lgbm candidate (idx 24, balanced=5.4127):
+    objective: lambdarank
+    metric: ndcg
+    ndcg_eval_at: [1, 3]
+    reg_alpha: 0.1
+    feature_fraction: 0.7
+    bagging_fraction: 0.8
+    bagging_freq: 1
+    verbose: -1
+    learning_rate: 0.05
+    num_leaves: 31
+    min_child_samples: 20
+    reg_lambda: 0.1
+  CV-mean metrics:
+    top1_accuracy    0.7279
+    pairwise_accuracy 0.8080
+    ndcg@3           0.9653
+    kendall_tau      0.6161
+    nll              1.1426
+    brier_score      0.3788
+    temperature      0.4800
+  -> saved to artifacts/tuning_anthropic\lgbm_best_params.json
+########## DONE (exit=0): src/tune/tune_lgbm.py ##########
+
+########## src/tune/tune_xgb.py ##########
+Loaded semantic config from artifacts/tuning_anthropic\semantic_best_config.json: use_semantic=True text_pca_dim=8 image_pca_dim=0
+XGBoost brand-CV tuning x 72 candidates x 5 folds
+  [ 1/72] eta=0.03 depth=3 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6857 k?=0.5733 nll=1.2224
+  [ 2/72] eta=0.03 depth=3 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6832 k?=0.5671 nll=1.2437
+  [ 3/72] eta=0.03 depth=3 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6886 k?=0.5748 nll=1.2096
+  [ 4/72] eta=0.03 depth=3 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6919 k?=0.5783 nll=1.1977
+  [ 5/72] eta=0.03 depth=3 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6908 k?=0.5776 nll=1.1973
+  [ 6/72] eta=0.03 depth=3 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6933 k?=0.5851 nll=1.1914
+  [ 7/72] eta=0.03 depth=3 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6948 k?=0.5837 nll=1.2084
+  [ 8/72] eta=0.03 depth=3 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6917 k?=0.5829 nll=1.1933
+  [ 9/72] eta=0.03 depth=3 mcw=10 gamma=0.0 l2=0.5 | top1=0.6935 k?=0.5806 nll=1.1975
+  [10/72] eta=0.03 depth=3 mcw=10 gamma=0.0 l2=1.0 | top1=0.6901 k?=0.5752 nll=1.2103
+  [11/72] eta=0.03 depth=3 mcw=10 gamma=0.5 l2=0.5 | top1=0.6859 k?=0.5786 nll=1.2093
+  [12/72] eta=0.03 depth=3 mcw=10 gamma=0.5 l2=1.0 | top1=0.6937 k?=0.5786 nll=1.2104
+  [13/72] eta=0.03 depth=4 mcw= 3 gamma=0.0 l2=0.5 | top1=0.7025 k?=0.5943 nll=1.1772
+  [14/72] eta=0.03 depth=4 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6998 k?=0.5936 nll=1.2008
+  [15/72] eta=0.03 depth=4 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6925 k?=0.5850 nll=1.2014
+  [16/72] eta=0.03 depth=4 mcw= 3 gamma=0.5 l2=1.0 | top1=0.7021 k?=0.5920 nll=1.1787
+  [17/72] eta=0.03 depth=4 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6982 k?=0.5890 nll=1.1857
+  [18/72] eta=0.03 depth=4 mcw= 5 gamma=0.0 l2=1.0 | top1=0.7047 k?=0.6006 nll=1.1610
+  [19/72] eta=0.03 depth=4 mcw= 5 gamma=0.5 l2=0.5 | top1=0.7017 k?=0.5899 nll=1.1884
+  [20/72] eta=0.03 depth=4 mcw= 5 gamma=0.5 l2=1.0 | top1=0.7084 k?=0.5987 nll=1.1633
+  [21/72] eta=0.03 depth=4 mcw=10 gamma=0.0 l2=0.5 | top1=0.7021 k?=0.5933 nll=1.1802
+  [22/72] eta=0.03 depth=4 mcw=10 gamma=0.0 l2=1.0 | top1=0.6970 k?=0.5890 nll=1.1935
+  [23/72] eta=0.03 depth=4 mcw=10 gamma=0.5 l2=0.5 | top1=0.6951 k?=0.5844 nll=1.1760
+  [24/72] eta=0.03 depth=4 mcw=10 gamma=0.5 l2=1.0 | top1=0.7008 k?=0.5877 nll=1.1892
+  [25/72] eta=0.03 depth=5 mcw= 3 gamma=0.0 l2=0.5 | top1=0.7030 k?=0.5881 nll=1.1620
+  [26/72] eta=0.03 depth=5 mcw= 3 gamma=0.0 l2=1.0 | top1=0.7073 k?=0.5936 nll=1.1589
+  [27/72] eta=0.03 depth=5 mcw= 3 gamma=0.5 l2=0.5 | top1=0.7101 k?=0.5981 nll=1.1575
+  [28/72] eta=0.03 depth=5 mcw= 3 gamma=0.5 l2=1.0 | top1=0.7060 k?=0.5913 nll=1.1716
+  [29/72] eta=0.03 depth=5 mcw= 5 gamma=0.0 l2=0.5 | top1=0.7014 k?=0.5878 nll=1.1764
+  [30/72] eta=0.03 depth=5 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6998 k?=0.5865 nll=1.1874
+  [31/72] eta=0.03 depth=5 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6952 k?=0.5871 nll=1.1812
+  [32/72] eta=0.03 depth=5 mcw= 5 gamma=0.5 l2=1.0 | top1=0.7135 k?=0.6012 nll=1.1477
+  [33/72] eta=0.03 depth=5 mcw=10 gamma=0.0 l2=0.5 | top1=0.7070 k?=0.5994 nll=1.1619
+  [34/72] eta=0.03 depth=5 mcw=10 gamma=0.0 l2=1.0 | top1=0.7015 k?=0.5915 nll=1.1935
+  [35/72] eta=0.03 depth=5 mcw=10 gamma=0.5 l2=0.5 | top1=0.7116 k?=0.6019 nll=1.1627
+  [36/72] eta=0.03 depth=5 mcw=10 gamma=0.5 l2=1.0 | top1=0.7021 k?=0.5885 nll=1.1741
+  [37/72] eta=0.05 depth=3 mcw= 3 gamma=0.0 l2=0.5 | top1=0.7062 k?=0.5967 nll=1.1768
+  [38/72] eta=0.05 depth=3 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6836 k?=0.5715 nll=1.2136
+  [39/72] eta=0.05 depth=3 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6924 k?=0.5836 nll=1.1893
+  [40/72] eta=0.05 depth=3 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6914 k?=0.5755 nll=1.2216
+  [41/72] eta=0.05 depth=3 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6928 k?=0.5836 nll=1.1899
+  [42/72] eta=0.05 depth=3 mcw= 5 gamma=0.0 l2=1.0 | top1=0.7035 k?=0.5959 nll=1.1670
+  [43/72] eta=0.05 depth=3 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6928 k?=0.5779 nll=1.2137
+  [44/72] eta=0.05 depth=3 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6983 k?=0.5863 nll=1.1939
+  [45/72] eta=0.05 depth=3 mcw=10 gamma=0.0 l2=0.5 | top1=0.6946 k?=0.5832 nll=1.2029
+  [46/72] eta=0.05 depth=3 mcw=10 gamma=0.0 l2=1.0 | top1=0.7016 k?=0.5891 nll=1.1983
+  [47/72] eta=0.05 depth=3 mcw=10 gamma=0.5 l2=0.5 | top1=0.6931 k?=0.5776 nll=1.2002
+  [48/72] eta=0.05 depth=3 mcw=10 gamma=0.5 l2=1.0 | top1=0.6994 k?=0.5822 nll=1.2134
+  [49/72] eta=0.05 depth=4 mcw= 3 gamma=0.0 l2=0.5 | top1=0.7036 k?=0.6002 nll=1.1619
+  [50/72] eta=0.05 depth=4 mcw= 3 gamma=0.0 l2=1.0 | top1=0.7015 k?=0.5895 nll=1.1876
+  [51/72] eta=0.05 depth=4 mcw= 3 gamma=0.5 l2=0.5 | top1=0.7106 k?=0.6053 nll=1.1476
+  [52/72] eta=0.05 depth=4 mcw= 3 gamma=0.5 l2=1.0 | top1=0.7046 k?=0.5976 nll=1.1519
+  [53/72] eta=0.05 depth=4 mcw= 5 gamma=0.0 l2=0.5 | top1=0.7055 k?=0.6007 nll=1.1686
+  [54/72] eta=0.05 depth=4 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6998 k?=0.5937 nll=1.1722
+  [55/72] eta=0.05 depth=4 mcw= 5 gamma=0.5 l2=0.5 | top1=0.7073 k?=0.5977 nll=1.1829
+  [56/72] eta=0.05 depth=4 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6989 k?=0.5876 nll=1.1884
+  [57/72] eta=0.05 depth=4 mcw=10 gamma=0.0 l2=0.5 | top1=0.7043 k?=0.6014 nll=1.1621
+  [58/72] eta=0.05 depth=4 mcw=10 gamma=0.0 l2=1.0 | top1=0.7013 k?=0.5908 nll=1.1685
+  [59/72] eta=0.05 depth=4 mcw=10 gamma=0.5 l2=0.5 | top1=0.7052 k?=0.5960 nll=1.1571
+  [60/72] eta=0.05 depth=4 mcw=10 gamma=0.5 l2=1.0 | top1=0.7044 k?=0.5972 nll=1.1581
+  [61/72] eta=0.05 depth=5 mcw= 3 gamma=0.0 l2=0.5 | top1=0.7099 k?=0.6018 nll=1.1665
+  [62/72] eta=0.05 depth=5 mcw= 3 gamma=0.0 l2=1.0 | top1=0.7048 k?=0.5925 nll=1.1776
+  [63/72] eta=0.05 depth=5 mcw= 3 gamma=0.5 l2=0.5 | top1=0.7111 k?=0.5967 nll=1.1989
+  [64/72] eta=0.05 depth=5 mcw= 3 gamma=0.5 l2=1.0 | top1=0.7097 k?=0.5978 nll=1.1651
+  [65/72] eta=0.05 depth=5 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6943 k?=0.5837 nll=1.1788
+  [66/72] eta=0.05 depth=5 mcw= 5 gamma=0.0 l2=1.0 | top1=0.7086 k?=0.5960 nll=1.1821
+  [67/72] eta=0.05 depth=5 mcw= 5 gamma=0.5 l2=0.5 | top1=0.7031 k?=0.5897 nll=1.1759
+  [68/72] eta=0.05 depth=5 mcw= 5 gamma=0.5 l2=1.0 | top1=0.7076 k?=0.5987 nll=1.1718
+  [69/72] eta=0.05 depth=5 mcw=10 gamma=0.0 l2=0.5 | top1=0.7043 k?=0.5918 nll=1.1543
+  [70/72] eta=0.05 depth=5 mcw=10 gamma=0.0 l2=1.0 | top1=0.7055 k?=0.5959 nll=1.1667
+  [71/72] eta=0.05 depth=5 mcw=10 gamma=0.5 l2=0.5 | top1=0.7077 k?=0.6015 nll=1.1559
+  [72/72] eta=0.05 depth=5 mcw=10 gamma=0.5 l2=1.0 | top1=0.7008 k?=0.5897 nll=1.2004
+
+============================================================
+Best xgb candidate (idx 50, balanced=5.0841):
+    objective: rank:ndcg
+    eval_metric: ndcg@1
+    subsample: 0.8
+    colsample_bytree: 0.7
+    reg_alpha: 0.0
+    verbosity: 0
+    seed: 42
+    eta: 0.05
+    max_depth: 4
+    min_child_weight: 3
+    gamma: 0.5
+    reg_lambda: 0.5
+  CV-mean metrics:
+    top1_accuracy    0.7106
+    pairwise_accuracy 0.8027
+    ndcg@3           0.9636
+    kendall_tau      0.6053
+    nll              1.1476
+    brier_score      0.3908
+    temperature      0.4400
+  -> saved to artifacts/tuning_anthropic\xgb_best_params.json
+########## DONE (exit=0): src/tune/tune_xgb.py ##########
+
+########## src/tune/tune_lgbm_pl.py ##########
+C:\Users\user\OneDrive\문서\DataMining\src\pl_objective.py:83: RuntimeWarning: overflow encountered in multiply
+  inv_Z2     = inv_Z * inv_Z
+C:\Users\user\OneDrive\문서\DataMining\src\pl_objective.py:82: RuntimeWarning: overflow encountered in divide
+  inv_Z      = 1.0 / Z
+C:\Users\user\OneDrive\문서\DataMining\src\pl_objective.py:94: RuntimeWarning: invalid value encountered in subtract
+  hessians = np.maximum(e * (A - e * C), 1e-6)        # (B, 3), ≥ 0
+Loaded semantic config from artifacts/tuning_anthropic\semantic_best_config.json: use_semantic=True text_pca_dim=8 image_pca_dim=0
+LightGBM-PL brand-CV tuning x 24 candidates x 5 folds
+  [ 1/24] lr=0.03 leaves=15 mcs=10 l2=0.1 | top1=0.7016 k?=0.5929 nll=1.1935
+  [ 2/24] lr=0.03 leaves=15 mcs=10 l2=0.5 | top1=0.7047 k?=0.5910 nll=1.2031
+  [ 3/24] lr=0.03 leaves=15 mcs=30 l2=0.1 | top1=0.7057 k?=0.5992 nll=1.2080
+  [ 4/24] lr=0.03 leaves=15 mcs=30 l2=0.5 | top1=0.7030 k?=0.5993 nll=1.1707
+  [ 5/24] lr=0.03 leaves=15 mcs=50 l2=0.1 | top1=0.7033 k?=0.5964 nll=1.1805
+  [ 6/24] lr=0.03 leaves=15 mcs=50 l2=0.5 | top1=0.7065 k?=0.6018 nll=1.1743
+  [ 7/24] lr=0.03 leaves=31 mcs=10 l2=0.1 | top1=0.7125 k?=0.6127 nll=1.1488
+  [ 8/24] lr=0.03 leaves=31 mcs=10 l2=0.5 | top1=0.7109 k?=0.6116 nll=1.1465
+  [ 9/24] lr=0.03 leaves=31 mcs=30 l2=0.1 | top1=0.7120 k?=0.6118 nll=1.1562
+  [10/24] lr=0.03 leaves=31 mcs=30 l2=0.5 | top1=0.7115 k?=0.6140 nll=1.1696
+  [11/24] lr=0.03 leaves=31 mcs=50 l2=0.1 | top1=0.7087 k?=0.6120 nll=1.1749
+  [12/24] lr=0.03 leaves=31 mcs=50 l2=0.5 | top1=0.7085 k?=0.6062 nll=1.1613
+  [13/24] lr=0.05 leaves=15 mcs=10 l2=0.1 | top1=0.7006 k?=0.6009 nll=1.1631
+  [14/24] lr=0.05 leaves=15 mcs=10 l2=0.5 | top1=0.7005 k?=0.5961 nll=1.1809
+  [15/24] lr=0.05 leaves=15 mcs=30 l2=0.1 | top1=0.7035 k?=0.5995 nll=1.2777
+  [16/24] lr=0.05 leaves=15 mcs=30 l2=0.5 | top1=0.7047 k?=0.6006 nll=1.2123
+  [17/24] lr=0.05 leaves=15 mcs=50 l2=0.1 | top1=0.7025 k?=0.6013 nll=1.2108
+  [18/24] lr=0.05 leaves=15 mcs=50 l2=0.5 | top1=0.7039 k?=0.5997 nll=1.1647
+  [19/24] lr=0.05 leaves=31 mcs=10 l2=0.1 | top1=0.7081 k?=0.6106 nll=1.1965
+  [20/24] lr=0.05 leaves=31 mcs=10 l2=0.5 | top1=0.7080 k?=0.6075 nll=1.1868
+  [21/24] lr=0.05 leaves=31 mcs=30 l2=0.1 | top1=0.7102 k?=0.6092 nll=1.1556
+  [22/24] lr=0.05 leaves=31 mcs=30 l2=0.5 | top1=0.7144 k?=0.6135 nll=1.1454
+  [23/24] lr=0.05 leaves=31 mcs=50 l2=0.1 | top1=0.7155 k?=0.6138 nll=1.3177
+  [24/24] lr=0.05 leaves=31 mcs=50 l2=0.5 | top1=0.7087 k?=0.6120 nll=1.2358
+
+============================================================
+Best lgbm_pl candidate (idx 21, balanced=4.0472):
+    metric: ndcg
+    ndcg_eval_at: [1, 3]
+    feature_fraction: 0.7
+    bagging_fraction: 0.8
+    bagging_freq: 1
+    reg_alpha: 0.1
+    verbose: -1
+    learning_rate: 0.05
+    num_leaves: 31
+    min_child_samples: 30
+    reg_lambda: 0.5
+  CV-mean metrics:
+    top1_accuracy    0.7144
+    pairwise_accuracy 0.8067
+    ndcg@3           0.9645
+    kendall_tau      0.6135
+    nll              1.1454
+    brier_score      0.3992
+    temperature      0.4200
+  -> saved to artifacts/tuning_anthropic\lgbm_pl_best_params.json
+########## DONE (exit=0): src/tune/tune_lgbm_pl.py ##########
+
+########## src/tune/tune_xgb_pl.py ##########
+C:\Users\user\OneDrive\문서\DataMining\src\pl_objective.py:83: RuntimeWarning: overflow encountered in multiply
+  inv_Z2     = inv_Z * inv_Z
+C:\Users\user\AppData\Local\Programs\Python\Python312\Lib\site-packages\numpy\_core\fromnumeric.py:54: RuntimeWarning: overflow encountered in accumulate
+  return bound(*args, **kwds)
+Loaded semantic config from artifacts/tuning_anthropic\semantic_best_config.json: use_semantic=True text_pca_dim=8 image_pca_dim=0
+XGBoost-PL brand-CV tuning x 48 candidates x 5 folds
+  [ 1/48] eta=0.03 depth=3 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6605 k?=0.5507 nll=1.3398
+  [ 2/48] eta=0.03 depth=3 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6555 k?=0.5477 nll=1.2923
+  [ 3/48] eta=0.03 depth=3 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6614 k?=0.5514 nll=1.3399
+  [ 4/48] eta=0.03 depth=3 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6553 k?=0.5474 nll=1.2903
+  [ 5/48] eta=0.03 depth=3 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6644 k?=0.5546 nll=1.3318
+  [ 6/48] eta=0.03 depth=3 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6608 k?=0.5537 nll=1.3080
+  [ 7/48] eta=0.03 depth=3 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6643 k?=0.5545 nll=1.3131
+  [ 8/48] eta=0.03 depth=3 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6600 k?=0.5533 nll=1.3084
+  [ 9/48] eta=0.03 depth=4 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6839 k?=0.5784 nll=1.2713
+  [10/48] eta=0.03 depth=4 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6886 k?=0.5812 nll=1.2554
+  [11/48] eta=0.03 depth=4 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6830 k?=0.5775 nll=1.2701
+  [12/48] eta=0.03 depth=4 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6887 k?=0.5810 nll=1.2668
+  [13/48] eta=0.03 depth=4 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6814 k?=0.5792 nll=1.2358
+  [14/48] eta=0.03 depth=4 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6864 k?=0.5774 nll=1.2408
+  [15/48] eta=0.03 depth=4 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6815 k?=0.5789 nll=1.2376
+  [16/48] eta=0.03 depth=4 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6832 k?=0.5738 nll=1.2472
+  [17/48] eta=0.03 depth=5 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6890 k?=0.5897 nll=1.2129
+  [18/48] eta=0.03 depth=5 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6940 k?=0.5948 nll=1.2118
+  [19/48] eta=0.03 depth=5 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6890 k?=0.5902 nll=1.2324
+  [20/48] eta=0.03 depth=5 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6937 k?=0.5933 nll=1.2084
+  [21/48] eta=0.03 depth=5 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6868 k?=0.5872 nll=1.2131
+  [22/48] eta=0.03 depth=5 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6876 k?=0.5887 nll=1.2160
+  [23/48] eta=0.03 depth=5 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6861 k?=0.5899 nll=1.2228
+  [24/48] eta=0.03 depth=5 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6888 k?=0.5888 nll=1.2123
+  [25/48] eta=0.05 depth=3 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6520 k?=0.5362 nll=1.4711
+  [26/48] eta=0.05 depth=3 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6577 k?=0.5449 nll=1.4204
+  [27/48] eta=0.05 depth=3 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6509 k?=0.5384 nll=1.4686
+  [28/48] eta=0.05 depth=3 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6577 k?=0.5451 nll=1.4206
+  [29/48] eta=0.05 depth=3 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6593 k?=0.5434 nll=1.4277
+  [30/48] eta=0.05 depth=3 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6616 k?=0.5429 nll=1.3986
+  [31/48] eta=0.05 depth=3 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6561 k?=0.5420 nll=1.4201
+  [32/48] eta=0.05 depth=3 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6616 k?=0.5429 nll=1.3984
+  [33/48] eta=0.05 depth=4 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6773 k?=0.5663 nll=1.4112
+  [34/48] eta=0.05 depth=4 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6754 k?=0.5645 nll=1.3891
+  [35/48] eta=0.05 depth=4 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6777 k?=0.5688 nll=1.4126
+  [36/48] eta=0.05 depth=4 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6769 k?=0.5650 nll=1.3919
+  [37/48] eta=0.05 depth=4 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6702 k?=0.5600 nll=1.3543
+  [38/48] eta=0.05 depth=4 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6783 k?=0.5664 nll=1.3427
+  [39/48] eta=0.05 depth=4 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6701 k?=0.5621 nll=1.3460
+  [40/48] eta=0.05 depth=4 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6783 k?=0.5686 nll=1.3178
+  [41/48] eta=0.05 depth=5 mcw= 3 gamma=0.0 l2=0.5 | top1=0.6772 k?=0.5740 nll=1.3508
+  [42/48] eta=0.05 depth=5 mcw= 3 gamma=0.0 l2=1.0 | top1=0.6893 k?=0.5897 nll=1.2794
+  [43/48] eta=0.05 depth=5 mcw= 3 gamma=0.5 l2=0.5 | top1=0.6805 k?=0.5757 nll=1.3377
+  [44/48] eta=0.05 depth=5 mcw= 3 gamma=0.5 l2=1.0 | top1=0.6896 k?=0.5884 nll=1.2732
+  [45/48] eta=0.05 depth=5 mcw= 5 gamma=0.0 l2=0.5 | top1=0.6855 k?=0.5817 nll=1.2713
+  [46/48] eta=0.05 depth=5 mcw= 5 gamma=0.0 l2=1.0 | top1=0.6857 k?=0.5819 nll=1.2737
+  [47/48] eta=0.05 depth=5 mcw= 5 gamma=0.5 l2=0.5 | top1=0.6840 k?=0.5824 nll=1.2747
+  [48/48] eta=0.05 depth=5 mcw= 5 gamma=0.5 l2=1.0 | top1=0.6879 k?=0.5833 nll=1.2765
+
+============================================================
+Best xgb_pl candidate (idx 17, balanced=4.3252):
+    eval_metric: ndcg@1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    reg_alpha: 0.1
+    verbosity: 0
+    seed: 42
+    eta: 0.03
+    max_depth: 5
+    min_child_weight: 3
+    gamma: 0.0
+    reg_lambda: 1.0
+  CV-mean metrics:
+    top1_accuracy    0.6940
+    pairwise_accuracy 0.7974
+    ndcg@3           0.9621
+    kendall_tau      0.5948
+    nll              1.2118
+    brier_score      0.4259
+    temperature      1.1400
+  -> saved to artifacts/tuning_anthropic\xgb_pl_best_params.json
+########## DONE (exit=0): src/tune/tune_xgb_pl.py ##########
+===== TRAINERS =====
+
+########## src/mlp/train.py ##########
+Loaded semantic config from artifacts/tuning_anthropic\semantic_best_config.json: use_semantic=True text_pca_dim=8 image_pca_dim=0
+Loaded tuned MLP params from artifacts/tuning_anthropic\mlp_best_params.json: dims=[128, 64, 32] dropout=0.3 wd=0.0001 lr=0.001 lambda_mse=0.5
+Device: cpu  |  Protocol: step2  |  Version: v3  |  Engine: anthropic  |  Features: 29  |  seeds: 5
+Trials - train: 1551  val: 275  test: 800
+Parameters: 14,657
+[seed 0] Epoch   1 | train=2.6553  val=1.4097  lr=1.00e-03
+[seed 0] Epoch   2 | train=1.9899  val=1.2526  lr=1.00e-03
+[seed 0] Epoch   3 | train=1.8045  val=1.2001  lr=1.00e-03
+[seed 0] Epoch   4 | train=1.6402  val=1.1541  lr=1.00e-03
+[seed 0] Epoch   5 | train=1.5615  val=1.1278  lr=1.00e-03
+[seed 0] Epoch   6 | train=1.5327  val=1.0942  lr=1.00e-03
+[seed 0] Epoch   7 | train=1.4603  val=1.0801  lr=1.00e-03
+[seed 0] Epoch   8 | train=1.3815  val=1.0652  lr=1.00e-03
+[seed 0] Epoch   9 | train=1.3842  val=1.0610  lr=1.00e-03
+[seed 0] Epoch  10 | train=1.3300  val=1.0553  lr=1.00e-03
+[seed 0] Epoch  11 | train=1.3256  val=1.0467  lr=1.00e-03
+[seed 0] Epoch  12 | train=1.2866  val=1.0487  lr=1.00e-03
+[seed 0] Epoch  13 | train=1.2979  val=1.0490  lr=1.00e-03
+[seed 0] Epoch  14 | train=1.2628  val=1.0481  lr=1.00e-03
+[seed 0] Epoch  15 | train=1.2456  val=1.0432  lr=1.00e-03
+[seed 0] Epoch  16 | train=1.2374  val=1.0517  lr=1.00e-03
+[seed 0] Epoch  17 | train=1.1923  val=1.0264  lr=1.00e-03
+[seed 0] Epoch  18 | train=1.2230  val=1.0324  lr=1.00e-03
+[seed 0] Epoch  19 | train=1.2026  val=1.0278  lr=1.00e-03
+[seed 0] Epoch  20 | train=1.2063  val=1.0344  lr=1.00e-03
+[seed 0] Epoch  21 | train=1.2015  val=1.0312  lr=1.00e-03
+[seed 0] Epoch  22 | train=1.1697  val=1.0372  lr=1.00e-03
+[seed 0] Epoch  23 | train=1.1644  val=1.0243  lr=1.00e-03
+[seed 0] Epoch  24 | train=1.1535  val=1.0366  lr=1.00e-03
+[seed 0] Epoch  25 | train=1.1587  val=1.0310  lr=1.00e-03
+[seed 0] Epoch  26 | train=1.1369  val=1.0193  lr=1.00e-03
+[seed 0] Epoch  27 | train=1.1271  val=1.0371  lr=1.00e-03
+[seed 0] Epoch  28 | train=1.1435  val=1.0332  lr=1.00e-03
+[seed 0] Epoch  29 | train=1.1423  val=1.0359  lr=1.00e-03
+[seed 0] Epoch  30 | train=1.1308  val=1.0308  lr=1.00e-03
+[seed 0] Epoch  31 | train=1.1405  val=1.0320  lr=1.00e-03
+[seed 0] Epoch  32 | train=1.1191  val=1.0329  lr=5.00e-04
+[seed 0] Epoch  33 | train=1.1098  val=1.0312  lr=5.00e-04
+[seed 0] Epoch  34 | train=1.1102  val=1.0236  lr=5.00e-04
+[seed 0] Epoch  35 | train=1.0950  val=1.0311  lr=5.00e-04
+[seed 0] Epoch  36 | train=1.1212  val=1.0246  lr=5.00e-04
+[seed 0] Epoch  37 | train=1.1142  val=1.0326  lr=5.00e-04
+[seed 0] Epoch  38 | train=1.0982  val=1.0301  lr=2.50e-04
+[seed 0] Epoch  39 | train=1.1011  val=1.0249  lr=2.50e-04
+[seed 0] Epoch  40 | train=1.0858  val=1.0299  lr=2.50e-04
+[seed 0] Epoch  41 | train=1.0989  val=1.0277  lr=2.50e-04
+[seed 0] Early stopping at epoch 41.
+[seed 0] Best val loss: 1.0193
+Temperature calibration: T* = 0.7
+[seed 1] Epoch   1 | train=2.5546  val=1.4061  lr=1.00e-03
+[seed 1] Epoch   2 | train=2.0261  val=1.2659  lr=1.00e-03
+[seed 1] Epoch   3 | train=1.7832  val=1.2026  lr=1.00e-03
+[seed 1] Epoch   4 | train=1.6637  val=1.1696  lr=1.00e-03
+[seed 1] Epoch   5 | train=1.6136  val=1.1410  lr=1.00e-03
+[seed 1] Epoch   6 | train=1.5365  val=1.1068  lr=1.00e-03
+[seed 1] Epoch   7 | train=1.4564  val=1.1046  lr=1.00e-03
+[seed 1] Epoch   8 | train=1.4221  val=1.0921  lr=1.00e-03
+[seed 1] Epoch   9 | train=1.4060  val=1.0696  lr=1.00e-03
+[seed 1] Epoch  10 | train=1.3643  val=1.0645  lr=1.00e-03
+[seed 1] Epoch  11 | train=1.3513  val=1.0745  lr=1.00e-03
+[seed 1] Epoch  12 | train=1.3127  val=1.0500  lr=1.00e-03
+[seed 1] Epoch  13 | train=1.2865  val=1.0513  lr=1.00e-03
+[seed 1] Epoch  14 | train=1.2940  val=1.0521  lr=1.00e-03
+[seed 1] Epoch  15 | train=1.2645  val=1.0537  lr=1.00e-03
+[seed 1] Epoch  16 | train=1.2455  val=1.0624  lr=1.00e-03
+[seed 1] Epoch  17 | train=1.2502  val=1.0415  lr=1.00e-03
+[seed 1] Epoch  18 | train=1.2243  val=1.0460  lr=1.00e-03
+[seed 1] Epoch  19 | train=1.2170  val=1.0552  lr=1.00e-03
+[seed 1] Epoch  20 | train=1.1952  val=1.0449  lr=1.00e-03
+[seed 1] Epoch  21 | train=1.1840  val=1.0467  lr=1.00e-03
+[seed 1] Epoch  22 | train=1.1760  val=1.0467  lr=1.00e-03
+[seed 1] Epoch  23 | train=1.1738  val=1.0326  lr=1.00e-03
+[seed 1] Epoch  24 | train=1.1612  val=1.0396  lr=1.00e-03
+[seed 1] Epoch  25 | train=1.1683  val=1.0448  lr=1.00e-03
+[seed 1] Epoch  26 | train=1.1815  val=1.0340  lr=1.00e-03
+[seed 1] Epoch  27 | train=1.1327  val=1.0380  lr=1.00e-03
+[seed 1] Epoch  28 | train=1.1456  val=1.0332  lr=1.00e-03
+[seed 1] Epoch  29 | train=1.1558  val=1.0435  lr=5.00e-04
+[seed 1] Epoch  30 | train=1.1297  val=1.0351  lr=5.00e-04
+[seed 1] Epoch  31 | train=1.1112  val=1.0426  lr=5.00e-04
+[seed 1] Epoch  32 | train=1.1429  val=1.0382  lr=5.00e-04
+[seed 1] Epoch  33 | train=1.1354  val=1.0349  lr=5.00e-04
+[seed 1] Epoch  34 | train=1.1186  val=1.0323  lr=5.00e-04
+[seed 1] Epoch  35 | train=1.1113  val=1.0331  lr=5.00e-04
+[seed 1] Epoch  36 | train=1.1282  val=1.0314  lr=5.00e-04
+[seed 1] Epoch  37 | train=1.1185  val=1.0323  lr=5.00e-04
+[seed 1] Epoch  38 | train=1.1144  val=1.0294  lr=5.00e-04
+[seed 1] Epoch  39 | train=1.1181  val=1.0322  lr=5.00e-04
+[seed 1] Epoch  40 | train=1.1122  val=1.0275  lr=5.00e-04
+[seed 1] Epoch  41 | train=1.1230  val=1.0299  lr=5.00e-04
+[seed 1] Epoch  42 | train=1.1115  val=1.0311  lr=5.00e-04
+[seed 1] Epoch  43 | train=1.1026  val=1.0253  lr=5.00e-04
+[seed 1] Epoch  44 | train=1.0873  val=1.0280  lr=5.00e-04
+[seed 1] Epoch  45 | train=1.0996  val=1.0245  lr=5.00e-04
+[seed 1] Epoch  46 | train=1.0841  val=1.0225  lr=5.00e-04
+[seed 1] Epoch  47 | train=1.0779  val=1.0366  lr=5.00e-04
+[seed 1] Epoch  48 | train=1.0826  val=1.0312  lr=5.00e-04
+[seed 1] Epoch  49 | train=1.0905  val=1.0244  lr=5.00e-04
+[seed 1] Epoch  50 | train=1.0772  val=1.0245  lr=5.00e-04
+[seed 1] Epoch  51 | train=1.0886  val=1.0283  lr=5.00e-04
+[seed 1] Epoch  52 | train=1.0851  val=1.0212  lr=5.00e-04
+[seed 1] Epoch  53 | train=1.0785  val=1.0253  lr=5.00e-04
+[seed 1] Epoch  54 | train=1.0672  val=1.0256  lr=5.00e-04
+[seed 1] Epoch  55 | train=1.0828  val=1.0251  lr=5.00e-04
+[seed 1] Epoch  56 | train=1.1070  val=1.0225  lr=5.00e-04
+[seed 1] Epoch  57 | train=1.0787  val=1.0231  lr=5.00e-04
+[seed 1] Epoch  58 | train=1.0939  val=1.0212  lr=2.50e-04
+[seed 1] Epoch  59 | train=1.0742  val=1.0214  lr=2.50e-04
+[seed 1] Epoch  60 | train=1.0691  val=1.0240  lr=2.50e-04
+[seed 1] Epoch  61 | train=1.0614  val=1.0234  lr=2.50e-04
+[seed 1] Epoch  62 | train=1.0580  val=1.0228  lr=2.50e-04
+[seed 1] Epoch  63 | train=1.0557  val=1.0242  lr=2.50e-04
+[seed 1] Epoch  64 | train=1.0678  val=1.0245  lr=1.25e-04
+[seed 1] Epoch  65 | train=1.0525  val=1.0213  lr=1.25e-04
+[seed 1] Epoch  66 | train=1.0348  val=1.0202  lr=1.25e-04
+[seed 1] Epoch  67 | train=1.0462  val=1.0197  lr=1.25e-04
+[seed 1] Epoch  68 | train=1.0644  val=1.0229  lr=1.25e-04
+[seed 1] Epoch  69 | train=1.0762  val=1.0228  lr=1.25e-04
+[seed 1] Epoch  70 | train=1.0722  val=1.0193  lr=1.25e-04
+[seed 1] Epoch  71 | train=1.0924  val=1.0183  lr=1.25e-04
+[seed 1] Epoch  72 | train=1.0429  val=1.0163  lr=1.25e-04
+[seed 1] Epoch  73 | train=1.0630  val=1.0199  lr=1.25e-04
+[seed 1] Epoch  74 | train=1.0650  val=1.0214  lr=1.25e-04
+[seed 1] Epoch  75 | train=1.0471  val=1.0188  lr=1.25e-04
+[seed 1] Epoch  76 | train=1.0585  val=1.0213  lr=1.25e-04
+[seed 1] Epoch  77 | train=1.0890  val=1.0176  lr=1.25e-04
+[seed 1] Epoch  78 | train=1.0499  val=1.0209  lr=6.25e-05
+[seed 1] Epoch  79 | train=1.0585  val=1.0235  lr=6.25e-05
+[seed 1] Epoch  80 | train=1.0523  val=1.0234  lr=6.25e-05
+[seed 1] Epoch  81 | train=1.0712  val=1.0198  lr=6.25e-05
+[seed 1] Epoch  82 | train=1.0465  val=1.0201  lr=6.25e-05
+[seed 1] Epoch  83 | train=1.0420  val=1.0213  lr=6.25e-05
+[seed 1] Epoch  84 | train=1.0349  val=1.0205  lr=3.13e-05
+[seed 1] Epoch  85 | train=1.0530  val=1.0226  lr=3.13e-05
+[seed 1] Epoch  86 | train=1.0340  val=1.0225  lr=3.13e-05
+[seed 1] Epoch  87 | train=1.0656  val=1.0209  lr=3.13e-05
+[seed 1] Early stopping at epoch 87.
+[seed 1] Best val loss: 1.0163
+Temperature calibration: T* = 0.7
+[seed 2] Epoch   1 | train=2.5668  val=1.4059  lr=1.00e-03
+[seed 2] Epoch   2 | train=1.9682  val=1.2653  lr=1.00e-03
+[seed 2] Epoch   3 | train=1.7321  val=1.2120  lr=1.00e-03
+[seed 2] Epoch   4 | train=1.6319  val=1.1678  lr=1.00e-03
+[seed 2] Epoch   5 | train=1.5106  val=1.1460  lr=1.00e-03
+[seed 2] Epoch   6 | train=1.4734  val=1.1244  lr=1.00e-03
+[seed 2] Epoch   7 | train=1.4452  val=1.1047  lr=1.00e-03
+[seed 2] Epoch   8 | train=1.3852  val=1.1017  lr=1.00e-03
+[seed 2] Epoch   9 | train=1.3517  val=1.0862  lr=1.00e-03
+[seed 2] Epoch  10 | train=1.3216  val=1.0766  lr=1.00e-03
+[seed 2] Epoch  11 | train=1.3049  val=1.0607  lr=1.00e-03
+[seed 2] Epoch  12 | train=1.2686  val=1.0652  lr=1.00e-03
+[seed 2] Epoch  13 | train=1.2671  val=1.0570  lr=1.00e-03
+[seed 2] Epoch  14 | train=1.2303  val=1.0573  lr=1.00e-03
+[seed 2] Epoch  15 | train=1.2339  val=1.0516  lr=1.00e-03
+[seed 2] Epoch  16 | train=1.2350  val=1.0397  lr=1.00e-03
+[seed 2] Epoch  17 | train=1.1930  val=1.0398  lr=1.00e-03
+[seed 2] Epoch  18 | train=1.2151  val=1.0421  lr=1.00e-03
+[seed 2] Epoch  19 | train=1.1870  val=1.0456  lr=1.00e-03
+[seed 2] Epoch  20 | train=1.1886  val=1.0373  lr=1.00e-03
+[seed 2] Epoch  21 | train=1.1923  val=1.0416  lr=1.00e-03
+[seed 2] Epoch  22 | train=1.1785  val=1.0433  lr=1.00e-03
+[seed 2] Epoch  23 | train=1.1605  val=1.0446  lr=1.00e-03
+[seed 2] Epoch  24 | train=1.1497  val=1.0383  lr=1.00e-03
+[seed 2] Epoch  25 | train=1.1449  val=1.0378  lr=1.00e-03
+[seed 2] Epoch  26 | train=1.1415  val=1.0342  lr=1.00e-03
+[seed 2] Epoch  27 | train=1.1417  val=1.0416  lr=1.00e-03
+[seed 2] Epoch  28 | train=1.1069  val=1.0313  lr=1.00e-03
+[seed 2] Epoch  29 | train=1.1359  val=1.0341  lr=1.00e-03
+[seed 2] Epoch  30 | train=1.1305  val=1.0342  lr=1.00e-03
+[seed 2] Epoch  31 | train=1.1108  val=1.0325  lr=1.00e-03
+[seed 2] Epoch  32 | train=1.1059  val=1.0280  lr=1.00e-03
+[seed 2] Epoch  33 | train=1.1056  val=1.0205  lr=1.00e-03
+[seed 2] Epoch  34 | train=1.1137  val=1.0342  lr=1.00e-03
+[seed 2] Epoch  35 | train=1.0986  val=1.0261  lr=1.00e-03
+[seed 2] Epoch  36 | train=1.0967  val=1.0346  lr=1.00e-03
+[seed 2] Epoch  37 | train=1.1009  val=1.0348  lr=1.00e-03
+[seed 2] Epoch  38 | train=1.0920  val=1.0203  lr=1.00e-03
+[seed 2] Epoch  39 | train=1.1123  val=1.0150  lr=1.00e-03
+[seed 2] Epoch  40 | train=1.0611  val=1.0217  lr=1.00e-03
+[seed 2] Epoch  41 | train=1.0885  val=1.0148  lr=1.00e-03
+[seed 2] Epoch  42 | train=1.0705  val=1.0148  lr=1.00e-03
+[seed 2] Epoch  43 | train=1.0729  val=1.0161  lr=1.00e-03
+[seed 2] Epoch  44 | train=1.0709  val=1.0158  lr=1.00e-03
+[seed 2] Epoch  45 | train=1.0698  val=1.0283  lr=1.00e-03
+[seed 2] Epoch  46 | train=1.0807  val=1.0130  lr=1.00e-03
+[seed 2] Epoch  47 | train=1.0691  val=1.0212  lr=1.00e-03
+[seed 2] Epoch  48 | train=1.0731  val=1.0094  lr=1.00e-03
+[seed 2] Epoch  49 | train=1.0815  val=1.0169  lr=1.00e-03
+[seed 2] Epoch  50 | train=1.0545  val=1.0216  lr=1.00e-03
+[seed 2] Epoch  51 | train=1.0760  val=1.0161  lr=1.00e-03
+[seed 2] Epoch  52 | train=1.0443  val=1.0213  lr=1.00e-03
+[seed 2] Epoch  53 | train=1.0671  val=1.0145  lr=1.00e-03
+[seed 2] Epoch  54 | train=1.0344  val=1.0168  lr=5.00e-04
+[seed 2] Epoch  55 | train=1.0351  val=1.0209  lr=5.00e-04
+[seed 2] Epoch  56 | train=1.0514  val=1.0169  lr=5.00e-04
+[seed 2] Epoch  57 | train=1.0536  val=1.0187  lr=5.00e-04
+[seed 2] Epoch  58 | train=1.0439  val=1.0122  lr=5.00e-04
+[seed 2] Epoch  59 | train=1.0576  val=1.0210  lr=5.00e-04
+[seed 2] Epoch  60 | train=1.0458  val=1.0192  lr=2.50e-04
+[seed 2] Epoch  61 | train=1.0418  val=1.0172  lr=2.50e-04
+[seed 2] Epoch  62 | train=1.0272  val=1.0129  lr=2.50e-04
+[seed 2] Epoch  63 | train=1.0227  val=1.0118  lr=2.50e-04
+[seed 2] Early stopping at epoch 63.
+[seed 2] Best val loss: 1.0094
+Temperature calibration: T* = 0.7
+[seed 3] Epoch   1 | train=2.7008  val=1.4419  lr=1.00e-03
+[seed 3] Epoch   2 | train=2.0677  val=1.2616  lr=1.00e-03
+[seed 3] Epoch   3 | train=1.8406  val=1.2028  lr=1.00e-03
+[seed 3] Epoch   4 | train=1.6695  val=1.1685  lr=1.00e-03
+[seed 3] Epoch   5 | train=1.6221  val=1.1474  lr=1.00e-03
+[seed 3] Epoch   6 | train=1.5143  val=1.1241  lr=1.00e-03
+[seed 3] Epoch   7 | train=1.4338  val=1.1019  lr=1.00e-03
+[seed 3] Epoch   8 | train=1.4787  val=1.0891  lr=1.00e-03
+[seed 3] Epoch   9 | train=1.4263  val=1.0877  lr=1.00e-03
+[seed 3] Epoch  10 | train=1.3667  val=1.0825  lr=1.00e-03
+[seed 3] Epoch  11 | train=1.3644  val=1.0676  lr=1.00e-03
+[seed 3] Epoch  12 | train=1.3309  val=1.0625  lr=1.00e-03
+[seed 3] Epoch  13 | train=1.3001  val=1.0596  lr=1.00e-03
+[seed 3] Epoch  14 | train=1.2727  val=1.0532  lr=1.00e-03
+[seed 3] Epoch  15 | train=1.2635  val=1.0607  lr=1.00e-03
+[seed 3] Epoch  16 | train=1.2494  val=1.0523  lr=1.00e-03
+[seed 3] Epoch  17 | train=1.2436  val=1.0518  lr=1.00e-03
+[seed 3] Epoch  18 | train=1.2428  val=1.0403  lr=1.00e-03
+[seed 3] Epoch  19 | train=1.2071  val=1.0503  lr=1.00e-03
+[seed 3] Epoch  20 | train=1.2171  val=1.0454  lr=1.00e-03
+[seed 3] Epoch  21 | train=1.1955  val=1.0313  lr=1.00e-03
+[seed 3] Epoch  22 | train=1.1741  val=1.0419  lr=1.00e-03
+[seed 3] Epoch  23 | train=1.2125  val=1.0317  lr=1.00e-03
+[seed 3] Epoch  24 | train=1.1766  val=1.0461  lr=1.00e-03
+[seed 3] Epoch  25 | train=1.1760  val=1.0414  lr=1.00e-03
+[seed 3] Epoch  26 | train=1.1423  val=1.0352  lr=1.00e-03
+[seed 3] Epoch  27 | train=1.1440  val=1.0432  lr=5.00e-04
+[seed 3] Epoch  28 | train=1.1693  val=1.0378  lr=5.00e-04
+[seed 3] Epoch  29 | train=1.1374  val=1.0320  lr=5.00e-04
+[seed 3] Epoch  30 | train=1.1332  val=1.0370  lr=5.00e-04
+[seed 3] Epoch  31 | train=1.1381  val=1.0259  lr=5.00e-04
+[seed 3] Epoch  32 | train=1.1314  val=1.0200  lr=5.00e-04
+[seed 3] Epoch  33 | train=1.1214  val=1.0217  lr=5.00e-04
+[seed 3] Epoch  34 | train=1.1366  val=1.0259  lr=5.00e-04
+[seed 3] Epoch  35 | train=1.1275  val=1.0267  lr=5.00e-04
+[seed 3] Epoch  36 | train=1.1247  val=1.0316  lr=5.00e-04
+[seed 3] Epoch  37 | train=1.1302  val=1.0241  lr=5.00e-04
+[seed 3] Epoch  38 | train=1.1257  val=1.0278  lr=2.50e-04
+[seed 3] Epoch  39 | train=1.1294  val=1.0275  lr=2.50e-04
+[seed 3] Epoch  40 | train=1.1245  val=1.0287  lr=2.50e-04
+[seed 3] Epoch  41 | train=1.1022  val=1.0237  lr=2.50e-04
+[seed 3] Epoch  42 | train=1.0984  val=1.0218  lr=2.50e-04
+[seed 3] Epoch  43 | train=1.0874  val=1.0178  lr=2.50e-04
+[seed 3] Epoch  44 | train=1.0731  val=1.0225  lr=2.50e-04
+[seed 3] Epoch  45 | train=1.0936  val=1.0201  lr=2.50e-04
+[seed 3] Epoch  46 | train=1.1004  val=1.0103  lr=2.50e-04
+[seed 3] Epoch  47 | train=1.1031  val=1.0169  lr=2.50e-04
+[seed 3] Epoch  48 | train=1.1015  val=1.0140  lr=2.50e-04
+[seed 3] Epoch  49 | train=1.0731  val=1.0153  lr=2.50e-04
+[seed 3] Epoch  50 | train=1.0985  val=1.0138  lr=2.50e-04
+[seed 3] Epoch  51 | train=1.0916  val=1.0113  lr=2.50e-04
+[seed 3] Epoch  52 | train=1.0787  val=1.0188  lr=1.25e-04
+[seed 3] Epoch  53 | train=1.0856  val=1.0123  lr=1.25e-04
+[seed 3] Epoch  54 | train=1.0946  val=1.0136  lr=1.25e-04
+[seed 3] Epoch  55 | train=1.0747  val=1.0129  lr=1.25e-04
+[seed 3] Epoch  56 | train=1.0837  val=1.0138  lr=1.25e-04
+[seed 3] Epoch  57 | train=1.0796  val=1.0142  lr=1.25e-04
+[seed 3] Epoch  58 | train=1.0926  val=1.0164  lr=6.25e-05
+[seed 3] Epoch  59 | train=1.0974  val=1.0138  lr=6.25e-05
+[seed 3] Epoch  60 | train=1.0889  val=1.0155  lr=6.25e-05
+[seed 3] Epoch  61 | train=1.0831  val=1.0157  lr=6.25e-05
+[seed 3] Early stopping at epoch 61.
+[seed 3] Best val loss: 1.0103
+Temperature calibration: T* = 0.7
+[seed 4] Epoch   1 | train=2.6621  val=1.4127  lr=1.00e-03
+[seed 4] Epoch   2 | train=2.0702  val=1.2529  lr=1.00e-03
+[seed 4] Epoch   3 | train=1.7812  val=1.1982  lr=1.00e-03
+[seed 4] Epoch   4 | train=1.7031  val=1.1770  lr=1.00e-03
+[seed 4] Epoch   5 | train=1.5706  val=1.1446  lr=1.00e-03
+[seed 4] Epoch   6 | train=1.4773  val=1.1219  lr=1.00e-03
+[seed 4] Epoch   7 | train=1.4394  val=1.1002  lr=1.00e-03
+[seed 4] Epoch   8 | train=1.3891  val=1.1010  lr=1.00e-03
+[seed 4] Epoch   9 | train=1.3668  val=1.0834  lr=1.00e-03
+[seed 4] Epoch  10 | train=1.3379  val=1.0815  lr=1.00e-03
+[seed 4] Epoch  11 | train=1.2956  val=1.0740  lr=1.00e-03
+[seed 4] Epoch  12 | train=1.3123  val=1.0637  lr=1.00e-03
+[seed 4] Epoch  13 | train=1.3018  val=1.0609  lr=1.00e-03
+[seed 4] Epoch  14 | train=1.2671  val=1.0617  lr=1.00e-03
+[seed 4] Epoch  15 | train=1.2384  val=1.0515  lr=1.00e-03
+[seed 4] Epoch  16 | train=1.2453  val=1.0562  lr=1.00e-03
+[seed 4] Epoch  17 | train=1.2217  val=1.0521  lr=1.00e-03
+[seed 4] Epoch  18 | train=1.2193  val=1.0640  lr=1.00e-03
+[seed 4] Epoch  19 | train=1.1968  val=1.0479  lr=1.00e-03
+[seed 4] Epoch  20 | train=1.1805  val=1.0510  lr=1.00e-03
+[seed 4] Epoch  21 | train=1.2019  val=1.0453  lr=1.00e-03
+[seed 4] Epoch  22 | train=1.1626  val=1.0326  lr=1.00e-03
+[seed 4] Epoch  23 | train=1.1576  val=1.0307  lr=1.00e-03
+[seed 4] Epoch  24 | train=1.1495  val=1.0367  lr=1.00e-03
+[seed 4] Epoch  25 | train=1.1553  val=1.0295  lr=1.00e-03
+[seed 4] Epoch  26 | train=1.1576  val=1.0358  lr=1.00e-03
+[seed 4] Epoch  27 | train=1.1325  val=1.0430  lr=1.00e-03
+[seed 4] Epoch  28 | train=1.1382  val=1.0304  lr=1.00e-03
+[seed 4] Epoch  29 | train=1.1366  val=1.0388  lr=1.00e-03
+[seed 4] Epoch  30 | train=1.1187  val=1.0346  lr=1.00e-03
+[seed 4] Epoch  31 | train=1.1298  val=1.0276  lr=1.00e-03
+[seed 4] Epoch  32 | train=1.1372  val=1.0359  lr=1.00e-03
+[seed 4] Epoch  33 | train=1.1217  val=1.0239  lr=1.00e-03
+[seed 4] Epoch  34 | train=1.0970  val=1.0267  lr=1.00e-03
+[seed 4] Epoch  35 | train=1.1254  val=1.0286  lr=1.00e-03
+[seed 4] Epoch  36 | train=1.0945  val=1.0323  lr=1.00e-03
+[seed 4] Epoch  37 | train=1.0946  val=1.0332  lr=1.00e-03
+[seed 4] Epoch  38 | train=1.0995  val=1.0228  lr=1.00e-03
+[seed 4] Epoch  39 | train=1.0850  val=1.0281  lr=1.00e-03
+[seed 4] Epoch  40 | train=1.1061  val=1.0282  lr=1.00e-03
+[seed 4] Epoch  41 | train=1.1008  val=1.0260  lr=1.00e-03
+[seed 4] Epoch  42 | train=1.0930  val=1.0160  lr=1.00e-03
+[seed 4] Epoch  43 | train=1.1002  val=1.0248  lr=1.00e-03
+[seed 4] Epoch  44 | train=1.0768  val=1.0256  lr=1.00e-03
+[seed 4] Epoch  45 | train=1.0914  val=1.0187  lr=1.00e-03
+[seed 4] Epoch  46 | train=1.1002  val=1.0223  lr=1.00e-03
+[seed 4] Epoch  47 | train=1.1002  val=1.0268  lr=1.00e-03
+[seed 4] Epoch  48 | train=1.0655  val=1.0115  lr=1.00e-03
+[seed 4] Epoch  49 | train=1.0779  val=1.0291  lr=1.00e-03
+[seed 4] Epoch  50 | train=1.0580  val=1.0196  lr=1.00e-03
+[seed 4] Epoch  51 | train=1.0595  val=1.0225  lr=1.00e-03
+[seed 4] Epoch  52 | train=1.0684  val=1.0232  lr=1.00e-03
+[seed 4] Epoch  53 | train=1.0541  val=1.0118  lr=1.00e-03
+[seed 4] Epoch  54 | train=1.0497  val=1.0186  lr=5.00e-04
+[seed 4] Epoch  55 | train=1.0595  val=1.0111  lr=5.00e-04
+[seed 4] Epoch  56 | train=1.0622  val=1.0167  lr=5.00e-04
+[seed 4] Epoch  57 | train=1.0697  val=1.0102  lr=5.00e-04
+[seed 4] Epoch  58 | train=1.0514  val=1.0146  lr=5.00e-04
+[seed 4] Epoch  59 | train=1.0708  val=1.0126  lr=5.00e-04
+[seed 4] Epoch  60 | train=1.0462  val=1.0137  lr=5.00e-04
+[seed 4] Epoch  61 | train=1.0512  val=1.0134  lr=5.00e-04
+[seed 4] Epoch  62 | train=1.0422  val=1.0162  lr=5.00e-04
+[seed 4] Epoch  63 | train=1.0458  val=1.0105  lr=2.50e-04
+[seed 4] Epoch  64 | train=1.0376  val=1.0093  lr=2.50e-04
+[seed 4] Epoch  65 | train=1.0580  val=1.0141  lr=2.50e-04
+[seed 4] Epoch  66 | train=1.0373  val=1.0128  lr=2.50e-04
+[seed 4] Epoch  67 | train=1.0395  val=1.0169  lr=2.50e-04
+[seed 4] Epoch  68 | train=1.0465  val=1.0136  lr=2.50e-04
+[seed 4] Epoch  69 | train=1.0338  val=1.0166  lr=2.50e-04
+[seed 4] Epoch  70 | train=1.0439  val=1.0181  lr=1.25e-04
+[seed 4] Epoch  71 | train=1.0383  val=1.0171  lr=1.25e-04
+[seed 4] Epoch  72 | train=1.0258  val=1.0159  lr=1.25e-04
+[seed 4] Epoch  73 | train=1.0444  val=1.0148  lr=1.25e-04
+[seed 4] Epoch  74 | train=1.0205  val=1.0141  lr=1.25e-04
+[seed 4] Epoch  75 | train=1.0327  val=1.0179  lr=1.25e-04
+[seed 4] Epoch  76 | train=1.0247  val=1.0169  lr=6.25e-05
+[seed 4] Epoch  77 | train=1.0408  val=1.0155  lr=6.25e-05
+[seed 4] Epoch  78 | train=1.0413  val=1.0169  lr=6.25e-05
+[seed 4] Epoch  79 | train=1.0330  val=1.0149  lr=6.25e-05
+[seed 4] Early stopping at epoch 79.
+[seed 4] Best val loss: 1.0093
+Temperature calibration: T* = 0.7
+
+=== Test Set Results ===
+  top1_accuracy          0.6538
+  pairwise_accuracy      0.7729
+  ndcg@3                 0.9539
+  kendall_tau            0.5458
+  nll                    1.6021
+  brier_score            0.5100
+########## DONE (exit=0): src/mlp/train.py ##########
+
+########## src/lightgbm/lgbm_train.py ##########
+Loaded semantic config from artifacts/tuning_anthropic\semantic_best_config.json: use_semantic=True text_pca_dim=8 image_pca_dim=0
+Loaded tuned LightGBM params from artifacts/tuning_anthropic\lgbm_best_params.json
+Trials - train: 1551  val: 275  test: 800
+Features: 29  |  seeds: 5
+  seed 0: best_iter=5  T*=0.1
+  seed 1: best_iter=28  T*=0.5
+  seed 2: best_iter=3  T*=0.1
+  seed 3: best_iter=4  T*=0.1
+  seed 4: best_iter=15  T*=0.2
+
+=== Test Set Results ===
+  top1_accuracy          0.6787
+  pairwise_accuracy      0.7812
+  ndcg@3                 0.9575
+  kendall_tau            0.5625
+  nll                    1.3412
+  brier_score            0.4496
+########## DONE (exit=0): src/lightgbm/lgbm_train.py ##########
+
+########## src/xgboost/xgb_train.py ##########
+Loaded semantic config from artifacts/tuning_anthropic\semantic_best_config.json: use_semantic=True text_pca_dim=8 image_pca_dim=0
+Loaded tuned XGBoost params from artifacts/tuning_anthropic\xgb_best_params.json
+Trials - train: 1551  val: 275  test: 800
+Features: 29  |  seeds: 5
+  seed 0: best_iter=40  T*=0.5
+  seed 1: best_iter=37  T*=0.2
+  seed 2: best_iter=25  T*=0.2
+  seed 3: best_iter=23  T*=0.2
+  seed 4: best_iter=35  T*=0.2
+
+=== Test Set Results ===
+  top1_accuracy          0.6288
+  pairwise_accuracy      0.7575
+  ndcg@3                 0.9512
+  kendall_tau            0.5150
+  nll                    1.5946
+  brier_score            0.5361
+########## DONE (exit=0): src/xgboost/xgb_train.py ##########
+
+########## src/lightgbm/lgbm_train_pl.py ##########
+Loaded semantic config from artifacts/tuning_anthropic\semantic_best_config.json: use_semantic=True text_pca_dim=8 image_pca_dim=0
+Loaded tuned LightGBM-PL params from artifacts/tuning_anthropic\lgbm_pl_best_params.json
+Trials - train: 1551  val: 275  test: 800
+Features: 29  |  seeds: 5
+  seed 0: best_iter=22  T*=0.7
+  seed 1: best_iter=37  T*=5.0
+  seed 2: best_iter=30  T*=1.5
+  seed 3: best_iter=25  T*=1.0
+  seed 4: best_iter=25  T*=1.0
+
+=== Test Set Results ===
+  top1_accuracy          0.6713
+  pairwise_accuracy      0.7871
+  ndcg@3                 0.9589
+  kendall_tau            0.5742
+  nll                    1.3079
+  brier_score            0.4347
+########## DONE (exit=0): src/lightgbm/lgbm_train_pl.py ##########
+
+########## src/xgboost/xgb_train_pl.py ##########
+Loaded semantic config from artifacts/tuning_anthropic\semantic_best_config.json: use_semantic=True text_pca_dim=8 image_pca_dim=0
+Loaded tuned XGBoost-PL params from artifacts/tuning_anthropic\xgb_pl_best_params.json
+Trials - train: 1551  val: 275  test: 800
+Features: 29  |  seeds: 5
+  seed 0: best_iter=31  T*=1.5
+  seed 1: best_iter=29  T*=1.5
+  seed 2: best_iter=13  T*=0.7
+  seed 3: best_iter=28  T*=1.5
+  seed 4: best_iter=28  T*=1.5
+
+=== Test Set Results ===
+  top1_accuracy          0.6450
+  pairwise_accuracy      0.7717
+  ndcg@3                 0.9550
+  kendall_tau            0.5433
+  nll                    1.4283
+  brier_score            0.4626
+########## DONE (exit=0): src/xgboost/xgb_train_pl.py ##########
+===== BLEND (post-hoc on saved preds) =====
+
+########## src/blend.py ##########
+Loaded ['mlp', 'lgbm', 'xgb'] — val trials: 275  test trials: 800
+
+Best weights — mlp=0.6  lgbm=0.0  xgb=0.4  (T*=0.5)
+  Val balanced metrics:
+    top1_accuracy    0.7527
+    pairwise_accuracy 0.8436
+    ndcg@3           0.9704
+    kendall_tau      0.6873
+    nll              1.0057
+    brier_score      0.3613
+
+=== Blended Test Results ===
+  top1_accuracy          0.6587
+  pairwise_accuracy      0.7729
+  ndcg@3                 0.9546
+  kendall_tau            0.5458
+  nll                    1.5159
+  brier_score            0.5061
+
+=== Single-model test (for comparison) ===
+  mlp   top1=0.6538  kτ=0.5458  nll=1.5200
+  lgbm  top1=0.6787  kτ=0.5625  nll=1.4248
+  xgb   top1=0.6288  kτ=0.5150  nll=1.6099
+########## DONE (exit=0): src/blend.py ##########
+===== PIPELINE COMPLETE =====

@@ -1,0 +1,115 @@
+{
+  "model": "lgbm_pl",
+  "params": {
+    "metric": "ndcg",
+    "ndcg_eval_at": [
+      1,
+      3
+    ],
+    "feature_fraction": 0.7,
+    "bagging_fraction": 0.8,
+    "bagging_freq": 1,
+    "reg_alpha": 0.1,
+    "verbose": -1,
+    "learning_rate": 0.03,
+    "num_leaves": 15,
+    "min_child_samples": 10,
+    "reg_lambda": 0.1
+  },
+  "cv_balanced": 3.598974182245652,
+  "per_metric": {
+    "top1_accuracy": 0.5607557975695513,
+    "pairwise_accuracy": 0.6889188034373309,
+    "ndcg@3": 0.939082675539247,
+    "kendall_tau": 0.378343712860411,
+    "nll": 1.5625671744346619,
+    "brier_score": 0.5591119741107741,
+    "temperature": 0.6
+  },
+  "all_candidates": [
+    {
+      "params": {
+        "metric": "ndcg",
+        "ndcg_eval_at": [
+          1,
+          3
+        ],
+        "feature_fraction": 0.7,
+        "bagging_fraction": 0.8,
+        "bagging_freq": 1,
+        "reg_alpha": 0.1,
+        "verbose": -1,
+        "learning_rate": 0.03,
+        "num_leaves": 15,
+        "min_child_samples": 10,
+        "reg_lambda": 0.1
+      },
+      "balanced": 3.598974182245652,
+      "metrics": {
+        "top1_accuracy": 0.5607557975695513,
+        "pairwise_accuracy": 0.6889188034373309,
+        "ndcg@3": 0.939082675539247,
+        "kendall_tau": 0.378343712860411,
+        "nll": 1.5625671744346619,
+        "brier_score": 0.5591119741107741,
+        "temperature": 0.6
+      }
+    },
+    {
+      "params": {
+        "metric": "ndcg",
+        "ndcg_eval_at": [
+          1,
+          3
+        ],
+        "feature_fraction": 0.7,
+        "bagging_fraction": 0.8,
+        "bagging_freq": 1,
+        "reg_alpha": 0.1,
+        "verbose": -1,
+        "learning_rate": 0.03,
+        "num_leaves": 15,
+        "min_child_samples": 10,
+        "reg_lambda": 0.5
+      },
+      "balanced": -2.481449700512103,
+      "metrics": {
+        "top1_accuracy": 0.5499173737049674,
+        "pairwise_accuracy": 0.683001407091723,
+        "ndcg@3": 0.9374852421339219,
+        "kendall_tau": 0.36594503602882633,
+        "nll": 1.5675058364868164,
+        "brier_score": 0.5619193181420674,
+        "temperature": 0.75
+      }
+    },
+    {
+      "params": {
+        "metric": "ndcg",
+        "ndcg_eval_at": [
+          1,
+          3
+        ],
+        "feature_fraction": 0.7,
+        "bagging_fraction": 0.8,
+        "bagging_freq": 1,
+        "reg_alpha": 0.1,
+        "verbose": -1,
+        "learning_rate": 0.03,
+        "num_leaves": 15,
+        "min_child_samples": 30,
+        "reg_lambda": 0.1
+      },
+      "balanced": -1.1175244817335814,
+      "metrics": {
+        "top1_accuracy": 0.551946541112272,
+        "pairwise_accuracy": 0.6878782371900942,
+        "ndcg@3": 0.9386741206634868,
+        "kendall_tau": 0.37611234833077856,
+        "nll": 1.570683240890503,
+        "brier_score": 0.562066705272062,
+        "temperature": 0.35
+      }
+    }
+  ]
+}
